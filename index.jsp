@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html; charset=utf-8" %>
-<%@ page import="java.util.Date,java.sql.*,java.text.*" %>
+<%@ page import="java.util.Date,java.sql.*,java.text.*, javax.naming.*, javax.sql.*" %>
 <%
   request.setCharacterEncoding("Windows-31J");
   response.setCharacterEncoding("Windows-31J");
@@ -70,8 +70,9 @@
       String login_pass = request.getParameter("password");
 
       if((email != null || email != "") && (login_pass != null || login_pass != "")){
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        Connection db6=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
+        Context context = new InitialContext();
+        DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/bookon");
+        Connection db6 = ds.getConnection();
         db6.setReadOnly(true);
         Statement objSql6=db6.createStatement();
         String login_query = ("SELECT * FROM user_data WHERE email = '" + email + "' AND password = HASHBYTES('SHA2_256', '" + login_pass + "')");
@@ -209,8 +210,9 @@
                 <input type="radio" autocomplete="off">大分類
               </label>
               <%
-              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-              Connection db=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
+              Context context = new InitialContext();
+              DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/bookon");
+              Connection db = ds.getConnection();
               db.setReadOnly(true);
               Statement objSql=db.createStatement();
               ResultSet rs=objSql.executeQuery("SELECT DISTINCT large_id, large FROM group_master ORDER BY large_id");
@@ -233,9 +235,7 @@
                 <input type="radio" autocomplete="off">中分類
               </label>
               <%
-              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-              Connection db2=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
-              db2.setReadOnly(true);
+              Connection db2 = ds.getConnection();
               Statement objSql2=db2.createStatement();
               String middle_query = "SELECT DISTINCT middle_id, middle FROM group_master WHERE large_id = ";
               if(large_id != null)
@@ -266,8 +266,7 @@
                 <input type="radio" autocomplete="off">小分類
               </label>
               <%
-                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection db3=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
+                Connection db3 = ds.getConnection();
                 db3.setReadOnly(true);
                 Statement objSql3=db3.createStatement();
                 String small_query = "SELECT DISTINCT small_id, small FROM group_master WHERE large_id = ";
@@ -312,8 +311,7 @@
             </div>
             <select id="pub_name" name="pub_name" size ="14" class="form-control">
               <%
-                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection db4=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
+                Connection db4 = ds.getConnection();
                 db4.setReadOnly(true);
                 Statement objSql4=db4.createStatement();
                 ResultSet rs4=objSql4.executeQuery("SELECT DISTINCT pub_name FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id");
@@ -369,8 +367,7 @@
             <div class="btn-group-vertical btn-block">
               <button type="submit" class="btn btn-default btn-block"><%if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")){%><%=session.getAttribute("last_name")%> <%=session.getAttribute("first_name")%> さん<%}else{%>全体<%}%></button>
               <%
-              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-              Connection db7=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
+              Connection db7 = ds.getConnection();
               db7.setReadOnly(true);
               Statement objSql7=db7.createStatement();
               String countQuery = "SELECT COUNT(*) AS number FROM item_state WHERE return_date IS NULL";
@@ -464,8 +461,7 @@
               query += (" AND books_data.bk_id LIKE '__" + small_id + "%'");
             }
 
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-              Connection db5=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
+              Connection db5 = ds.getConnection();
               db5.setReadOnly(true);
               Statement objSql5=db5.createStatement();
               ResultSet rs5=objSql5.executeQuery(query);

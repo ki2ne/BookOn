@@ -1,13 +1,14 @@
 <%@ page contentType="text/html; charset=utf-8"
-         import="java.sql.*,java.text.*" %>
+         import="java.sql.*,java.text.*, javax.naming.*, javax.sql.*" %>
 <table border="1">
 <tr>
   <th>NAME</th><th>AUTHOR</th><th>PUB</th>
   <th>PRICE</th><th>PUBDATE</th>
 </tr>
 <%
-Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-Connection db=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+Context context = new InitialContext();
+DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/bookon");
+Connection db = ds.getConnection();
 db.setReadOnly(true);
 Statement objSql=db.createStatement();
 ResultSet rs=objSql.executeQuery("SELECT bk_name, writer, pub_id, price, pub_date FROM books_data");
