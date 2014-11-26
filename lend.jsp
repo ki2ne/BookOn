@@ -2,7 +2,7 @@
 	import="java.sql.*,java.text.*"
     pageEncoding="utf-8"%>
 <%
-    String ip_address = "192.168.10.122";
+    String ip_address = "localhost";
     String db_name = "Library_DB";
     String user = "sa";
     String password = "P@ssw0rd";

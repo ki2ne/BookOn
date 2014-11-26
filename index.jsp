@@ -52,7 +52,7 @@
   </head>
   <body>
     <%
-      String ip_address = "192.168.10.122";
+      String ip_address = "localhost";
       String db_name = "Library_DB";
       String user = "sa";
       String password = "P@ssw0rd";
@@ -355,85 +355,85 @@
       <div class="panel panel-default">
         <!-- Default panel contents -->
         <form class="form" name="bookTable" role="form" action="./lend.jsp">
-        <div class="panel-heading">検索結果</div>
+          <div class="panel-heading">検索結果</div>
 
-        <!-- Table -->
-        <table class="table">
-          <tr>
-            <th>#</th>
-            <th>書籍名</th>
-            <th>著者</th>
-            <th>出版社</th>
-            <th>発行年</th>
-            <th>ISBN</th>
-            <th>価格</th>
-            <th>貸出状況</th>
-          </tr>
-          <%
-          String query = "SELECT books_data.bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price, state = CASE WHEN lend_date IS NOT NULL AND return_date IS NULL THEN 'false' ELSE 'true' END FROM books_data LEFT OUTER JOIN item_state ON books_data.bk_id = item_state.bk_id, pub_master WHERE pub_master.pub_id = books_data.pub_id";
-          if((pub_name != "") && (enable_pub_name != null))
-          {
-            query += (" AND pub_name = '" + pub_name + "'");
-          }
-          if(name != null && name !="")
-          {
-            query += (" AND bk_name LIKE '%" + name + "%'");
-          }
-          if(writer != null && writer !="")
-          {
-            query += (" AND writer LIKE '%" + writer + "%'");
-          }
-          if(isbn != null && isbn !="")
-          {
-            query += (" AND isbn_no = '" + isbn + "'");
-          }
-          if(below_price != null && below_price !="")
-          {
-            query += (" AND price <= " + below_price);
-          }
-          if(above_price != null && above_price !="")
-          {
-            query += (" AND price >= " + above_price);
-          }
-          if(large_id != null && large_id !="")
-          {
-            query += (" AND books_data.bk_id LIKE '" + large_id + "%'");
-          }
-          if(middle_id != null && middle_id !="")
-          {
-            query += (" AND books_data.bk_id LIKE '_" + middle_id + "%'");
-          }
-          if(small_id != null && small_id !="")
-          {
-            query += (" AND books_data.bk_id LIKE '__" + small_id + "%'");
-          }
-
-          Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection db5=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
-            db5.setReadOnly(true);
-            Statement objSql5=db5.createStatement();
-            ResultSet rs5=objSql5.executeQuery(query);
-            while(rs5.next()){
-          %>
+          <!-- Table -->
+          <table class="table">
             <tr>
-              <td><%=rs5.getString("bk_id")%></td>
-              <td><%=rs5.getString("bk_name")%></td>
-              <td><%=rs5.getString("writer")%></td>
-              <td><%=rs5.getString("pub_name")%></td>
-              <td><%=rs5.getDate("pub_date")%></td>
-              <td><%=rs5.getString("isbn_no")%></td>
-              <td><%=rs5.getInt("price")%></td>
-              <td><%if(rs5.getString("state").equals("true")){%><button type="submit" class="btn btn-primary btn-lg btn-block" <%if((session.getAttribute("login") == null) || !session.getAttribute("login").equals("true")){%>disabled=disabled<%}%> name="bk_id" value="<%=rs5.getString("bk_id")%>" onClick="return confirm('<%=rs5.getString("bk_name")%>を借りますか？')">貸出可</button><%}else{%><button type="button" class="btn btn-danger btn-lg btn-block">貸出中</button><%}%></td>
+              <th>#</th>
+              <th>書籍名</th>
+              <th>著者</th>
+              <th>出版社</th>
+              <th>発行年</th>
+              <th>ISBN</th>
+              <th>価格</th>
+              <th>貸出状況</th>
             </tr>
-          <%
-          }
-          rs5.close();
-          objSql5.close();
-          db5.close();
-          %>
-        </table>
+            <%
+            String query = "SELECT books_data.bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price, state = CASE WHEN lend_date IS NOT NULL AND return_date IS NULL THEN 'false' ELSE 'true' END FROM books_data LEFT OUTER JOIN item_state ON books_data.bk_id = item_state.bk_id, pub_master WHERE pub_master.pub_id = books_data.pub_id";
+            if((pub_name != "") && (enable_pub_name != null))
+            {
+              query += (" AND pub_name = '" + pub_name + "'");
+            }
+            if(name != null && name !="")
+            {
+              query += (" AND bk_name LIKE '%" + name + "%'");
+            }
+            if(writer != null && writer !="")
+            {
+              query += (" AND writer LIKE '%" + writer + "%'");
+            }
+            if(isbn != null && isbn !="")
+            {
+              query += (" AND isbn_no = '" + isbn + "'");
+            }
+            if(below_price != null && below_price !="")
+            {
+              query += (" AND price <= " + below_price);
+            }
+            if(above_price != null && above_price !="")
+            {
+              query += (" AND price >= " + above_price);
+            }
+            if(large_id != null && large_id !="")
+            {
+              query += (" AND books_data.bk_id LIKE '" + large_id + "%'");
+            }
+            if(middle_id != null && middle_id !="")
+            {
+              query += (" AND books_data.bk_id LIKE '_" + middle_id + "%'");
+            }
+            if(small_id != null && small_id !="")
+            {
+              query += (" AND books_data.bk_id LIKE '__" + small_id + "%'");
+            }
+
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+              Connection db5=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
+              db5.setReadOnly(true);
+              Statement objSql5=db5.createStatement();
+              ResultSet rs5=objSql5.executeQuery(query);
+              while(rs5.next()){
+            %>
+              <tr>
+                <td><%=rs5.getString("bk_id")%></td>
+                <td><%=rs5.getString("bk_name")%></td>
+                <td><%=rs5.getString("writer")%></td>
+                <td><%=rs5.getString("pub_name")%></td>
+                <td><%=rs5.getDate("pub_date")%></td>
+                <td><%=rs5.getString("isbn_no")%></td>
+                <td><%=rs5.getInt("price")%></td>
+                <td><%if(rs5.getString("state").equals("true")){%><button type="submit" class="btn btn-primary btn-lg btn-block" <%if((session.getAttribute("login") == null) || !session.getAttribute("login").equals("true")){%>disabled=disabled<%}%> name="bk_id" value="<%=rs5.getString("bk_id")%>" onClick="return confirm('<%=rs5.getString("bk_name")%>を借りますか？')">貸出可</button><%}else{%><button type="button" class="btn btn-danger btn-lg btn-block">貸出中</button><%}%></td>
+              </tr>
+            <%
+            }
+            rs5.close();
+            objSql5.close();
+            db5.close();
+            %>
+          </table>
+        </form>
       </div>
-    </form>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
