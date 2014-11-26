@@ -66,6 +66,31 @@
       String large_id = request.getParameter("large_id");
       String middle_id = request.getParameter("middle_id");
       String small_id = request.getParameter("small_id");
+      String email = request.getParameter("email");
+      String login_pass = request.getParameter("password");
+
+      if((email != null || email != "") && (login_pass != null || login_pass != "")){
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        Connection db6=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
+        db6.setReadOnly(true);
+        Statement objSql6=db6.createStatement();
+        String login_query = ("SELECT * FROM user_data WHERE email = '" + email + "' AND password = HASHBYTES('SHA2_256', '" + login_pass + "')");
+        ResultSet rs6=objSql6.executeQuery(login_query);
+
+        if(rs6.next()){
+                //セッションを一度破棄
+                session.invalidate();
+                //セッション再生成
+                session = request.getSession();
+                //セッションへ保存
+                session.setAttribute("email", email);
+                //画面遷移
+                response.sendRedirect("http://localhost:8080/BookSearch/index.jsp");
+            }
+        rs6.close();
+        objSql6.close();
+        db6.close();
+        }
     %>
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
@@ -83,17 +108,39 @@
             <li><a href=""><%= new Date() %></a></li>
 		      </ul>
         </div>
-        <div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
+        <div id="navbar" class="navbar-collapse collapse">
+              <%if((session.getAttribute("login") == null) || !session.getAttribute("login").equals("true")){%>
+              <form class="navbar-form navbar-right" role="form" method="post" action="authentication.jsp">
+              <div class="form-group <%if (session.getAttribute("login") != null &&
+          !session.getAttribute("login").equals("true")){%>has-error has-feedback<%}%>">
+              <input type="text" name='email' placeholder="Email" class="form-control">
+              <%if (session.getAttribute("login") != null &&
+                  !session.getAttribute("login").equals("true")){%>
+                  <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                  <%}%>
+              </div>
+              <div class="form-group <%if (session.getAttribute("login") != null &&
+          !session.getAttribute("login").equals("true")){%>has-error has-feedback<%}%>">
+                <input type="password" name='pass' placeholder="Password" class="form-control">
+                <%if (session.getAttribute("login") != null &&
+                  !session.getAttribute("login").equals("true")){%>
+                  <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                  <%}%>
+              </div>
+              <button type="submit" class="btn btn-success">Sign in</button>
+              </form>
+              <%}else{%>
+              <ul class="nav navbar-nav navbar-right">
+                  <li><a href="#">session ID = <%=session.getId()%></a></li>
+                  <li><a href="#"><%=email%></a></li>
+                  <li>
+                      <form class="navbar-form navbar-right" role="form" method="post" action="sign_out.jsp">
+                      <button type="submit" class="btn btn-success">Sign out</button>
+                      </form>
+                  </li>
+              </ul>
+              <%}%>
+          </div><!--/.navbar-collapse -->
       </div>
     </div>
 
