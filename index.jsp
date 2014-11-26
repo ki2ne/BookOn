@@ -75,106 +75,107 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#" onClick="clearAll()">Book On</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 		    		<li><a href="">about</a></li>
 		    		<li><a href="">contact</a></li>
             <li><a href=""><%= new Date() %></a></li>
 		      </ul>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-              <%if((session.getAttribute("login") == null) || !session.getAttribute("login").equals("true")){%>
-              <form class="navbar-form navbar-right" role="form" method="post" action="authentication.jsp">
-              <div class="form-group <%if (session.getAttribute("login") != null &&
-          !session.getAttribute("login").equals("true")){%>has-error has-feedback<%}%>">
-              <input type="text" name='email' placeholder="Email" class="form-control">
-              <%if (session.getAttribute("login") != null &&
-                  !session.getAttribute("login").equals("true")){%>
-                  <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-                  <%}%>
-              </div>
-              <div class="form-group <%if (session.getAttribute("login") != null &&
-          !session.getAttribute("login").equals("true")){%>has-error has-feedback<%}%>">
-                <input type="password" name='pass' placeholder="Password" class="form-control">
-                <%if (session.getAttribute("login") != null &&
-                  !session.getAttribute("login").equals("true")){%>
-                  <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-                  <%}%>
-              </div>
-              <button type="submit" class="btn btn-success">ログイン</button>
-              <!-- Button trigger modal -->
-              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">登録
-              </button>
-              </form>
-              <%}else{%>
-              <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#"><%=session.getAttribute("email")%></a></li>
-                  <li>
-                      <form class="navbar-form navbar-right" role="form" method="post" action="sign_out.jsp">
-                      <button type="submit" class="btn btn-success">ログアウト</button>
-                      </form>
-                  </li>
-              </ul>
+          <%if((session.getAttribute("login") == null) || !session.getAttribute("login").equals("true")){%>
+          <form class="navbar-form navbar-right" role="form" method="post" action="authentication.jsp">
+          <div class="form-group <%if (session.getAttribute("login") != null &&
+      !session.getAttribute("login").equals("true")){%>has-error has-feedback<%}%>">
+          <input type="text" name='email' placeholder="Email" class="form-control">
+          <%if (session.getAttribute("login") != null &&
+              !session.getAttribute("login").equals("true")){%>
+              <span class="glyphicon glyphicon-remove form-control-feedback"></span>
               <%}%>
-          </div><!--/.navbar-collapse -->
+          </div>
+          <div class="form-group <%if (session.getAttribute("login") != null &&
+      !session.getAttribute("login").equals("true")){%>has-error has-feedback<%}%>">
+            <input type="password" name='pass' placeholder="Password" class="form-control">
+            <%if (session.getAttribute("login") != null &&
+              !session.getAttribute("login").equals("true")){%>
+              <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+              <%}%>
+          </div>
+          <button type="submit" class="btn btn-success">ログイン</button>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">登録
+          </button>
+          </form>
+          <%}else{%>
+          <ul class="nav navbar-nav navbar-right">
+              <li><a href="#"><%=session.getAttribute("email")%></a></li>
+              <li>
+                  <form class="navbar-form navbar-right" role="form" method="post" action="sign_out.jsp">
+                  <button type="submit" class="btn btn-success">ログアウト</button>
+                  </form>
+              </li>
+          </ul>
+          <%}%>
+        </div><!--/.navbar-collapse -->
       </div>
     </div>
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">ユーザー登録</h4>
+        <form class="form-horizontal register_form" method="POST" name="register_form" role="form" action="./register_transaction.jsp">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="myModalLabel">ユーザー登録</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                  <label for="register_id" class="col-md-4 control-label">ID</label>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" name="register_id" maxlength="4" placeholder="ID">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="register_last_name" class="col-md-4 control-label">名前</label>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control" name="register_last_name" placeholder="姓">
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control" name="register_first_name" placeholder="名">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="register_email" class="col-md-4 control-label">メールアドレス</label>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" name="register_email" maxlength="100" placeholder="Email">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="register_password" class="col-md-4 control-label">パスワード</label>
+                  <div class="col-md-6">
+                    <input type="password" class="form-control" name="register_password" placeholder="Password">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="confirm_register_password" class="col-md-4 control-label">パスワード再入力</label>
+                  <div class="col-md-6">
+                    <input type="password" class="form-control" name="confirm_register_password" placeholder="Password">
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success" name="register">登録</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+            </div>
           </div>
-          <div class="modal-body">
-            <form class="form-horizontal registerForm" method="POST" name="register_form" role="form" action="./register_transaction.jsp">
-              <div class="form-group">
-                <label for="register_id" class="col-md-4 control-label">ID</label>
-                <div class="col-md-6">
-                  <input type="text" class="form-control" name="register_id" maxlength="4" placeholder="ID">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="register_last_name" class="col-md-4 control-label">名前</label>
-                <div class="col-md-3">
-                  <input type="text" class="form-control" name="register_last_name" placeholder="姓">
-                </div>
-                <div class="col-md-3">
-                  <input type="text" class="form-control" name="register_first_name" placeholder="名">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="register_email" class="col-md-4 control-label">メールアドレス</label>
-                <div class="col-md-6">
-                  <input type="text" class="form-control" name="register_email" maxlength="100" placeholder="Email">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="register_password" class="col-md-4 control-label">パスワード</label>
-                <div class="col-md-6">
-                  <input type="password" class="form-control" name="register_password" placeholder="Password">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="register_password2" class="col-md-4 control-label">パスワード再入力</label>
-                <div class="col-md-6">
-                  <input type="password" class="form-control" name="register_password2" placeholder="Password">
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success" name="register" onClick="document.forms['register_form'].submit()">登録</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
 
     <div class="container">
       <div class="row">
-        <form class="form" name="search_form" role="form" action="#">
+        <form class="form search_form" name="search_form" role="form" action="#">
           <div class="col-sm-2" style="background:white;">
             <div class="btn-group-vertical btn-block" data-toggle="buttons">
               <label class="btn btn-primary">
@@ -533,7 +534,8 @@
     }
 
     $(document).ready(function() {
-        $('.registerForm').bootstrapValidator({
+        $('.register_form').bootstrapValidator({
+            live: 'disabled',
             message: 'This value is not valid',
             feedbackIcons: {
                 valid: 'glyphicon glyphicon-ok',
@@ -601,11 +603,15 @@
                         },
                         regexp: {
                             regexp: /(?=(.*[0-9])+|(.*[ !\"#$%&'()*+,\-.\/:;<=>?@\[\\\]^_`{|}~])+)(?=(.*[a-z])+)(?=(.*[A-Z])+)[0-9a-zA-Z !\"#$%&'()*+,\-.\/:;<=>?@\[\\\]^_`{|}~]{8,}/g,
-                            message: '大文字、小文字、数字、ASCIIシンボルを含む文字列で登録してください'
+                            message: '大文字、小文字、数字、ASCIIシンボルを含む半角の文字列で登録してください'
+                        },
+                        identical: {
+                        field: 'confirm_register_password',
+                        message: 'パスワードが一致しません'
                         }
                     }
                 },
-                register_password2: {
+                confirm_register_password: {
                     validators: {
                         notEmpty: {
                             message: 'パスワードを再度入力してください'
@@ -617,7 +623,11 @@
                         },
                         regexp: {
                             regexp: /(?=(.*[0-9])+|(.*[ !\"#$%&'()*+,\-.\/:;<=>?@\[\\\]^_`{|}~])+)(?=(.*[a-z])+)(?=(.*[A-Z])+)[0-9a-zA-Z !\"#$%&'()*+,\-.\/:;<=>?@\[\\\]^_`{|}~]{8,}/g,
-                            message: '大文字、小文字、数字、ASCIIシンボルを含む文字列で登録してください'
+                            message: '大文字、小文字、数字、ASCIIシンボルを含む半角の文字列で登録してください'
+                        },
+                        identical: {
+                        field: 'register_password',
+                        message: 'パスワードが一致しません'
                         }
                     }
                 }
@@ -625,7 +635,7 @@
         });
 
         $('#myModal').on('shown.bs.modal', function() {
-            $('.registerForm').bootstrapValidator('resetForm', true);
+            $('.register_form').bootstrapValidator('resetForm', true);
         });
     });
     </script>
