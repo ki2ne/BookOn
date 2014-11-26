@@ -54,8 +54,8 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-2" style="background:white;">
-          <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-info">大分類</a>
+          <div class="btn-group-vertical btn-block">
+            <button type="button" class="btn btn-primary">大分類</button>
             <%
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection db=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
@@ -64,7 +64,7 @@
             ResultSet rs=objSql.executeQuery("SELECT DISTINCT large, large_id FROM group_master ORDER BY large_id");
             while(rs.next()){
             %>
-              <a href="#" class="list-group-item"><%=rs.getString("large")%></a>
+              <button type="button" class="btn btn-default"><%=rs.getString("large")%></button>
             <%
             }
             rs.close();
@@ -74,8 +74,8 @@
           </div>
         </div>
         <div class="col-sm-2" style="background:white;">
-          <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-success">中分類</a>
+          <div class="btn-group-vertical btn-block">
+            <button type="button" class="btn btn-success">中分類</button>
             <%
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection db2=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
@@ -84,7 +84,7 @@
             ResultSet rs2=objSql2.executeQuery("SELECT DISTINCT middle FROM group_master WHERE middle_id = 1");
             while(rs2.next()){
             %>
-              <a href="#" class="list-group-item"><%=rs2.getString("middle")%></a>
+              <button type="button" class="btn btn-default"><%=rs2.getString("middle")%></button>
             <%
             }
             rs2.close();
@@ -94,11 +94,23 @@
           </div>
         </div>
         <div class="col-sm-2" style="background:white;">
-          <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-danger">小分類</a>
-            <a href="#" class="list-group-item">ネットワーク</a>
-            <a href="#" class="list-group-item">TCP/IP</a>
-            <a href="#" class="list-group-item">セキュリティ</a>
+          <div class="btn-group-vertical btn-block">
+            <button type="button" class="btn btn-danger">小分類</button>
+            <%
+              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+              Connection db3=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+              db3.setReadOnly(true);
+              Statement objSql3=db3.createStatement();
+              ResultSet rs3=objSql3.executeQuery("SELECT DISTINCT small FROM group_master WHERE small_id = 9");
+              while(rs3.next()){
+            %>
+              <button type="button" class="btn btn-default"><%=rs3.getString("small")%></button>
+            <%
+            }
+            rs3.close();
+            objSql3.close();
+            db3.close();
+            %>
           </div>
         </div>
         <div class="col-sm-2" style="background:white;">
@@ -130,8 +142,15 @@
           </form>
         </div>
         <div class="col-sm-2" style="background:white;">
-          <select multiple id="pub_name" size ="19" class="form-control">
-            <option class="bg-info text-info" disabled="disabled">出版社</option>
+          <div class="form-group">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="">
+                出版社
+              </label>
+            </div>
+          </div>
+          <select multiple id="pub_name" size ="14" class="form-control">
             <option>IDGｼﾞｬﾊﾟﾝ</option>
             <option>朝倉書店</option>
             <option>ｱｽｷｰ</option>
@@ -145,7 +164,7 @@
       </div>
     </div>
 
-    <div classname="container">
+    <div class="container">
       <div class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading">検索結果</div>
@@ -163,26 +182,26 @@
           </tr>
           <%
           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection db3=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
-            db3.setReadOnly(true);
-            Statement objSql3=db3.createStatement();
-            ResultSet rs3=objSql3.executeQuery("SELECT bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id");
-            while(rs3.next()){
+            Connection db4=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+            db4.setReadOnly(true);
+            Statement objSql4=db4.createStatement();
+            ResultSet rs4=objSql4.executeQuery("SELECT bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id");
+            while(rs4.next()){
           %>
             <tr>
-              <td><%=rs3.getString("bk_id")%></td>
-              <td><%=rs3.getString("bk_name")%></td>
-              <td><%=rs3.getString("writer")%></td>
-              <td><%=rs3.getString("pub_name")%></td>
-              <td><%=rs3.getDate("pub_date")%></td>
-              <td><%=rs3.getString("isbn_no")%></td>
-              <td><%=rs3.getInt("price")%></td>
+              <td><%=rs4.getString("bk_id")%></td>
+              <td><%=rs4.getString("bk_name")%></td>
+              <td><%=rs4.getString("writer")%></td>
+              <td><%=rs4.getString("pub_name")%></td>
+              <td><%=rs4.getDate("pub_date")%></td>
+              <td><%=rs4.getString("isbn_no")%></td>
+              <td><%=rs4.getInt("price")%></td>
             </tr>
           <%
           }
-          rs3.close();
-          objSql3.close();
-          db3.close();
+          rs4.close();
+          objSql4.close();
+          db4.close();
           %>
         </table>
       </div>
