@@ -33,6 +33,7 @@
       String isbn = request.getParameter("isbn");
       String below_price = request.getParameter("below_price");
       String above_price = request.getParameter("above_price");
+      String large_id = request.getParameter("large_id");
     %>
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
@@ -66,66 +67,77 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-sm-2" style="background:white;">
-          <div class="btn-group-vertical btn-block">
-            <button type="button" class="btn btn-primary">大分類</button>
-            <%
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection db=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
-            db.setReadOnly(true);
-            Statement objSql=db.createStatement();
-            ResultSet rs=objSql.executeQuery("SELECT DISTINCT large, large_id FROM group_master ORDER BY large_id");
-            while(rs.next()){
-            %>
-              <button type="button" class="btn btn-default"><%=rs.getString("large")%></button>
-            <%
-            }
-            rs.close();
-            objSql.close();
-            db.close();
-            %>
-          </div>
-        </div>
-        <div class="col-sm-2" style="background:white;">
-          <div class="btn-group-vertical btn-block">
-            <button type="button" class="btn btn-success">中分類</button>
-            <%
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection db2=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
-            db2.setReadOnly(true);
-            Statement objSql2=db2.createStatement();
-            ResultSet rs2=objSql2.executeQuery("SELECT DISTINCT middle FROM group_master WHERE middle_id = 1");
-            while(rs2.next()){
-            %>
-              <button type="button" class="btn btn-default"><%=rs2.getString("middle")%></button>
-            <%
-            }
-            rs2.close();
-            objSql2.close();
-            db2.close();
-            %>
-          </div>
-        </div>
-        <div class="col-sm-2" style="background:white;">
-          <div class="btn-group-vertical btn-block">
-            <button type="button" class="btn btn-danger">小分類</button>
-            <%
+        <form class="form" role="form" action="http://localhost:8080/BookSearch/index.jsp">
+          <div class="col-sm-2" style="background:white;">
+            <div class="btn-group-vertical btn-block">
+              <button type="button" class="btn btn-primary">大分類</button>
+              <%
               Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-              Connection db3=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
-              db3.setReadOnly(true);
-              Statement objSql3=db3.createStatement();
-              ResultSet rs3=objSql3.executeQuery("SELECT DISTINCT small FROM group_master WHERE small_id = 9");
-              while(rs3.next()){
-            %>
-              <button type="button" class="btn btn-default"><%=rs3.getString("small")%></button>
-            <%
-            }
-            rs3.close();
-            objSql3.close();
-            db3.close();
-            %>
+              Connection db=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+              db.setReadOnly(true);
+              Statement objSql=db.createStatement();
+              ResultSet rs=objSql.executeQuery("SELECT DISTINCT large_id, large FROM group_master ORDER BY large_id");
+              while(rs.next()){
+              %>
+                <button type="submit" class="btn btn-default" name="large_id" value ='<%=rs.getString("large_id")%>'><%=rs.getString("large")%></button>
+              <%
+              }
+              rs.close();
+              objSql.close();
+              db.close();
+              %>
+            </div>
           </div>
-        </div>
+          <div class="col-sm-2" style="background:white;">
+            <div class="btn-group-vertical btn-block">
+              <button type="button" class="btn btn-success">中分類</button>
+              <%
+              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+              Connection db2=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+              db2.setReadOnly(true);
+              Statement objSql2=db2.createStatement();
+              String middle_query = "SELECT DISTINCT middle FROM group_master WHERE large_id = ";
+              if(large_id != null)
+              {
+              middle_query += large_id;
+              }
+              else
+              {
+                middle_query += "1";
+              }
+              ResultSet rs2=objSql2.executeQuery(middle_query);
+              while(rs2.next()){
+              %>
+                <button type="button" class="btn btn-default"><%=rs2.getString("middle")%></button>
+              <%
+              }
+              rs2.close();
+              objSql2.close();
+              db2.close();
+              %>
+            </div>
+          </div>
+          <div class="col-sm-2" style="background:white;">
+            <div class="btn-group-vertical btn-block">
+              <button type="button" class="btn btn-danger">小分類</button>
+              <%
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection db3=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+                db3.setReadOnly(true);
+                Statement objSql3=db3.createStatement();
+                ResultSet rs3=objSql3.executeQuery("SELECT DISTINCT small FROM group_master WHERE small_id = 9");
+                while(rs3.next()){
+              %>
+                <button type="button" class="btn btn-default"><%=rs3.getString("small")%></button>
+              <%
+              }
+              rs3.close();
+              objSql3.close();
+              db3.close();
+              %>
+            </div>
+          </div>
+        </form>
         <form class="form" role="form" action="http://localhost:8080/BookSearch/index.jsp">
           <div class="col-sm-2" style="background:white;">
             <div class="form-group">
