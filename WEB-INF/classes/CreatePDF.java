@@ -39,10 +39,10 @@ public class CreatePDF extends HttpServlet {
 				BaseFont.NOT_EMBEDDED),11,Font.BOLD);
 			Font fData = new Font(BaseFont.createFont("HeiseiKakuGo-W5","UniJIS-UCS2-H",
 				BaseFont.NOT_EMBEDDED),10,Font.NORMAL);
-			PdfPTable tbl = new PdfPTable(8);
-			int[] ws = {10, 20, 20, 10, 10, 10, 10, 10};
+			PdfPTable tbl = new PdfPTable(7);
+			int[] ws = {6, 29, 20, 15, 10, 13, 7};
 			tbl.setWidths(ws);
-			String[] headers = {"#", "書籍名", "著者", "出版社", "発行年", "ISBN", "価格", "貸出状況"};
+			String[] headers = {"#", "書籍名", "著者", "出版社", "発行年", "ISBN", "価格"};
 			for(int i = 0; i < headers.length; i++) {
 				PdfPCell c = new PdfPCell(new Phrase(headers[i],fTitle));	
 				c.setHorizontalAlignment(PdfPTable.ALIGN_CENTER);
@@ -56,7 +56,7 @@ public class CreatePDF extends HttpServlet {
 			rs = ps.executeQuery();
 			ResultSetMetaData meta = rs.getMetaData();
 			while(rs.next()){
-				for(int i = 1; i <= meta.getColumnCount(); i++) {
+				for(int i = 1; i <= meta.getColumnCount() - 1; i++) {
 					PdfPCell c = new PdfPCell(new Phrase(rs.getString(i),fData));
 					tbl.addCell(c);
 				}
