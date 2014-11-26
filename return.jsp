@@ -235,7 +235,7 @@
               String overdue_query = "SELECT item_state.bk_id, bk_name, pub_name, lend_date, estimate_return_date FROM item_state INNER JOIN (SELECT bk_id, bk_name, pub_name FROM books_data bd INNER JOIN pub_master pm ON bd.pub_id = pm.pub_id) AS books_and_pub_data ON item_state.bk_id = books_and_pub_data.bk_id WHERE return_date IS NULL　AND estimate_return_date < DATEDIFF(day, 1, GETDATE())";
               if(session.getAttribute("id") != null)
                 {
-                  query += " AND id = '" + session.getAttribute("id") + "'";
+                  overdue_query += " AND id = '" + session.getAttribute("id") + "'";
                 }
 
                 Statement objSql3=db.createStatement();

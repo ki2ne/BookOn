@@ -424,6 +424,9 @@
             {
               query += (" AND books_data.bk_id LIKE '__" + small_id + "%'");
             }
+              session.setAttribute("large_id", large_id);
+              session.setAttribute("middle_id", middle_id);
+              session.setAttribute("small_id", small_id);
               session.setAttribute("search_query", query);
               Statement objSql5=db.createStatement();
               ResultSet rs5=objSql5.executeQuery(query);
