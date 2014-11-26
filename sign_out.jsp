@@ -7,5 +7,5 @@
  
 // セッションの終了(セッション変数の解放)
 session.invalidate();
-pageContext.forward("./index.jsp");
+response.sendRedirect("./index.jsp");
 %>

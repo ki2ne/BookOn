@@ -34,5 +34,5 @@ else {
 rs.close();
 objSql.close();
 db.close();
-pageContext.forward("./index.jsp");
+response.sendRedirect("./index.jsp");
 %>
