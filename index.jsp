@@ -54,23 +54,43 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-2" style="background:white;">
-          <div class="btn-group-vertical">
-              <button type="button" class="btn btn-default">大分類</button>
-              <button type="button" class="btn btn-default">OS</button>
-              <button type="button" class="btn btn-default">言語</button>
-              <button type="button" class="btn btn-default">ネット</button>
-              <button type="button" class="btn btn-default">アプリ</button>
-              <button type="button" class="btn btn-default">経理</button>
-              <button type="button" class="btn btn-default">資格など</button>
-              <button type="button" class="btn btn-default">その他</button>
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-info">大分類</a>
+            <%
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection db=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+            db.setReadOnly(true);
+            Statement objSql=db.createStatement();
+            ResultSet rs=objSql.executeQuery("SELECT DISTINCT large, large_id FROM group_master ORDER BY large_id");
+            while(rs.next()){
+            %>
+              <a href="#" class="list-group-item"><%=rs.getString("large")%></a>
+            <%
+            }
+            rs.close();
+            objSql.close();
+            db.close();
+            %>
           </div>
         </div>
         <div class="col-sm-2" style="background:white;">
           <div class="list-group">
             <a href="#" class="list-group-item list-group-item-success">中分類</a>
-            <a href="#" class="list-group-item">Windows</a>
-            <a href="#" class="list-group-item">Linux, UNIX</a>
-            <a href="#" class="list-group-item">その他</a>
+            <%
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection db2=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+            db2.setReadOnly(true);
+            Statement objSql2=db2.createStatement();
+            ResultSet rs2=objSql2.executeQuery("SELECT DISTINCT middle FROM group_master WHERE middle_id = 1");
+            while(rs2.next()){
+            %>
+              <a href="#" class="list-group-item"><%=rs2.getString("middle")%></a>
+            <%
+            }
+            rs2.close();
+            objSql2.close();
+            db2.close();
+            %>
           </div>
         </div>
         <div class="col-sm-2" style="background:white;">
@@ -142,27 +162,27 @@
             <th>ISBN</th>
           </tr>
           <%
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection db=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
-            db.setReadOnly(true);
-            Statement objSql=db.createStatement();
-            ResultSet rs=objSql.executeQuery("SELECT bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id");
-            while(rs.next()){
+          Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection db3=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+            db3.setReadOnly(true);
+            Statement objSql3=db3.createStatement();
+            ResultSet rs3=objSql3.executeQuery("SELECT bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id");
+            while(rs3.next()){
           %>
             <tr>
-              <td><%=rs.getString("bk_id")%></td>
-              <td><%=rs.getString("bk_name")%></td>
-              <td><%=rs.getString("writer")%></td>
-              <td><%=rs.getString("pub_name")%></td>
-              <td><%=rs.getDate("pub_date")%></td>
-              <td><%=rs.getString("isbn_no")%></td>
-              <td><%=rs.getInt("price")%></td>
+              <td><%=rs3.getString("bk_id")%></td>
+              <td><%=rs3.getString("bk_name")%></td>
+              <td><%=rs3.getString("writer")%></td>
+              <td><%=rs3.getString("pub_name")%></td>
+              <td><%=rs3.getDate("pub_date")%></td>
+              <td><%=rs3.getString("isbn_no")%></td>
+              <td><%=rs3.getInt("price")%></td>
             </tr>
           <%
           }
-          rs.close();
-          objSql.close();
-          db.close();
+          rs3.close();
+          objSql3.close();
+          db3.close();
           %>
         </table>
       </div>
