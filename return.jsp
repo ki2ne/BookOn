@@ -99,7 +99,7 @@
                   <span class="glyphicon glyphicon-remove form-control-feedback"></span>
                   <%}%>
               </div>
-              <button type="submit" class="btn btn-success">Sign in</button>
+              <button type="submit" class="btn btn-success">ログイン</button>
               </form>
               <%}else{%>
               <ul class="nav navbar-nav navbar-right">
@@ -107,7 +107,7 @@
                   <li><a href="#"><%=session.getAttribute("email")%></a></li>
                   <li>
                       <form class="navbar-form navbar-right" role="form" method="post" action="sign_out.jsp">
-                      <button type="submit" class="btn btn-success">Sign out</button>
+                      <button type="submit" class="btn btn-success">ログアウト</button>
                       </form>
                   </li>
               </ul>
@@ -155,24 +155,28 @@
             db7.close();
             %>
           </div>
-          <button type="button" class="btn btn-danger btn-block">返却</button>
+          <%if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")){%>
+          <button type="button" class="btn btn-danger btn-block" onClick="return document.forms['lend'].submit()">返却</button>
+          <%}%>
         </form>
       </div>
       <div class="col-sm-10" style="background:white;">
         <div class="panel panel-default">
           <!-- Default panel contents -->
-          <form class="form" name="lend" role="form" action="./lend.jsp">
+          <form class="form" name="lend" role="form" action="./return_transaction.jsp">
             <div class="panel-heading">貸出中書籍</div>
 
             <!-- Table -->
             <table class="table">
               <tr>
                 <th>#</th>
+                <%if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")){%>
                 <th>
                   <div class="checkbox">
                       <input type="checkbox" onClick="toggleAll(this)">
                   </div>
                 </th>
+                <%}%>
                 <th>書籍名</th>
                 <th>出版社</th>
                 <th>貸出日</th>
@@ -194,11 +198,13 @@
               %>
                 <tr>
                   <td><%=rs2.getString("bk_id")%></td>
+                  <%if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")){%>
                   <td>
                     <div class="checkbox">
                         <input type="checkbox" name="bk_id" value='<%=rs2.getString("bk_id")%>'>
                     </div>
                   </td>
+                  <%}%>
                   <td><%=rs2.getString("bk_name")%></td>
                   <td><%=rs2.getString("pub_name")%></td>
                   <td><%=rs2.getDate("lend_date")%></td>

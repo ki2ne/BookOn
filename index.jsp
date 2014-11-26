@@ -127,7 +127,7 @@
                   <span class="glyphicon glyphicon-remove form-control-feedback"></span>
                   <%}%>
               </div>
-              <button type="submit" class="btn btn-success">Sign in</button>
+              <button type="submit" class="btn btn-success">ログイン</button>
               </form>
               <%}else{%>
               <ul class="nav navbar-nav navbar-right">
@@ -135,7 +135,7 @@
                   <li><a href="#"><%=session.getAttribute("email")%></a></li>
                   <li>
                       <form class="navbar-form navbar-right" role="form" method="post" action="sign_out.jsp">
-                      <button type="submit" class="btn btn-success">Sign out</button>
+                      <button type="submit" class="btn btn-success">ログアウト</button>
                       </form>
                   </li>
               </ul>
