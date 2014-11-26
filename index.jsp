@@ -329,9 +329,10 @@
             <th>発行年</th>
             <th>ISBN</th>
             <th>価格</th>
+            <th>貸出状況</th>
           </tr>
           <%
-          String query = "SELECT bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id";
+          String query = "SELECT books_data.bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price, jokyo = CASE WHEN lend_date IS NOT NULL AND return_date IS NULL THEN '貸出中' ELSE '貸出可' END FROM books_data LEFT OUTER JOIN item_state ON books_data.bk_id = item_state.bk_id, pub_master WHERE pub_master.pub_id = books_data.pub_id";
           if((pub_name != "") && (enable_pub_name != null))
           {
             query += (" AND pub_name = '" + pub_name + "'");
@@ -385,6 +386,7 @@
               <td><%=rs5.getDate("pub_date")%></td>
               <td><%=rs5.getString("isbn_no")%></td>
               <td><%=rs5.getInt("price")%></td>
+              <td><%=rs5.getString("jokyo")%></td>
             </tr>
           <%
           }
