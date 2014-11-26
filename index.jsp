@@ -34,6 +34,7 @@
       String below_price = request.getParameter("below_price");
       String above_price = request.getParameter("above_price");
       String large_id = request.getParameter("large_id");
+      String middle_id = request.getParameter("middle_id");
     %>
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
@@ -96,10 +97,10 @@
               Connection db2=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
               db2.setReadOnly(true);
               Statement objSql2=db2.createStatement();
-              String middle_query = "SELECT DISTINCT middle FROM group_master WHERE large_id = ";
+              String middle_query = "SELECT DISTINCT middle_id, middle FROM group_master WHERE large_id = ";
               if(large_id != null)
               {
-              middle_query += large_id;
+                middle_query += large_id;
               }
               else
               {
@@ -108,7 +109,7 @@
               ResultSet rs2=objSql2.executeQuery(middle_query);
               while(rs2.next()){
               %>
-                <button type="button" class="btn btn-default"><%=rs2.getString("middle")%></button>
+                <button type="submit" class="btn btn-default" name="middle_id" value ='<%=rs2.getString("middle_id")%>'><%=rs2.getString("middle")%></button>
               <%
               }
               rs2.close();
@@ -125,7 +126,24 @@
                 Connection db3=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
                 db3.setReadOnly(true);
                 Statement objSql3=db3.createStatement();
-                ResultSet rs3=objSql3.executeQuery("SELECT DISTINCT small FROM group_master WHERE small_id = 9");
+                String small_query = "SELECT DISTINCT small_id, small FROM group_master WHERE large_id = ";
+                if(large_id != null)
+                {
+                  small_query += large_id;
+                }
+                else
+                {
+                  small_query += "1";
+                }
+                if(middle_id != null)
+                {
+                  small_query += (" AND middle_id = " + middle_id);
+                }
+                else
+                {
+                  small_query += " AND middle_id = 1";
+                }
+                ResultSet rs3=objSql3.executeQuery(small_query);
                 while(rs3.next()){
               %>
                 <button type="button" class="btn btn-default"><%=rs3.getString("small")%></button>
@@ -137,8 +155,6 @@
               %>
             </div>
           </div>
-        </form>
-        <form class="form" role="form" action="http://localhost:8080/BookSearch/index.jsp">
           <div class="col-sm-2" style="background:white;">
             <div class="form-group">
               <div class="checkbox">
@@ -230,26 +246,32 @@
           {
             query += (" AND pub_name = '" + pub_name + "'");
           }
-          if(name != "")
+          if(name != null && name !="")
           {
             query += (" AND bk_name LIKE '%" + name + "%'");
           }
-          if(writer != "")
+          if(writer != null && writer !="")
           {
             query += (" AND writer LIKE '%" + writer + "%'");
           }
-          if(isbn != "")
+          if(isbn != null && isbn !="")
           {
             query += (" AND isbn_no = '" + isbn + "'");
           }
-          if(below_price != "")
+          if(below_price != null && below_price !="")
           {
             query += (" AND price <= " + below_price);
           }
-          if(above_price != "")
+          if(above_price != null && above_price !="")
           {
             query += (" AND price >= " + above_price);
           }
+          if(large_id != null && large_id !="")
+          {
+            query += (" AND bk_id LIKE '" + large_id + "%'");
+          }
+
+
           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection db5=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
             db5.setReadOnly(true);
