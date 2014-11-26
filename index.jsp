@@ -35,6 +35,7 @@
       String above_price = request.getParameter("above_price");
       String large_id = request.getParameter("large_id");
       String middle_id = request.getParameter("middle_id");
+      String small_id = request.getParameter("small_id");
     %>
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
@@ -70,8 +71,10 @@
       <div class="row">
         <form class="form" role="form" action="http://localhost:8080/BookSearch/index.jsp">
           <div class="col-sm-2" style="background:white;">
-            <div class="btn-group-vertical btn-block">
-              <button type="button" class="btn btn-primary">大分類</button>
+            <div class="btn-group-vertical btn-block" data-toggle="buttons">
+              <label class="btn btn-primary">
+                <input type="radio" autocomplete="off">大分類
+              </label>
               <%
               Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
               Connection db=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
@@ -80,7 +83,9 @@
               ResultSet rs=objSql.executeQuery("SELECT DISTINCT large_id, large FROM group_master ORDER BY large_id");
               while(rs.next()){
               %>
-                <button type="submit" <%if(large_id != null){if(large_id.equals(rs.getString("large_id"))){%>class="btn btn-default active"<%}else{%>class="btn btn-default"<%}}else{%>class="btn btn-default"<%}%> name="large_id" value ='<%=rs.getString("large_id")%>'><%=rs.getString("large")%></button>
+                <label <%if(large_id != null){if(large_id.equals(rs.getString("large_id"))){%>class="btn btn-default active"<%}else{%>class="btn btn-default"<%}}else{%>class="btn btn-default"<%}%>>
+                  <input type="radio" name="large_id" value ='<%=rs.getString("large_id")%>' autocomplete="off" <%if(large_id != null){if(large_id.equals(rs.getString("large_id"))){%>checked<%}}%> onChange="submit()"><%=rs.getString("large")%>
+                </label>
               <%
               }
               rs.close();
@@ -90,8 +95,10 @@
             </div>
           </div>
           <div class="col-sm-2" style="background:white;">
-            <div class="btn-group-vertical btn-block">
-              <button type="button" class="btn btn-success">中分類</button>
+            <div class="btn-group-vertical btn-block" data-toggle="buttons">
+              <label class="btn btn-success">
+                <input type="radio" autocomplete="off">中分類
+              </label>
               <%
               Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
               Connection db2=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
@@ -109,7 +116,9 @@
               ResultSet rs2=objSql2.executeQuery(middle_query);
               while(rs2.next()){
               %>
-                <button type="submit" class="btn btn-default" name="middle_id" value ='<%=rs2.getString("middle_id")%>'><%=rs2.getString("middle")%></button>
+                <label <%if(middle_id != null){if(middle_id.equals(rs2.getString("middle_id"))){%>class="btn btn-default active"<%}else{%>class="btn btn-default"<%}}else{%>class="btn btn-default"<%}%>>
+                  <input type="radio" name="middle_id" value ='<%=rs2.getString("middle_id")%>' autocomplete="off" <%if(middle_id != null){if(middle_id.equals(rs2.getString("middle_id"))){%>checked<%}}%> onChange="submit()"><%=rs2.getString("middle")%>
+                </label>
               <%
               }
               rs2.close();
@@ -119,8 +128,10 @@
             </div>
           </div>
           <div class="col-sm-2" style="background:white;">
-            <div class="btn-group-vertical btn-block">
-              <button type="button" class="btn btn-danger">小分類</button>
+            <div class="btn-group-vertical btn-block" data-toggle="buttons">
+              <label class="btn btn-danger">
+                <input type="radio" autocomplete="off">小分類
+              </label>
               <%
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 Connection db3=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
@@ -146,7 +157,9 @@
                 ResultSet rs3=objSql3.executeQuery(small_query);
                 while(rs3.next()){
               %>
-                <button type="button" class="btn btn-default"><%=rs3.getString("small")%></button>
+                <label <%if(small_id != null){if(small_id.equals(rs3.getString("small_id"))){%>class="btn btn-default active"<%}else{%>class="btn btn-default"<%}}else{%>class="btn btn-default"<%}%>>
+                  <input type="radio" name="small_id" value ='<%=rs3.getString("small_id")%>' autocomplete="off" <%if(small_id != null){if(small_id.equals(rs3.getString("small_id"))){%>checked<%}}%> onChange="submit()"><%=rs3.getString("small")%>
+                </label>
               <%
               }
               rs3.close();
@@ -269,6 +282,14 @@
           if(large_id != null && large_id !="")
           {
             query += (" AND bk_id LIKE '" + large_id + "%'");
+          }
+          if(middle_id != null && middle_id !="")
+          {
+            query += (" AND bk_id LIKE '_" + middle_id + "%'");
+          }
+          if(small_id != null && small_id !="")
+          {
+            query += (" AND bk_id LIKE '__" + small_id + "%'");
           }
 
 
