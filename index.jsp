@@ -114,34 +114,6 @@
           </div>
         </div>
         <div class="col-sm-2" style="background:white;">
-          <form class="form-horizontal" role="form">
-            <div class="form-group">
-              <div class="input-group">
-                <div class="input-group-addon"><span class="glyphicon glyphicon-book"></span></div>
-                  <input class="form-control" type="email" placeholder="書籍名">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="input-group">
-                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                  <input class="form-control" type="email" placeholder="著者">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="input-group">
-                <div class="input-group-addon"><span class="glyphicon glyphicon-barcode"></span></div>
-                  <input class="form-control" type="email" placeholder="ISBN">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="input-group">
-                <div class="input-group-addon"><span class="glyphicon glyphicon-usd"></span></div>
-                  <input class="form-control" type="email" placeholder="価格">
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="col-sm-2" style="background:white;">
           <div class="form-group">
             <div class="checkbox">
               <label>
@@ -159,7 +131,44 @@
           </select>
         </div>
         <div class="col-sm-2" style="background:white;">
-          <button type="button" class="btn btn-primary btn-lg btn-block">検索</button>
+          <form class="form" role="form" action="http://localhost:8080/BookSearch/index.jsp">
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-book"></span></div>
+                  <input class="form-control" type="text" name="name" placeholder="書籍名">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                  <input class="form-control" type="text" name="writer" placeholder="著者">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-barcode"></span></div>
+                  <input class="form-control" type="text" name="isbn" placeholder="ISBN">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-usd"></span></div>
+                  <input class="form-control" type="text" name="below_price" placeholder="価格">
+                <div class="input-group-addon">以下</span></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-usd"></span></div>
+                  <input class="form-control" type="text" name="above_price" placeholder="価格">
+                <div class="input-group-addon">以上</span></div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">検索</button>
+          </form>
+        </div>
+        <div class="col-sm-2" style="background:white;">
+          <p>貸出機能実装予定</p>
         </div>
       </div>
     </div>
@@ -177,15 +186,41 @@
             <th>著者</th>
             <th>出版社</th>
             <th>発行年</th>
-            <th>価格</th>
             <th>ISBN</th>
+            <th>価格</th>
           </tr>
           <%
+          String name = request.getParameter("name");
+          String writer = request.getParameter("writer");
+          String isbn = request.getParameter("isbn");
+          String below_price = request.getParameter("below_price");
+          String above_price = request.getParameter("above_price");
+          String query = "SELECT bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id";
+          if(name != "")
+          {
+            query += (" AND bk_name LIKE '%" + name + "%'");
+          }
+          if(writer != "")
+          {
+            query += (" AND writer LIKE '%" + writer + "%'");
+          }
+          if(isbn != "")
+          {
+            query += (" AND isbn_no = '" + isbn + "'");
+          }
+          if(below_price != "")
+          {
+            query += (" AND price < " + below_price);
+          }
+          if(above_price != "")
+          {
+            query += (" AND price > " + above_price);
+          }
           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection db4=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
             db4.setReadOnly(true);
             Statement objSql4=db4.createStatement();
-            ResultSet rs4=objSql4.executeQuery("SELECT bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id");
+            ResultSet rs4=objSql4.executeQuery(query);
             while(rs4.next()){
           %>
             <tr>
