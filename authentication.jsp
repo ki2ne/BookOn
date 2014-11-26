@@ -11,7 +11,7 @@ pass = pass == null ? "" : pass;
 String securePass = "HASHBYTES('SHA2_256', '" + pass + "')";
 
 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-Connection db=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+Connection db=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
 db.setReadOnly(true);
 /*
 String query = "SELECT id, email, password FROM user_data WHERE email = ? AND password = ?"; 
@@ -27,7 +27,7 @@ ResultSet rs=objSql.executeQuery(query);
 if(rs.next()){
 	session.setMaxInactiveInterval(60 * 10);
     session.setAttribute("login","true");
-    session.setAttribute("id", rs.getString("id"))
+    session.setAttribute("id", rs.getString("id"));
     session.setAttribute("email", email);
 }
 else {

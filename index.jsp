@@ -52,7 +52,7 @@
   </head>
   <body>
     <%
-      String ip_address = "192.168.10.122";
+      String ip_address = "localhost";
       String db_name = "Library_DB";
       String user = "sa";
       String password = "P@ssw0rd";
@@ -317,6 +317,7 @@
     <div class="container">
       <div class="panel panel-default">
         <!-- Default panel contents -->
+        <form class="form" name="bookTable" role="form" action="./lend.jsp">
         <div class="panel-heading">検索結果</div>
 
         <!-- Table -->
@@ -385,7 +386,7 @@
               <td><%=rs5.getDate("pub_date")%></td>
               <td><%=rs5.getString("isbn_no")%></td>
               <td><%=rs5.getInt("price")%></td>
-              <td><%if(rs5.getString("jokyo").equals("true")){%><button type="button" class="btn btn-primary btn-lg btn-block" onClick="return confirm('<%=rs5.getString("bk_name")%>を借りますか？')">貸出可</button><%}else{%><button type="button" class="btn btn-danger btn-lg btn-block">貸出中</button><%}%></td>
+              <td><%if(rs5.getString("jokyo").equals("true")){%><button type="submit" class="btn btn-primary btn-lg btn-block" name="bk_id" value="<%=rs5.getString("bk_id")%>" onClick="return confirm('<%=rs5.getString("bk_name")%>を借りますか？')">貸出可</button><%}else{%><button type="button" class="btn btn-danger btn-lg btn-block">貸出中</button><%}%></td>
             </tr>
           <%
           }
@@ -395,6 +396,7 @@
           %>
         </table>
       </div>
+    </form>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
