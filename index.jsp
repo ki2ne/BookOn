@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page import="java.util.Date,java.sql.*,java.text.*" %>
+<%
+  request.setCharacterEncoding("utf-8");
+  response.setCharacterEncoding("utf-8");
+%>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -21,6 +25,15 @@
     <![endif]-->
   </head>
   <body>
+    <%
+      String enable_pub_name = request.getParameter("enable_pub_name");
+      String pub_name = request.getParameter("pub_name");
+      String name = request.getParameter("name");
+      String writer = request.getParameter("writer");
+      String isbn = request.getParameter("isbn");
+      String below_price = request.getParameter("below_price");
+      String above_price = request.getParameter("above_price");
+    %>
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -145,32 +158,32 @@
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-addon"><span class="glyphicon glyphicon-book"></span></div>
-                    <input class="form-control" type="text" name="name" placeholder="書籍名">
+                    <input class="form-control" type="text" name="name" value='<%=name%>' placeholder="書籍名">
                 </div>
               </div>
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                    <input class="form-control" type="text" name="writer" placeholder="著者">
+                    <input class="form-control" type="text" name="writer" value='<%=writer%>' placeholder="著者">
                 </div>
               </div>
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-addon"><span class="glyphicon glyphicon-barcode"></span></div>
-                    <input class="form-control" type="text" name="isbn" placeholder="ISBN">
+                    <input class="form-control" type="text" name="isbn" value='<%=isbn%>' placeholder="ISBN">
                 </div>
               </div>
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-addon"><span class="glyphicon glyphicon-usd"></span></div>
-                    <input class="form-control" type="text" name="below_price" placeholder="価格">
+                    <input class="form-control" type="text" name="below_price" value='<%=below_price%>' placeholder="価格">
                   <div class="input-group-addon">以下</span></div>
                 </div>
               </div>
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-addon"><span class="glyphicon glyphicon-usd"></span></div>
-                    <input class="form-control" type="text" name="above_price" placeholder="価格">
+                    <input class="form-control" type="text" name="above_price" value='<%=above_price%>' placeholder="価格">
                   <div class="input-group-addon">以上</span></div>
                 </div>
               </div>
@@ -200,13 +213,6 @@
             <th>価格</th>
           </tr>
           <%
-          String enable_pub_name = request.getParameter("enable_pub_name");
-          String pub_name = request.getParameter("pub_name");
-          String name = request.getParameter("name");
-          String writer = request.getParameter("writer");
-          String isbn = request.getParameter("isbn");
-          String below_price = request.getParameter("below_price");
-          String above_price = request.getParameter("above_price");
           String query = "SELECT bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id";
           if((pub_name != "") && (enable_pub_name != null))
           {
