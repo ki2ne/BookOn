@@ -132,7 +132,7 @@
               <%}else{%>
               <ul class="nav navbar-nav navbar-right">
                   <li><a href="#">session ID = <%=session.getId()%></a></li>
-                  <li><a href="#"><%=email%></a></li>
+                  <li><a href="#"><%=session.getAttribute("email")%></a></li>
                   <li>
                       <form class="navbar-form navbar-right" role="form" method="post" action="sign_out.jsp">
                       <button type="submit" class="btn btn-success">Sign out</button>
@@ -370,7 +370,6 @@
             query += (" AND books_data.bk_id LIKE '__" + small_id + "%'");
           }
 
-
           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection db5=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
             db5.setReadOnly(true);
@@ -386,7 +385,7 @@
               <td><%=rs5.getDate("pub_date")%></td>
               <td><%=rs5.getString("isbn_no")%></td>
               <td><%=rs5.getInt("price")%></td>
-              <td><%if(rs5.getString("jokyo").equals("true")){%><button type="button" class="btn btn-primary btn-lg btn-block">貸出可</button><%}else{%><button type="button" class="btn btn-danger btn-lg btn-block">貸出中</button><%}%></td>
+              <td><%if(rs5.getString("jokyo").equals("true")){%><button type="button" class="btn btn-primary btn-lg btn-block" onClick="return confirm('<%=rs5.getString("bk_name")%>を借りますか？')">貸出可</button><%}else{%><button type="button" class="btn btn-danger btn-lg btn-block">貸出中</button><%}%></td>
             </tr>
           <%
           }

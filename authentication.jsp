@@ -27,6 +27,8 @@ ResultSet rs=objSql.executeQuery(query);
 if(rs.next()){
 	session.setMaxInactiveInterval(60 * 10);
     session.setAttribute("login","true");
+    session.setAttribute("id", rs.getString("id"))
+    session.setAttribute("email", email);
 }
 else {
     session.setAttribute("login","false");
