@@ -26,8 +26,11 @@
     <script type="text/javascript">
     var wrapperSubmit = function(callObj) {
 
+      var large_id = document.getElementsByName('large_id');
       var middle_id = document.getElementsByName('middle_id');
       var small_id = document.getElementsByName('small_id');
+      var large_id_is_not_checked = true;
+      var middle_id_is_not_checked = true;
 
       if (callObj.name == 'large_id') {
         for(var i=0; i < middle_id.length; i++)
@@ -43,6 +46,39 @@
         for(var i=0; i < small_id.length; i++)
         {
         small_id[i].checked = false;
+        }
+        for(var i=0; i < large_id.length; i++)
+        {
+          if(large_id[i].checked == true)
+          {
+            large_id_is_not_checked = false;
+          }
+        }
+        if(large_id_is_not_checked == true) {
+          large_id[0].checked = true;
+        }
+      }
+
+      if (callObj.name == 'small_id') {
+        for(var i=0; i < large_id.length; i++)
+        {
+          if(large_id[i].checked == true)
+          {
+            large_id_is_not_checked = false;
+          }
+        }
+        if(large_id_is_not_checked == true) {
+          large_id[0].checked = true;
+        }
+        for(var i=0; i < middle_id.length; i++)
+        {
+          if(middle_id[i].checked == true)
+          {
+            middle_id_is_not_checked = false;
+          }
+        }
+        if(middle_id_is_not_checked == true) {
+          middle_id[0].checked = true;
         }
       }
 
@@ -281,7 +317,7 @@
                 while(rs3.next()){
               %>
                 <label <%if(small_id != null){if(small_id.equals(rs3.getString("small_id"))){%>class="btn btn-default active"<%}else{%>class="btn btn-default"<%}}else{%>class="btn btn-default"<%}%>>
-                  <input type="radio" name="small_id" value ='<%=rs3.getString("small_id")%>' autocomplete="off" <%if(small_id != null){if(small_id.equals(rs3.getString("small_id"))){%>checked<%}}%> onChange="submit()"><%=rs3.getString("small")%>
+                  <input type="radio" name="small_id" value ='<%=rs3.getString("small_id")%>' autocomplete="off" <%if(small_id != null){if(small_id.equals(rs3.getString("small_id"))){%>checked<%}}%> onChange="wrapperSubmit(this)"><%=rs3.getString("small")%>
                 </label>
               <%
               }
