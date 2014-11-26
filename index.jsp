@@ -2,12 +2,12 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page import="java.util.Date,java.sql.*,java.text.*" %>
 <%
-  request.setCharacterEncoding("utf-8");
-  response.setCharacterEncoding("utf-8");
+  request.setCharacterEncoding("Windows-31J");
+  response.setCharacterEncoding("Windows-31J");
 %>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="Windows-31J">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Book On</title>
@@ -131,7 +131,7 @@
             <div class="form-group">
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" name="enable_pub_name" value="enable">
+                  <input type="checkbox" name="enable_pub_name" value="enable" <%if (enable_pub_name != null){%>checked<%}%>>
                   出版社
                 </label>
               </div>
@@ -232,11 +232,11 @@
           }
           if(below_price != "")
           {
-            query += (" AND price < " + below_price);
+            query += (" AND price <= " + below_price);
           }
           if(above_price != "")
           {
-            query += (" AND price > " + above_price);
+            query += (" AND price >= " + above_price);
           }
           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection db5=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
