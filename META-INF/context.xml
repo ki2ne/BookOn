@@ -5,4 +5,9 @@
 		 driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		 url="jdbc:sqlserver://localhost:1433;databaseName=Library_DB;" maxActive="4" maxWait="5000" maxIdle="2"
 		 validationQuery="SELECT COUNT(*) FROM user_data" />
+	<Resource name="jdbc/selfjsp" auth="Container"
+		type="javax.sql.DataSource" username="selfjsp" password="selfjsp"
+		driverClassName="org.gjt.mm.mysql.Driver"
+		url="jdbc:mysql://localhost/selfjsp?useUnicode=true&amp;characterEncoding=Windows-31J" maxActive="4" maxWait="5000" maxIdle="2"
+		validationQuery="SELECT count(*) FROM book" />
 </Context>

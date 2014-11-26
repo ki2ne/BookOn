@@ -368,7 +368,11 @@
       <div class="panel panel-default">
         <!-- Default panel contents -->
         <form class="form" name="book_table" role="form" action="./lend_transaction.jsp">
-          <div class="panel-heading">検索結果</div>
+          <div class="panel-heading">検索結果
+            <div class="form-group pull-right">
+              <button type="button" name="pdf" class="btn btn-danger" onClick ="createPDF()">PDF</button>
+            </div>
+          </div>
 
           <!-- Table -->
           <table class="table">
@@ -420,7 +424,7 @@
             {
               query += (" AND books_data.bk_id LIKE '__" + small_id + "%'");
             }
-
+              session.setAttribute("search_query", query);
               Statement objSql5=db.createStatement();
               ResultSet rs5=objSql5.executeQuery(query);
               while(rs5.next()){
@@ -638,6 +642,10 @@
             $('.register_form').bootstrapValidator('resetForm', true);
         });
     });
+
+    function createPDF() {
+      window.open("./CreatePDF");
+    }
     </script>
   </body>
 </html>
