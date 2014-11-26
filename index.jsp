@@ -23,7 +23,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script>
+    <script type="text/javascript">
   var wrapperSubmit = function(callObj) {
 
     var middle_id = document.getElementsByName('middle_id');
@@ -52,6 +52,10 @@
   </head>
   <body>
     <%
+      String ip_address = "192.168.10.122";
+      String db_name = "Library_DB";
+      String user = "sa";
+      String password = "P@ssw0rd";
       String enable_pub_name = request.getParameter("enable_pub_name");
       String pub_name = request.getParameter("pub_name");
       String name = request.getParameter("name");
@@ -95,7 +99,7 @@
 
     <div class="container">
       <div class="row">
-        <form class="form" name="formName" role="form" action="http://localhost:8080/BookSearch/index.jsp">
+        <form class="form" name="formName" role="form" action="#">
           <div class="col-sm-2" style="background:white;">
             <div class="btn-group-vertical btn-block" data-toggle="buttons">
               <label class="btn btn-primary">
@@ -103,7 +107,7 @@
               </label>
               <%
               Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-              Connection db=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+              Connection db=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
               db.setReadOnly(true);
               Statement objSql=db.createStatement();
               ResultSet rs=objSql.executeQuery("SELECT DISTINCT large_id, large FROM group_master ORDER BY large_id");
@@ -127,7 +131,7 @@
               </label>
               <%
               Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-              Connection db2=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+              Connection db2=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
               db2.setReadOnly(true);
               Statement objSql2=db2.createStatement();
               String middle_query = "SELECT DISTINCT middle_id, middle FROM group_master WHERE large_id = ";
@@ -160,7 +164,7 @@
               </label>
               <%
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection db3=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+                Connection db3=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
                 db3.setReadOnly(true);
                 Statement objSql3=db3.createStatement();
                 String small_query = "SELECT DISTINCT small_id, small FROM group_master WHERE large_id = ";
@@ -206,7 +210,7 @@
             <select id="pub_name" name="pub_name" size ="14" class="form-control">
               <%
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection db4=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+                Connection db4=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
                 db4.setReadOnly(true);
                 Statement objSql4=db4.createStatement();
                 ResultSet rs4=objSql4.executeQuery("SELECT DISTINCT pub_name FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id");
@@ -320,7 +324,7 @@
 
 
           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection db5=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+            Connection db5=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
             db5.setReadOnly(true);
             Statement objSql5=db5.createStatement();
             ResultSet rs5=objSql5.executeQuery(query);
