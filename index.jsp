@@ -158,32 +158,32 @@
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-addon"><span class="glyphicon glyphicon-book"></span></div>
-                    <input class="form-control" type="text" name="name" value='<%=name%>' placeholder="書籍名">
+                    <input class="form-control" type="text" name="name" value='<%if (name != null){%><%=name%><%}%>' placeholder="書籍名">
                 </div>
               </div>
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                    <input class="form-control" type="text" name="writer" value='<%=writer%>' placeholder="著者">
+                    <input class="form-control" type="text" name="writer" value='<%if (writer != null){%><%=writer%><%}%>' placeholder="著者">
                 </div>
               </div>
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-addon"><span class="glyphicon glyphicon-barcode"></span></div>
-                    <input class="form-control" type="text" name="isbn" value='<%=isbn%>' placeholder="ISBN">
+                    <input class="form-control" type="text" name="isbn" value='<%if (isbn != null){%><%=isbn%><%}%>' placeholder="ISBN">
                 </div>
               </div>
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-addon"><span class="glyphicon glyphicon-usd"></span></div>
-                    <input class="form-control" type="text" name="below_price" value='<%=below_price%>' placeholder="価格">
+                    <input class="form-control" type="text" name="below_price" value='<%if (below_price != null){%><%=below_price%><%}%>' placeholder="価格">
                   <div class="input-group-addon">以下</span></div>
                 </div>
               </div>
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-addon"><span class="glyphicon glyphicon-usd"></span></div>
-                    <input class="form-control" type="text" name="above_price" value='<%=above_price%>' placeholder="価格">
+                    <input class="form-control" type="text" name="above_price" value='<%if (above_price != null){%><%=above_price%><%}%>' placeholder="価格">
                   <div class="input-group-addon">以上</span></div>
                 </div>
               </div>
