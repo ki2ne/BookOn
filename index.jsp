@@ -359,15 +359,15 @@
           }
           if(large_id != null && large_id !="")
           {
-            query += (" AND bk_id LIKE '" + large_id + "%'");
+            query += (" AND books_data.bk_id LIKE '" + large_id + "%'");
           }
           if(middle_id != null && middle_id !="")
           {
-            query += (" AND bk_id LIKE '_" + middle_id + "%'");
+            query += (" AND books_data.bk_id LIKE '_" + middle_id + "%'");
           }
           if(small_id != null && small_id !="")
           {
-            query += (" AND bk_id LIKE '__" + small_id + "%'");
+            query += (" AND books_data.bk_id LIKE '__" + small_id + "%'");
           }
 
 
@@ -386,7 +386,7 @@
               <td><%=rs5.getDate("pub_date")%></td>
               <td><%=rs5.getString("isbn_no")%></td>
               <td><%=rs5.getInt("price")%></td>
-              <td><%=rs5.getString("jokyo")%></td>
+              <td><button type="button" class="btn btn-primary btn-lg btn-block"><%=rs5.getString("jokyo")%></button></td>
             </tr>
           <%
           }
