@@ -57,7 +57,7 @@
                 //セッションへ保存
                 session.setAttribute("email", email);
                 //画面遷移
-                response.sendRedirect("http://localhost:8080/BookSearch/index.jsp");
+                response.sendRedirect("./index.jsp");
             }
         rs.close();
         objSql.close();

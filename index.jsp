@@ -24,31 +24,31 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script type="text/javascript">
-  var wrapperSubmit = function(callObj) {
+    var wrapperSubmit = function(callObj) {
 
-    var middle_id = document.getElementsByName('middle_id');
-    var small_id = document.getElementsByName('small_id');
+      var middle_id = document.getElementsByName('middle_id');
+      var small_id = document.getElementsByName('small_id');
 
-    if (callObj.name == 'large_id') {
-      for(var i=0; i < middle_id.length; i++)
-      {
-      middle_id[i].checked = false;
+      if (callObj.name == 'large_id') {
+        for(var i=0; i < middle_id.length; i++)
+        {
+        middle_id[i].checked = false;
+        }
+        for(var i=0; i < small_id.length; i++)
+        {
+        small_id[i].checked = false;
+        }
       }
-      for(var i=0; i < small_id.length; i++)
-      {
-      small_id[i].checked = false;
+      if (callObj.name == 'middle_id') {
+        for(var i=0; i < small_id.length; i++)
+        {
+        small_id[i].checked = false;
+        }
       }
+
+      document.forms['search_form'].submit();
     }
-    if (callObj.name == 'middle_id') {
-      for(var i=0; i < small_id.length; i++)
-      {
-      small_id[i].checked = false;
-      }
-    }
-
-    document.forms['search_form'].submit();
-  }
-  </script>
+    </script>
   </head>
   <body>
     <%
@@ -85,7 +85,7 @@
                 //セッションへ保存
                 session.setAttribute("email", email);
                 //画面遷移
-                response.sendRedirect("http://localhost:8080/BookSearch/index.jsp");
+                response.sendRedirect("./index.jsp");
             }
         rs6.close();
         objSql6.close();
