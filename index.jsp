@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html; charset=utf-8" %>
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.Date,java.sql.*,java.text.*" %>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -128,7 +128,7 @@
     <div classname="container">
       <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading">Panel heading</div>
+        <div class="panel-heading">検索結果</div>
 
         <!-- Table -->
         <table class="table">
@@ -138,8 +138,32 @@
             <th>著者</th>
             <th>出版社</th>
             <th>発行年</th>
-            <th>価格<th>
+            <th>価格</th>
+            <th>ISBN</th>
           </tr>
+          <%
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection db=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+            db.setReadOnly(true);
+            Statement objSql=db.createStatement();
+            ResultSet rs=objSql.executeQuery("SELECT bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id");
+            while(rs.next()){
+          %>
+            <tr>
+              <td><%=rs.getString("bk_id")%></td>
+              <td><%=rs.getString("bk_name")%></td>
+              <td><%=rs.getString("writer")%></td>
+              <td><%=rs.getString("pub_name")%></td>
+              <td><%=rs.getDate("pub_date")%></td>
+              <td><%=rs.getString("isbn_no")%></td>
+              <td><%=rs.getInt("price")%></td>
+            </tr>
+          <%
+          }
+          rs.close();
+          objSql.close();
+          db.close();
+          %>
         </table>
       </div>
     </div>
