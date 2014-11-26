@@ -54,15 +54,15 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-2" style="background:white;">
-          <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-info">大分類</a>
-            <a href="#" class="list-group-item">OS</a>
-            <a href="#" class="list-group-item">言語</a>
-            <a href="#" class="list-group-item">ネット</a>
-            <a href="#" class="list-group-item">アプリ</a>
-            <a href="#" class="list-group-item">経理</a>
-            <a href="#" class="list-group-item">資格など</a>
-            <a href="#" class="list-group-item">その他</a>
+          <div class="btn-group-vertical">
+              <button type="button" class="btn btn-default">大分類</button>
+              <button type="button" class="btn btn-default">OS</button>
+              <button type="button" class="btn btn-default">言語</button>
+              <button type="button" class="btn btn-default">ネット</button>
+              <button type="button" class="btn btn-default">アプリ</button>
+              <button type="button" class="btn btn-default">経理</button>
+              <button type="button" class="btn btn-default">資格など</button>
+              <button type="button" class="btn btn-default">その他</button>
           </div>
         </div>
         <div class="col-sm-2" style="background:white;">
