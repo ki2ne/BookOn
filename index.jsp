@@ -173,7 +173,7 @@
                 ResultSet rs4=objSql4.executeQuery("SELECT DISTINCT pub_name FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id");
                 while(rs4.next()){
               %>
-              <option><%=rs4.getString("pub_name")%></option>
+              <option <%if(pub_name != null){if(pub_name.equals(rs4.getString("pub_name"))){%>selected<%}}%>><%=rs4.getString("pub_name")%></option>
               <%
               }
               rs4.close();
