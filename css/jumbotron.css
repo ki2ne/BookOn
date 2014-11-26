@@ -7,3 +7,7 @@ body {
 .container {
 	margin-top: 10px;
 }
+
+th {
+	white-space: nowrap;
+}

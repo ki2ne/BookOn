@@ -128,6 +128,9 @@
                   <%}%>
               </div>
               <button type="submit" class="btn btn-success">ログイン</button>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">登録
+              </button>
               </form>
               <%}else{%>
               <ul class="nav navbar-nav navbar-right">
@@ -141,6 +144,59 @@
               </ul>
               <%}%>
           </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">ユーザー登録</h4>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal" role="form">
+              <div class="form-group">
+                <label for="register_id" class="col-md-4 control-label">ID</label>
+                <div class="col-md-6">
+                  <input type="text" class="form-control" id="register_id" placeholder="ID">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="register_last_name" class="col-md-4 control-label">名前</label>
+                <div class="col-md-3">
+                  <input type="text" class="form-control" id="register_last_name" placeholder="姓">
+                </div>
+                <div class="col-md-3">
+                  <input type="text" class="form-control" id="register_first_name" placeholder="名">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="register_email" class="col-md-4 control-label">メールアドレス</label>
+                <div class="col-md-6">
+                  <input type="email" class="form-control" id="register_email" placeholder="Email">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="register_password" class="col-md-4 control-label">パスワード</label>
+                <div class="col-md-6">
+                  <input type="password" class="form-control" id="register_password" placeholder="Password">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="register_password2" class="col-md-4 control-label">パスワード再入力</label>
+                <div class="col-md-6">
+                  <input type="password" class="form-control" id="register_password2" placeholder="Password">
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success">登録</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+          </div>
+        </div>
       </div>
     </div>
 
