@@ -23,6 +23,32 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script>
+  var wrapperSubmit = function(callObj) {
+
+    var middle_id = document.getElementsByName('middle_id');
+    var small_id = document.getElementsByName('small_id');
+
+    if (callObj.name == 'large_id') {
+      for(var i=0; i < middle_id.length; i++)
+      {
+      middle_id[i].checked = false;
+      }
+      for(var i=0; i < small_id.length; i++)
+      {
+      small_id[i].checked = false;
+      }
+    }
+    if (callObj.name == 'middle_id') {
+      for(var i=0; i < small_id.length; i++)
+      {
+      small_id[i].checked = false;
+      }
+    }
+
+    document.forms['formName'].submit();
+  }
+  </script>
   </head>
   <body>
     <%
@@ -69,7 +95,7 @@
 
     <div class="container">
       <div class="row">
-        <form class="form" role="form" action="http://localhost:8080/BookSearch/index.jsp">
+        <form class="form" name="formName" role="form" action="http://localhost:8080/BookSearch/index.jsp">
           <div class="col-sm-2" style="background:white;">
             <div class="btn-group-vertical btn-block" data-toggle="buttons">
               <label class="btn btn-primary">
@@ -84,7 +110,7 @@
               while(rs.next()){
               %>
                 <label <%if(large_id != null){if(large_id.equals(rs.getString("large_id"))){%>class="btn btn-default active"<%}else{%>class="btn btn-default"<%}}else{%>class="btn btn-default"<%}%>>
-                  <input type="radio" name="large_id" value ='<%=rs.getString("large_id")%>' autocomplete="off" <%if(large_id != null){if(large_id.equals(rs.getString("large_id"))){%>checked<%}}%> onChange="submit()"><%=rs.getString("large")%>
+                  <input type="radio" name="large_id" value ='<%=rs.getString("large_id")%>' autocomplete="off" <%if(large_id != null){if(large_id.equals(rs.getString("large_id"))){%>checked<%}}%> onChange="wrapperSubmit(this)"><%=rs.getString("large")%>
                 </label>
               <%
               }
@@ -117,7 +143,7 @@
               while(rs2.next()){
               %>
                 <label <%if(middle_id != null){if(middle_id.equals(rs2.getString("middle_id"))){%>class="btn btn-default active"<%}else{%>class="btn btn-default"<%}}else{%>class="btn btn-default"<%}%>>
-                  <input type="radio" name="middle_id" value ='<%=rs2.getString("middle_id")%>' autocomplete="off" <%if(middle_id != null){if(middle_id.equals(rs2.getString("middle_id"))){%>checked<%}}%> onChange="submit()"><%=rs2.getString("middle")%>
+                  <input type="radio" name="middle_id" value ='<%=rs2.getString("middle_id")%>' autocomplete="off" <%if(middle_id != null){if(middle_id.equals(rs2.getString("middle_id"))){%>checked<%}}%> onChange="wrapperSubmit(this)"><%=rs2.getString("middle")%>
                 </label>
               <%
               }
