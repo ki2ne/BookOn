@@ -3,7 +3,8 @@
     pageEncoding="utf-8"%>
 
 <%
-request.setCharacterEncoding("utf-8");
+request.setCharacterEncoding("Windows-31J");
+response.setCharacterEncoding("Windows-31J");
 String email = request.getParameter("email");
 email = email == null ? "" : email;
 String pass = request.getParameter("pass");

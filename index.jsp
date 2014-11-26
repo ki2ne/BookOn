@@ -24,66 +24,6 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script type="text/javascript">
-    var wrapperSubmit = function(callObj) {
-
-      var large_id = document.getElementsByName('large_id');
-      var middle_id = document.getElementsByName('middle_id');
-      var small_id = document.getElementsByName('small_id');
-      var large_id_is_not_checked = true;
-      var middle_id_is_not_checked = true;
-
-      if (callObj.name == 'large_id') {
-        for(var i=0; i < middle_id.length; i++)
-        {
-        middle_id[i].checked = false;
-        }
-        for(var i=0; i < small_id.length; i++)
-        {
-        small_id[i].checked = false;
-        }
-      }
-      if (callObj.name == 'middle_id') {
-        for(var i=0; i < small_id.length; i++)
-        {
-        small_id[i].checked = false;
-        }
-        for(var i=0; i < large_id.length; i++)
-        {
-          if(large_id[i].checked == true)
-          {
-            large_id_is_not_checked = false;
-          }
-        }
-        if(large_id_is_not_checked == true) {
-          large_id[0].checked = true;
-        }
-      }
-
-      if (callObj.name == 'small_id') {
-        for(var i=0; i < large_id.length; i++)
-        {
-          if(large_id[i].checked == true)
-          {
-            large_id_is_not_checked = false;
-          }
-        }
-        if(large_id_is_not_checked == true) {
-          large_id[0].checked = true;
-        }
-        for(var i=0; i < middle_id.length; i++)
-        {
-          if(middle_id[i].checked == true)
-          {
-            middle_id_is_not_checked = false;
-          }
-        }
-        if(middle_id_is_not_checked == true) {
-          middle_id[0].checked = true;
-        }
-      }
-
-      document.forms['search_form'].submit();
-    }
     </script>
   </head>
   <body>
@@ -134,7 +74,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="">Book On</a>
+          <a class="navbar-brand" href="#" onClick="clearAll()">Book On</a>
           <ul class="nav navbar-nav">
 		    		<li><a href="">about</a></li>
 		    		<li><a href="">contact</a></li>
@@ -167,7 +107,6 @@
               </form>
               <%}else{%>
               <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#">session ID = <%=session.getId()%></a></li>
                   <li><a href="#"><%=session.getAttribute("email")%></a></li>
                   <li>
                       <form class="navbar-form navbar-right" role="form" method="post" action="sign_out.jsp">
@@ -189,44 +128,44 @@
             <h4 class="modal-title" id="myModalLabel">ユーザー登録</h4>
           </div>
           <div class="modal-body">
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal registerForm" method="POST" name="register_form" role="form" action="./register_transaction.jsp">
               <div class="form-group">
                 <label for="register_id" class="col-md-4 control-label">ID</label>
                 <div class="col-md-6">
-                  <input type="text" class="form-control" id="register_id" placeholder="ID">
+                  <input type="text" class="form-control" name="register_id" maxlength="4" placeholder="ID">
                 </div>
               </div>
               <div class="form-group">
                 <label for="register_last_name" class="col-md-4 control-label">名前</label>
                 <div class="col-md-3">
-                  <input type="text" class="form-control" id="register_last_name" placeholder="姓">
+                  <input type="text" class="form-control" name="register_last_name" placeholder="姓">
                 </div>
                 <div class="col-md-3">
-                  <input type="text" class="form-control" id="register_first_name" placeholder="名">
+                  <input type="text" class="form-control" name="register_first_name" placeholder="名">
                 </div>
               </div>
               <div class="form-group">
                 <label for="register_email" class="col-md-4 control-label">メールアドレス</label>
                 <div class="col-md-6">
-                  <input type="email" class="form-control" id="register_email" placeholder="Email">
+                  <input type="text" class="form-control" name="register_email" maxlength="100" placeholder="Email">
                 </div>
               </div>
               <div class="form-group">
                 <label for="register_password" class="col-md-4 control-label">パスワード</label>
                 <div class="col-md-6">
-                  <input type="password" class="form-control" id="register_password" placeholder="Password">
+                  <input type="password" class="form-control" name="register_password" placeholder="Password">
                 </div>
               </div>
               <div class="form-group">
                 <label for="register_password2" class="col-md-4 control-label">パスワード再入力</label>
                 <div class="col-md-6">
-                  <input type="password" class="form-control" id="register_password2" placeholder="Password">
+                  <input type="password" class="form-control" name="register_password2" placeholder="Password">
                 </div>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success">登録</button>
+            <button type="button" class="btn btn-success" name="register" onClick="document.forms['register_form'].submit()">登録</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
           </div>
         </div>
@@ -427,7 +366,7 @@
     <div class="container">
       <div class="panel panel-default">
         <!-- Default panel contents -->
-        <form class="form" name="book_table" role="form" action="./lend.jsp">
+        <form class="form" name="book_table" role="form" action="./lend_transaction.jsp">
           <div class="panel-heading">検索結果</div>
 
           <!-- Table -->
@@ -510,5 +449,185 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrapValidator.min.js"></script>
+    <script type="text/javascript">
+    var wrapperSubmit = function(callObj) {
+
+      var large_id = document.getElementsByName('large_id');
+      var middle_id = document.getElementsByName('middle_id');
+      var small_id = document.getElementsByName('small_id');
+      var large_id_is_not_checked = true;
+      var middle_id_is_not_checked = true;
+
+      if (callObj.name == 'large_id') {
+        for(var i=0; i < middle_id.length; i++)
+        {
+        middle_id[i].checked = false;
+        }
+        for(var i=0; i < small_id.length; i++)
+        {
+        small_id[i].checked = false;
+        }
+      }
+      if (callObj.name == 'middle_id') {
+        for(var i=0; i < small_id.length; i++)
+        {
+        small_id[i].checked = false;
+        }
+        for(var i=0; i < large_id.length; i++)
+        {
+          if(large_id[i].checked == true)
+          {
+            large_id_is_not_checked = false;
+          }
+        }
+        if(large_id_is_not_checked == true) {
+          large_id[0].checked = true;
+        }
+      }
+
+      if (callObj.name == 'small_id') {
+        for(var i=0; i < large_id.length; i++)
+        {
+          if(large_id[i].checked == true)
+          {
+            large_id_is_not_checked = false;
+          }
+        }
+        if(large_id_is_not_checked == true) {
+          large_id[0].checked = true;
+        }
+        for(var i=0; i < middle_id.length; i++)
+        {
+          if(middle_id[i].checked == true)
+          {
+            middle_id_is_not_checked = false;
+          }
+        }
+        if(middle_id_is_not_checked == true) {
+          middle_id[0].checked = true;
+        }
+      }
+
+      document.forms['search_form'].submit();
+    }
+
+    function clearAll() {
+      var large_id = document.getElementsByName('large_id');
+      var middle_id = document.getElementsByName('middle_id');
+      var small_id = document.getElementsByName('small_id');
+
+      for(var i=0; i < large_id.length; i++)
+        {
+          large_id[i].checked = false;
+        }
+        for(var i=0; i < middle_id.length; i++)
+        {
+          middle_id[i].checked = false;
+        }
+        for(var i=0; i < small_id.length; i++)
+        {
+          small_id[i].checked = false;
+        }
+        document.forms['search_form'].submit();
+    }
+
+    $(document).ready(function() {
+        $('.registerForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                register_id: {
+                    message: 'ID is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: 'IDを入力してください'
+                        },
+                        stringLength: {
+                            min: 4,
+                            max: 4,
+                            message: '有効なIDを入力してください'
+                        },
+                        integer: {
+                            message: '半角数字で入力してください'
+                        }
+                    }
+                },
+                register_last_name: {
+                    validators: {
+                        notEmpty: {
+                            message: 'お名前(姓)を入力してください'
+                        },
+                        stringLength: {
+                            max: 20,
+                            message: '全角10文字まで'
+                        }
+                    }
+                },
+                register_first_name: {
+                    validators: {
+                        notEmpty: {
+                            message: 'お名前(名)を入力してください'
+                        },
+                        stringLength: {
+                            max: 20,
+                            message: '全角10文字まで'
+                        }
+                    }
+                },
+                register_email: {
+                    validators: {
+                        notEmpty: {
+                            message: 'メールアドレスを入力してください'
+                        },
+                        emailAddress: {
+                            message: '有効なメールアドレスを入力してください'
+                        }
+                    }
+                },
+                register_password: {
+                    validators: {
+                        notEmpty: {
+                            message: 'パスワードを入力してください'
+                        },
+                        stringLength: {
+                            min: 5,
+                            max: 20,
+                            message: '5 ～ 20文字で作成してください'
+                        },
+                        regexp: {
+                            regexp: /(?=(.*[0-9])+|(.*[ !\"#$%&'()*+,\-.\/:;<=>?@\[\\\]^_`{|}~])+)(?=(.*[a-z])+)(?=(.*[A-Z])+)[0-9a-zA-Z !\"#$%&'()*+,\-.\/:;<=>?@\[\\\]^_`{|}~]{8,}/g,
+                            message: '大文字、小文字、数字、ASCIIシンボルを含む文字列で登録してください'
+                        }
+                    }
+                },
+                register_password2: {
+                    validators: {
+                        notEmpty: {
+                            message: 'パスワードを再度入力してください'
+                        },
+                        stringLength: {
+                            min: 5,
+                            max: 20,
+                            message: '5 ～ 20文字で作成してください'
+                        },
+                        regexp: {
+                            regexp: /(?=(.*[0-9])+|(.*[ !\"#$%&'()*+,\-.\/:;<=>?@\[\\\]^_`{|}~])+)(?=(.*[a-z])+)(?=(.*[A-Z])+)[0-9a-zA-Z !\"#$%&'()*+,\-.\/:;<=>?@\[\\\]^_`{|}~]{8,}/g,
+                            message: '大文字、小文字、数字、ASCIIシンボルを含む文字列で登録してください'
+                        }
+                    }
+                }
+            }
+        });
+
+        $('#myModal').on('shown.bs.modal', function() {
+            $('.registerForm').bootstrapValidator('resetForm', true);
+        });
+    });
+    </script>
   </body>
 </html>

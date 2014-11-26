@@ -2,6 +2,8 @@
 	import="java.sql.*,java.text.*, javax.naming.*, javax.sql.*"
     pageEncoding="utf-8"%>
 <%
+    request.setCharacterEncoding("Windows-31J");
+    response.setCharacterEncoding("Windows-31J");
 	String[] bk_id = request.getParameterValues("bk_id");
     if(bk_id != null) {
         String id = (String)session.getAttribute("id");

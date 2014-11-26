@@ -100,7 +100,6 @@
               </form>
               <%}else{%>
               <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#">session ID = <%=session.getId()%></a></li>
                   <li><a href="#"><%=session.getAttribute("email")%></a></li>
                   <li>
                       <form class="navbar-form navbar-right" role="form" method="post" action="sign_out.jsp">
