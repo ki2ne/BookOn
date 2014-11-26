@@ -101,7 +101,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Book On</a>
+          <a class="navbar-brand" href="">Book On</a>
           <ul class="nav navbar-nav">
 		    		<li><a href="">about</a></li>
 		    		<li><a href="">contact</a></li>
@@ -309,7 +309,24 @@
           </div>
         </form>
         <div class="col-sm-2" style="background:white;">
-          <p>貸出機能実装予定</p>
+          <ul class="list-group">
+          <%
+          Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+          Connection db7=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
+          db7.setReadOnly(true);
+          Statement objSql7=db7.createStatement();
+          ResultSet rs7=objSql7.executeQuery("SELECT COUNT(*) AS number FROM item_state");
+          while(rs7.next()){
+          %>
+            <li class="list-group-item">借りている本 <span class="badge badge-info"><%=rs7.getInt("number")%></span></li>
+          <%
+          }
+          rs7.close();
+          objSql7.close();
+          db7.close();
+          %>
+            <li class="list-group-item">貸出期限超過 <span class="badge">2</span></li>
+          </div>
         </div>
       </div>
     </div>
@@ -333,7 +350,7 @@
             <th>貸出状況</th>
           </tr>
           <%
-          String query = "SELECT books_data.bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price, jokyo = CASE WHEN lend_date IS NOT NULL AND return_date IS NULL THEN 'false' ELSE 'true' END FROM books_data LEFT OUTER JOIN item_state ON books_data.bk_id = item_state.bk_id, pub_master WHERE pub_master.pub_id = books_data.pub_id";
+          String query = "SELECT books_data.bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price, state = CASE WHEN lend_date IS NOT NULL AND return_date IS NULL THEN 'false' ELSE 'true' END FROM books_data LEFT OUTER JOIN item_state ON books_data.bk_id = item_state.bk_id, pub_master WHERE pub_master.pub_id = books_data.pub_id";
           if((pub_name != "") && (enable_pub_name != null))
           {
             query += (" AND pub_name = '" + pub_name + "'");
@@ -386,7 +403,7 @@
               <td><%=rs5.getDate("pub_date")%></td>
               <td><%=rs5.getString("isbn_no")%></td>
               <td><%=rs5.getInt("price")%></td>
-              <td><%if(rs5.getString("jokyo").equals("true")){%><button type="submit" class="btn btn-primary btn-lg btn-block" name="bk_id" value="<%=rs5.getString("bk_id")%>" onClick="return confirm('<%=rs5.getString("bk_name")%>を借りますか？')">貸出可</button><%}else{%><button type="button" class="btn btn-danger btn-lg btn-block">貸出中</button><%}%></td>
+              <td><%if(rs5.getString("state").equals("true")){%><button type="submit" class="btn btn-primary btn-lg btn-block" <%if((session.getAttribute("login") == null) || !session.getAttribute("login").equals("true")){%>disabled=disabled<%}%> name="bk_id" value="<%=rs5.getString("bk_id")%>" onClick="return confirm('<%=rs5.getString("bk_name")%>を借りますか？')">貸出可</button><%}else{%><button type="button" class="btn btn-danger btn-lg btn-block">貸出中</button><%}%></td>
             </tr>
           <%
           }
