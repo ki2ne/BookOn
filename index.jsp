@@ -123,11 +123,21 @@
             </div>
           </div>
           <select multiple id="pub_name" size ="14" class="form-control">
-            <option>IDGｼﾞｬﾊﾟﾝ</option>
-            <option>朝倉書店</option>
-            <option>ｱｽｷｰ</option>
-            <option>医道の日本社</option>
-            <option>岩波書店</option>
+            <%
+              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+              Connection db4=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+              db4.setReadOnly(true);
+              Statement objSql4=db4.createStatement();
+              ResultSet rs4=objSql4.executeQuery("SELECT DISTINCT pub_name FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id");
+              while(rs4.next()){
+            %>
+            <option><%=rs4.getString("pub_name")%></option>
+            <%
+            }
+            rs4.close();
+            objSql4.close();
+            db4.close();
+            %>
           </select>
         </div>
         <div class="col-sm-2" style="background:white;">
@@ -217,26 +227,26 @@
             query += (" AND price > " + above_price);
           }
           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection db4=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
-            db4.setReadOnly(true);
-            Statement objSql4=db4.createStatement();
-            ResultSet rs4=objSql4.executeQuery(query);
-            while(rs4.next()){
+            Connection db5=DriverManager.getConnection("jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+            db5.setReadOnly(true);
+            Statement objSql5=db5.createStatement();
+            ResultSet rs5=objSql5.executeQuery(query);
+            while(rs5.next()){
           %>
             <tr>
-              <td><%=rs4.getString("bk_id")%></td>
-              <td><%=rs4.getString("bk_name")%></td>
-              <td><%=rs4.getString("writer")%></td>
-              <td><%=rs4.getString("pub_name")%></td>
-              <td><%=rs4.getDate("pub_date")%></td>
-              <td><%=rs4.getString("isbn_no")%></td>
-              <td><%=rs4.getInt("price")%></td>
+              <td><%=rs5.getString("bk_id")%></td>
+              <td><%=rs5.getString("bk_name")%></td>
+              <td><%=rs5.getString("writer")%></td>
+              <td><%=rs5.getString("pub_name")%></td>
+              <td><%=rs5.getDate("pub_date")%></td>
+              <td><%=rs5.getString("isbn_no")%></td>
+              <td><%=rs5.getInt("price")%></td>
             </tr>
           <%
           }
-          rs4.close();
-          objSql4.close();
-          db4.close();
+          rs5.close();
+          objSql5.close();
+          db5.close();
           %>
         </table>
       </div>
