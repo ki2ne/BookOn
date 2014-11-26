@@ -80,7 +80,7 @@
               ResultSet rs=objSql.executeQuery("SELECT DISTINCT large_id, large FROM group_master ORDER BY large_id");
               while(rs.next()){
               %>
-                <button type="submit" class="btn btn-default" name="large_id" value ='<%=rs.getString("large_id")%>'><%=rs.getString("large")%></button>
+                <button type="submit" <%if(large_id != null){if(large_id.equals(rs.getString("large_id"))){%>class="btn btn-default active"<%}else{%>class="btn btn-default"<%}}else{%>class="btn btn-default"<%}%> name="large_id" value ='<%=rs.getString("large_id")%>'><%=rs.getString("large")%></button>
               <%
               }
               rs.close();
