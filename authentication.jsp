@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	import="java.sql.*,java.text.*"
+	import="java.sql.*,java.text.*, javax.naming.*, javax.sql.*"
     pageEncoding="utf-8"%>
 
 <%
@@ -10,8 +10,9 @@ String pass = request.getParameter("pass");
 pass = pass == null ? "" : pass;
 String securePass = "HASHBYTES('SHA2_256', '" + pass + "')";
 
-Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-Connection db=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Library_DB;integratedSecurity=false;user=sa;password=P@ssw0rd;");
+Context context = new InitialContext();
+DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/bookon");
+Connection db = ds.getConnection();
 db.setReadOnly(true);
 /*
 String query = "SELECT id, email, password FROM user_data WHERE email = ? AND password = ?"; 

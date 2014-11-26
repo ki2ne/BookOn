@@ -52,10 +52,6 @@
   </head>
   <body>
     <%
-      String ip_address = "localhost";
-      String db_name = "Library_DB";
-      String user = "sa";
-      String password = "P@ssw0rd";
       String enable_pub_name = request.getParameter("enable_pub_name");
       String pub_name = request.getParameter("pub_name");
       String name = request.getParameter("name");
@@ -225,7 +221,6 @@
               }
               rs.close();
               objSql.close();
-              db.close();
               %>
             </div>
           </div>
@@ -235,8 +230,7 @@
                 <input type="radio" autocomplete="off">中分類
               </label>
               <%
-              Connection db2 = ds.getConnection();
-              Statement objSql2=db2.createStatement();
+              Statement objSql2=db.createStatement();
               String middle_query = "SELECT DISTINCT middle_id, middle FROM group_master WHERE large_id = ";
               if(large_id != null)
               {
@@ -256,7 +250,6 @@
               }
               rs2.close();
               objSql2.close();
-              db2.close();
               %>
             </div>
           </div>
@@ -266,9 +259,7 @@
                 <input type="radio" autocomplete="off">小分類
               </label>
               <%
-                Connection db3 = ds.getConnection();
-                db3.setReadOnly(true);
-                Statement objSql3=db3.createStatement();
+                Statement objSql3=db.createStatement();
                 String small_query = "SELECT DISTINCT small_id, small FROM group_master WHERE large_id = ";
                 if(large_id != null)
                 {
@@ -296,7 +287,6 @@
               }
               rs3.close();
               objSql3.close();
-              db3.close();
               %>
             </div>
           </div>
@@ -311,9 +301,7 @@
             </div>
             <select id="pub_name" name="pub_name" size ="14" class="form-control">
               <%
-                Connection db4 = ds.getConnection();
-                db4.setReadOnly(true);
-                Statement objSql4=db4.createStatement();
+                Statement objSql4=db.createStatement();
                 ResultSet rs4=objSql4.executeQuery("SELECT DISTINCT pub_name FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id");
                 while(rs4.next()){
               %>
@@ -322,7 +310,6 @@
               }
               rs4.close();
               objSql4.close();
-              db4.close();
               %>
             </select>
           </div>
@@ -367,9 +354,7 @@
             <div class="btn-group-vertical btn-block">
               <button type="submit" class="btn btn-default btn-block"><%if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")){%><%=session.getAttribute("last_name")%> <%=session.getAttribute("first_name")%> さん<%}else{%>全体<%}%></button>
               <%
-              Connection db7 = ds.getConnection();
-              db7.setReadOnly(true);
-              Statement objSql7=db7.createStatement();
+              Statement objSql7=db.createStatement();
               String countQuery = "SELECT COUNT(*) AS number FROM item_state WHERE return_date IS NULL";
               if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true"))
                 {
@@ -384,7 +369,7 @@
               rs7.close();
               objSql7.close();
 
-              Statement objSql8=db7.createStatement();
+              Statement objSql8=db.createStatement();
               String overdueQuery = "SELECT COUNT(*) AS number FROM item_state WHERE return_date IS NULL AND estimate_return_date < DATEDIFF(day, 1, GETDATE())";
               if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true"))
                 {
@@ -396,7 +381,6 @@
               <button type="submit" class="btn btn-default btn-block">貸出期限超過 <span class="badge pull-right"><%=rs8.getInt("number")%></span></button>
               <%
               }
-              db7.close();
               %>
             </div>
           </form>
@@ -461,9 +445,7 @@
               query += (" AND books_data.bk_id LIKE '__" + small_id + "%'");
             }
 
-              Connection db5 = ds.getConnection();
-              db5.setReadOnly(true);
-              Statement objSql5=db5.createStatement();
+              Statement objSql5=db.createStatement();
               ResultSet rs5=objSql5.executeQuery(query);
               while(rs5.next()){
             %>
@@ -481,7 +463,7 @@
             }
             rs5.close();
             objSql5.close();
-            db5.close();
+            db.close();
             %>
           </table>
         </form>

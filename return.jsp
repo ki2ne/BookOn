@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html; charset=utf-8" %>
-<%@ page import="java.util.Date,java.sql.*,java.text.*" %>
+<%@ page import="java.util.Date,java.sql.*,java.text.*, javax.naming.*, javax.sql.*" %>
 <%
   request.setCharacterEncoding("Windows-31J");
   response.setCharacterEncoding("Windows-31J");
@@ -34,16 +34,13 @@
   </head>
   <body>
     <%
-      String ip_address = "localhost";
-      String db_name = "Library_DB";
-      String user = "sa";
-      String password = "P@ssw0rd";
       String email = request.getParameter("email");
       String login_pass = request.getParameter("password");
 
       if((email != null || email != "") && (login_pass != null || login_pass != "")){
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        Connection db=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
+        Context context = new InitialContext();
+        DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/bookon");
+        Connection db = ds.getConnection();
         db.setReadOnly(true);
         Statement objSql=db.createStatement();
         String login_query = ("SELECT * FROM user_data WHERE email = '" + email + "' AND password = HASHBYTES('SHA2_256', '" + login_pass + "')");
@@ -122,10 +119,11 @@
           <div class="btn-group-vertical btn-block">
             <button type="submit" class="btn btn-default btn-block"><%if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")){%><%=session.getAttribute("last_name")%> <%=session.getAttribute("first_name")%> さん<%}else{%>全体<%}%></button>
             <%
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection db7=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
-            db7.setReadOnly(true);
-            Statement objSql7=db7.createStatement();
+            Context context = new InitialContext();
+            DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/bookon");
+            Connection db = ds.getConnection();
+            db.setReadOnly(true);
+            Statement objSql7=db.createStatement();
             String countQuery = "SELECT COUNT(*) AS number FROM item_state WHERE return_date IS NULL";
             if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true"))
               {
@@ -140,7 +138,7 @@
             rs7.close();
             objSql7.close();
 
-            Statement objSql8=db7.createStatement();
+            Statement objSql8=db.createStatement();
             String overdueQuery = "SELECT COUNT(*) AS number FROM item_state WHERE return_date IS NULL AND estimate_return_date < DATEDIFF(day, 1, GETDATE())";
             if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true"))
               {
@@ -152,7 +150,6 @@
             <button type="submit" class="btn btn-default btn-block">貸出期限超過 <span class="badge pull-right"><%=rs8.getInt("number")%></span></button>
             <%
             }
-            db7.close();
             %>
           </div>
           <%if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")){%>
@@ -189,10 +186,7 @@
                   query += " AND id = '" + session.getAttribute("id") + "'";
                 }
 
-              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection db2=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
-                db2.setReadOnly(true);
-                Statement objSql2=db2.createStatement();
+                Statement objSql2=db.createStatement();
                 ResultSet rs2=objSql2.executeQuery(query);
                 while(rs2.next()){
               %>
@@ -214,7 +208,6 @@
               }
               rs2.close();
               objSql2.close();
-              db2.close();
               %>
             </table>
           </form>
@@ -246,10 +239,7 @@
                   query += " AND id = '" + session.getAttribute("id") + "'";
                 }
 
-              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                Connection db3=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
-                db3.setReadOnly(true);
-                Statement objSql3=db3.createStatement();
+                Statement objSql3=db.createStatement();
                 ResultSet rs3=objSql3.executeQuery(overdue_query);
                 while(rs3.next()){
               %>
@@ -264,7 +254,7 @@
               }
               rs3.close();
               objSql3.close();
-              db3.close();
+              db.close();
               %>
             </table>
           </form>
