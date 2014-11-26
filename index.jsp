@@ -332,7 +332,7 @@
             <th>貸出状況</th>
           </tr>
           <%
-          String query = "SELECT books_data.bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price, jokyo = CASE WHEN lend_date IS NOT NULL AND return_date IS NULL THEN '貸出中' ELSE '貸出可' END FROM books_data LEFT OUTER JOIN item_state ON books_data.bk_id = item_state.bk_id, pub_master WHERE pub_master.pub_id = books_data.pub_id";
+          String query = "SELECT books_data.bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price, jokyo = CASE WHEN lend_date IS NOT NULL AND return_date IS NULL THEN 'false' ELSE 'true' END FROM books_data LEFT OUTER JOIN item_state ON books_data.bk_id = item_state.bk_id, pub_master WHERE pub_master.pub_id = books_data.pub_id";
           if((pub_name != "") && (enable_pub_name != null))
           {
             query += (" AND pub_name = '" + pub_name + "'");
@@ -386,7 +386,7 @@
               <td><%=rs5.getDate("pub_date")%></td>
               <td><%=rs5.getString("isbn_no")%></td>
               <td><%=rs5.getInt("price")%></td>
-              <td><button type="button" class="btn btn-primary btn-lg btn-block"><%=rs5.getString("jokyo")%></button></td>
+              <td><%if(rs5.getString("jokyo").equals("true")){%><button type="button" class="btn btn-primary btn-lg btn-block">貸出可</button><%}else{%><button type="button" class="btn btn-danger btn-lg btn-block">貸出中</button><%}%></td>
             </tr>
           <%
           }
