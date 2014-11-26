@@ -46,7 +46,7 @@
       }
     }
 
-    document.forms['formName'].submit();
+    document.forms['search_form'].submit();
   }
   </script>
   </head>
@@ -146,7 +146,7 @@
 
     <div class="container">
       <div class="row">
-        <form class="form" name="formName" role="form" action="#">
+        <form class="form" name="search_form" role="form" action="#">
           <div class="col-sm-2" style="background:white;">
             <div class="btn-group-vertical btn-block" data-toggle="buttons">
               <label class="btn btn-primary">
@@ -354,7 +354,7 @@
     <div class="container">
       <div class="panel panel-default">
         <!-- Default panel contents -->
-        <form class="form" name="bookTable" role="form" action="./lend.jsp">
+        <form class="form" name="book_table" role="form" action="./lend.jsp">
           <div class="panel-heading">検索結果</div>
 
           <!-- Table -->

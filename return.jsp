@@ -117,106 +117,152 @@
     </div>
 
     <div class="container">
-      <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <form class="form" name="lend" role="form" action="./lend.jsp">
-          <div class="panel-heading">貸出中書籍</div>
-
-          <!-- Table -->
-          <table class="table">
-            <tr>
-              <th>#</th>
-              <th>
-                <div class="checkbox">
-                    <input type="checkbox" name="select_return" value="all" onClick="toggleAll(this)">
-                </div>
-              </th>
-              <th>書籍名</th>
-              <th>出版社</th>
-              <th>貸出日</th>
-              <th>返却予定日</th>
-            </tr>
+      <div class="col-sm-2" style="background:white;">
+        <form class="form" name="item_state_form" role="form" action="./return.jsp">
+          <div class="btn-group-vertical btn-block">
+            <button type="submit" class="btn btn-default btn-block"><%if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")){%><%=session.getAttribute("last_name")%> <%=session.getAttribute("first_name")%> さん<%}else{%>全体<%}%></button>
             <%
-            String query = "SELECT item_state.bk_id, bk_name, pub_name, lend_date, estimate_return_date FROM item_state INNER JOIN (SELECT bk_id, bk_name, pub_name FROM books_data bd INNER JOIN pub_master pm ON bd.pub_id = pm.pub_id) AS books_and_pub_data ON item_state.bk_id = books_and_pub_data.bk_id WHERE return_date IS NULL";
-            if(session.getAttribute("id") != null)
-              {
-                query += " AND id = '" + session.getAttribute("id") + "'";
-              }
-
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-              Connection db2=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
-              db2.setReadOnly(true);
-              Statement objSql2=db2.createStatement();
-              ResultSet rs2=objSql2.executeQuery(query);
-              while(rs2.next()){
+            Connection db7=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
+            db7.setReadOnly(true);
+            Statement objSql7=db7.createStatement();
+            String countQuery = "SELECT COUNT(*) AS number FROM item_state WHERE return_date IS NULL";
+            if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true"))
+              {
+                countQuery += " AND id = '" + session.getAttribute("id") + "'";
+              }
+            ResultSet rs7=objSql7.executeQuery(countQuery);
+            while(rs7.next()){
             %>
-              <tr>
-                <td><%=rs2.getString("bk_id")%></td>
-                <td>
-                  <div class="checkbox">
-                      <input type="checkbox" name="bk_id" value='<%=rs2.getString("bk_id")%>'>
-                  </div>
-                </td>
-                <td><%=rs2.getString("bk_name")%></td>
-                <td><%=rs2.getString("pub_name")%></td>
-                <td><%=rs2.getDate("lend_date")%></td>
-                <td><%=rs2.getDate("estimate_return_date")%></td>
-              </tr>
+              <button type="submit" class="btn btn-default btn-block">貸出中書籍 <span class="badge pull-right"><%=rs7.getInt("number")%></span></button>
             <%
             }
-            rs2.close();
-            objSql2.close();
-            db2.close();
+            rs7.close();
+            objSql7.close();
+
+            Statement objSql8=db7.createStatement();
+            String overdueQuery = "SELECT COUNT(*) AS number FROM item_state WHERE return_date IS NULL AND estimate_return_date < DATEDIFF(day, 1, GETDATE())";
+            if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true"))
+              {
+                overdueQuery += " AND id = '" + session.getAttribute("id") + "'";
+              }
+            ResultSet rs8=objSql8.executeQuery(overdueQuery);
+            while(rs8.next()){
             %>
-          </table>
+            <button type="submit" class="btn btn-default btn-block">貸出期限超過 <span class="badge pull-right"><%=rs8.getInt("number")%></span></button>
+            <%
+            }
+            db7.close();
+            %>
+          </div>
+          <button type="button" class="btn btn-danger btn-block">返却</button>
         </form>
+      </div>
+      <div class="col-sm-10" style="background:white;">
+        <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <form class="form" name="lend" role="form" action="./lend.jsp">
+            <div class="panel-heading">貸出中書籍</div>
+
+            <!-- Table -->
+            <table class="table">
+              <tr>
+                <th>#</th>
+                <th>
+                  <div class="checkbox">
+                      <input type="checkbox" onClick="toggleAll(this)">
+                  </div>
+                </th>
+                <th>書籍名</th>
+                <th>出版社</th>
+                <th>貸出日</th>
+                <th>返却予定日</th>
+              </tr>
+              <%
+              String query = "SELECT item_state.bk_id, bk_name, pub_name, lend_date, estimate_return_date FROM item_state INNER JOIN (SELECT bk_id, bk_name, pub_name FROM books_data bd INNER JOIN pub_master pm ON bd.pub_id = pm.pub_id) AS books_and_pub_data ON item_state.bk_id = books_and_pub_data.bk_id WHERE return_date IS NULL";
+              if(session.getAttribute("id") != null)
+                {
+                  query += " AND id = '" + session.getAttribute("id") + "'";
+                }
+
+              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection db2=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
+                db2.setReadOnly(true);
+                Statement objSql2=db2.createStatement();
+                ResultSet rs2=objSql2.executeQuery(query);
+                while(rs2.next()){
+              %>
+                <tr>
+                  <td><%=rs2.getString("bk_id")%></td>
+                  <td>
+                    <div class="checkbox">
+                        <input type="checkbox" name="bk_id" value='<%=rs2.getString("bk_id")%>'>
+                    </div>
+                  </td>
+                  <td><%=rs2.getString("bk_name")%></td>
+                  <td><%=rs2.getString("pub_name")%></td>
+                  <td><%=rs2.getDate("lend_date")%></td>
+                  <td><%=rs2.getDate("estimate_return_date")%></td>
+                </tr>
+              <%
+              }
+              rs2.close();
+              objSql2.close();
+              db2.close();
+              %>
+            </table>
+          </form>
+        </div>
       </div>
     </div>
 
     <div class="container">
-      <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <form class="form" name="overdue" role="form" action="./lend.jsp">
-          <div class="panel-heading">貸出期限超過書籍</div>
+      <div class="col-sm-2" style="background:white;"></div>
+      <div class="col-sm-10" style="background:white;">
+        <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <form class="form" name="overdue" role="form" action="./lend.jsp">
+            <div class="panel-heading">貸出期限超過書籍</div>
 
-          <!-- Table -->
-          <table class="table">
-            <tr>
-              <th>#</th>
-              <th>書籍名</th>
-              <th>出版社</th>
-              <th>貸出日</th>
-              <th>返却予定日</th>
-            </tr>
-            <%
-            String overdue_query = "SELECT item_state.bk_id, bk_name, pub_name, lend_date, estimate_return_date FROM item_state INNER JOIN (SELECT bk_id, bk_name, pub_name FROM books_data bd INNER JOIN pub_master pm ON bd.pub_id = pm.pub_id) AS books_and_pub_data ON item_state.bk_id = books_and_pub_data.bk_id WHERE return_date IS NULL　AND estimate_return_date < DATEDIFF(day, 1, GETDATE())";
-            if(session.getAttribute("id") != null)
-              {
-                query += " AND id = '" + session.getAttribute("id") + "'";
-              }
-
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-              Connection db3=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
-              db3.setReadOnly(true);
-              Statement objSql3=db3.createStatement();
-              ResultSet rs3=objSql3.executeQuery(overdue_query);
-              while(rs3.next()){
-            %>
+            <!-- Table -->
+            <table class="table">
               <tr>
-                <td><%=rs3.getString("bk_id")%></td>
-                <td><%=rs3.getString("bk_name")%></td>
-                <td><%=rs3.getString("pub_name")%></td>
-                <td><%=rs3.getDate("lend_date")%></td>
-                <td><%=rs3.getDate("estimate_return_date")%></td>
+                <th>#</th>
+                <th>書籍名</th>
+                <th>出版社</th>
+                <th>貸出日</th>
+                <th>返却予定日</th>
               </tr>
-            <%
-            }
-            rs3.close();
-            objSql3.close();
-            db3.close();
-            %>
-          </table>
-        </form>
+              <%
+              String overdue_query = "SELECT item_state.bk_id, bk_name, pub_name, lend_date, estimate_return_date FROM item_state INNER JOIN (SELECT bk_id, bk_name, pub_name FROM books_data bd INNER JOIN pub_master pm ON bd.pub_id = pm.pub_id) AS books_and_pub_data ON item_state.bk_id = books_and_pub_data.bk_id WHERE return_date IS NULL　AND estimate_return_date < DATEDIFF(day, 1, GETDATE())";
+              if(session.getAttribute("id") != null)
+                {
+                  query += " AND id = '" + session.getAttribute("id") + "'";
+                }
+
+              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection db3=DriverManager.getConnection("jdbc:sqlserver://" + ip_address + ":1433;databaseName=" + db_name + ";integratedSecurity=false;user=" + user + ";password=" + password + ";");
+                db3.setReadOnly(true);
+                Statement objSql3=db3.createStatement();
+                ResultSet rs3=objSql3.executeQuery(overdue_query);
+                while(rs3.next()){
+              %>
+                <tr>
+                  <td><%=rs3.getString("bk_id")%></td>
+                  <td><%=rs3.getString("bk_name")%></td>
+                  <td><%=rs3.getString("pub_name")%></td>
+                  <td><%=rs3.getDate("lend_date")%></td>
+                  <td><%=rs3.getDate("estimate_return_date")%></td>
+                </tr>
+              <%
+              }
+              rs3.close();
+              objSql3.close();
+              db3.close();
+              %>
+            </table>
+          </form>
+        </div>
       </div>
     </div>
 
