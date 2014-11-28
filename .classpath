@@ -8,5 +8,8 @@
 	<classpathentry kind="var" path="TOMCAT_HOME/lib/annotations-api.jar"/>
 	<classpathentry kind="src" path="WEB-INF/src"/>
 	<classpathentry kind="src" output="work" path="work"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/bcprov-jdk15on-1.48.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/itext-asian.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/itextpdf-5.5.3.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>

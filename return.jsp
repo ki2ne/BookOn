@@ -102,7 +102,7 @@
               <ul class="nav navbar-nav navbar-right">
                   <li><a href="#"><%=session.getAttribute("email")%></a></li>
                   <li>
-                      <form class="navbar-form navbar-right" role="form" method="post" action="sign_out.jsp">
+                      <form class="navbar-form navbar-right" role="form" method="post" action="SignOut">
                       <button type="submit" class="btn btn-success">ログアウト</button>
                       </form>
                   </li>
@@ -159,7 +159,7 @@
       <div class="col-sm-10" style="background:white;">
         <div class="panel panel-default">
           <!-- Default panel contents -->
-          <form class="form" name="lend" role="form" action="./return_transaction.jsp">
+          <form class="form" name="lend" role="form" action="ReturnTransaction">
             <div class="panel-heading">貸出中書籍</div>
 
             <!-- Table -->

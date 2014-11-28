@@ -83,7 +83,7 @@
             <li><a href=""><%= new Date() %></a></li>
 		      </ul>
           <%if((session.getAttribute("login") == null) || !session.getAttribute("login").equals("true")){%>
-          <form class="navbar-form navbar-right" role="form" method="post" action="authentication.jsp">
+          <form class="navbar-form navbar-right" role="form" method="post" action="Authentication">
           <div class="form-group <%if (session.getAttribute("login") != null &&
       !session.getAttribute("login").equals("true")){%>has-error has-feedback<%}%>">
           <input type="text" name='email' placeholder="Email" class="form-control">
@@ -109,7 +109,7 @@
           <ul class="nav navbar-nav navbar-right">
               <li><a href="#"><%=session.getAttribute("email")%></a></li>
               <li>
-                  <form class="navbar-form navbar-right" role="form" method="post" action="sign_out.jsp">
+                  <form class="navbar-form navbar-right" role="form" method="post" action="SignOut">
                   <button type="submit" class="btn btn-success">ログアウト</button>
                   </form>
               </li>
@@ -122,7 +122,7 @@
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <form class="form-horizontal register_form" method="POST" name="register_form" role="form" action="./register_transaction.jsp">
+        <form class="form-horizontal register_form" method="POST" name="register_form" role="form" action="RegisterTransaction">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -367,7 +367,7 @@
     <div class="container">
       <div class="panel panel-default">
         <!-- Default panel contents -->
-        <form class="form" name="book_table" role="form" action="./lend_transaction.jsp">
+        <form class="form" name="book_table" role="form" action="LendTransaction">
           <div class="panel-heading">検索結果
             <div class="form-group pull-right">
               <button type="button" name="pdf" class="btn btn-danger" onClick ="createPDF()">PDF</button>
