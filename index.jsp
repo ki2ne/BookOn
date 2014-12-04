@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page import="java.util.Date,java.sql.*,java.text.*, javax.naming.*, javax.sql.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
   request.setCharacterEncoding("Windows-31J");
   response.setCharacterEncoding("Windows-31J");
@@ -162,7 +164,6 @@
                     <input type="password" class="form-control" name="confirm_register_password" placeholder="Password">
                   </div>
                 </div>
-              </form>
             </div>
             <div class="modal-footer">
               <button type="submit" class="btn btn-success" name="register">登録</button>
@@ -175,29 +176,77 @@
 
     <div class="container">
       <div class="row">
-        <form class="form search_form" name="search_form" role="form" action="#">
+        <form class="form search_form" name="search_form" role="form" action="Large">
           <div class="col-sm-2" style="background:white;">
             <div class="btn-group-vertical btn-block" data-toggle="buttons">
               <label class="btn btn-primary">
                 <input type="radio" autocomplete="off">大分類
               </label>
-              <%
-              Context context = new InitialContext();
-              DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/bookon");
-              Connection db = ds.getConnection();
-              db.setReadOnly(true);
-              Statement objSql=db.createStatement();
-              ResultSet rs=objSql.executeQuery("SELECT DISTINCT large_id, large FROM group_master ORDER BY large_id");
-              while(rs.next()){
-              %>
-                <label <%if(large_id != null){if(large_id.equals(rs.getString("large_id"))){%>class="btn btn-default active"<%}else{%>class="btn btn-default"<%}}else{%>class="btn btn-default"<%}%>>
-                  <input type="radio" name="large_id" value ='<%=rs.getString("large_id")%>' autocomplete="off" <%if(large_id != null){if(large_id.equals(rs.getString("large_id"))){%>checked<%}}%> onChange="wrapperSubmit(this)"><%=rs.getString("large")%>
-                </label>
-              <%
-              }
-              rs.close();
-              objSql.close();
-              %>
+              <c:forEach var="item" items="${requestScope['list']}">
+              	<c:choose>
+					<c:when test="${param.large_id != null}">
+						<c:choose>
+							<c:when test="${param.large_id == item.id}">
+								<label class="btn btn-default active">
+									 <c:choose>
+										<c:when test="${param.large_id != null}">
+											<c:choose>
+												<c:when test="${param.large_id == item.id}">
+													<input type="radio" name="large_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)" checked>${fn:escapeXml(item.classification)}
+												</c:when>
+												<c:otherwise>
+													<input type="radio" name="large_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
+												</c:otherwise>
+											</c:choose>
+										</c:when>
+										<c:otherwise>
+											<input type="radio" name="large_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
+										</c:otherwise>
+									</c:choose>
+								</label>
+							</c:when>
+							<c:otherwise>
+								<label class="btn btn-default">
+									<c:choose>
+										<c:when test="${param.large_id != null}">
+											<c:choose>
+												<c:when test="${param.large_id == item.id}">
+													<input type="radio" name="large_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)" checked>${fn:escapeXml(item.classification)}
+												</c:when>
+												<c:otherwise>
+													<input type="radio" name="large_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
+												</c:otherwise>
+											</c:choose>
+										</c:when>
+										<c:otherwise>
+											<input type="radio" name="large_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
+										</c:otherwise>
+									</c:choose>
+								</label>
+							</c:otherwise>
+						</c:choose>
+					</c:when>
+					<c:otherwise>
+						<label class="btn btn-default">
+							<c:choose>
+								<c:when test="${param.large_id != null}">
+									<c:choose>
+										<c:when test="${param.large_id == item.id}">
+											<input type="radio" name="large_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)" checked>${fn:escapeXml(item.classification)}
+										</c:when>
+										<c:otherwise>
+											<input type="radio" name="large_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:otherwise>
+									<input type="radio" name="large_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
+								</c:otherwise>
+							</c:choose>
+						</label>
+					</c:otherwise>
+				</c:choose>
+              </c:forEach>
             </div>
           </div>
           <div class="col-sm-2" style="background:white;">
@@ -206,6 +255,9 @@
                 <input type="radio" autocomplete="off">中分類
               </label>
               <%
+              Context context = new InitialContext();
+              DataSource ds = (DataSource) context.lookup("java:comp/env/jdbc/bookon");
+  			  Connection db = ds.getConnection();
               Statement objSql2=db.createStatement();
               String middle_query = "SELECT DISTINCT middle_id, middle FROM group_master WHERE large_id = ";
               if(large_id != null)

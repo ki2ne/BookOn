@@ -51,6 +51,22 @@
 			<servlet-name>SignOut</servlet-name>
 			<url-pattern>/SignOut</url-pattern>
 	</servlet-mapping>
+	<servlet>
+			<servlet-name>Large</servlet-name>
+			<servlet-class>Large</servlet-class>
+	</servlet>
+	<servlet-mapping>
+			<servlet-name>Large</servlet-name>
+			<url-pattern>/Large</url-pattern>
+	</servlet-mapping>
+	<servlet>
+			<servlet-name>LargeClassification</servlet-name>
+			<servlet-class>LargeClassification</servlet-class>
+	</servlet>
+	<servlet-mapping>
+			<servlet-name>LargeClassification</servlet-name>
+			<url-pattern>/LargeClassification</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

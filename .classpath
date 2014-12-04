@@ -11,5 +11,7 @@
 	<classpathentry kind="lib" path="WEB-INF/lib/bcprov-jdk15on-1.48.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/itext-asian.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/itextpdf-5.5.3.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/javax.servlet.jsp.jstl-1.2.1.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/javax.servlet.jsp.jstl-api-1.2.1.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>
