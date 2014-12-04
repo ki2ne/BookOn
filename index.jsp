@@ -271,8 +271,14 @@
             <div class="form-group">
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" name="enable_pub_name" value="enable" <%if (enable_pub_name != null){%>checked<%}%>>
-                  出版社
+                	<c:choose>
+                		<c:when test="${param.enable_pub_name != null}">
+                			<input type="checkbox" name="enable_pub_name" value="enable" checked>出版社
+                		</c:when>
+                		<c:otherwise>
+                			<input type="checkbox" name="enable_pub_name" value="enable">出版社
+                		</c:otherwise>
+            		</c:choose>
                 </label>
               </div>
             </div>
