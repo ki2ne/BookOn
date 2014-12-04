@@ -43,7 +43,7 @@ public class CreatePDF extends HttpServlet {
 			PdfPTable tbl = new PdfPTable(7);
 			int[] ws = {6, 29, 20, 15, 10, 13, 7};
 			tbl.setWidths(ws);
-			String[] headers = {"#", "書籍名", "著者", "出版社", "発行年", "ISBN", "価格"};
+			String[] headers = {"ﾂ�", "譖ｸ邀榊錐", "闡苓�", "蜃ｺ迚育､ｾ", "逋ｺ陦悟ｹｴ", "ISBN", "萓｡譬ｼ"};
 			for(int i = 0; i < headers.length; i++) {
 				PdfPCell c = new PdfPCell(new Phrase(headers[i],fTitle));	
 				c.setHorizontalAlignment(PdfPTable.ALIGN_CENTER);

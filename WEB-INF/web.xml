@@ -52,12 +52,12 @@
 			<url-pattern>/SignOut</url-pattern>
 	</servlet-mapping>
 	<servlet>
-			<servlet-name>Large</servlet-name>
-			<servlet-class>Large</servlet-class>
+			<servlet-name>SearchBooks</servlet-name>
+			<servlet-class>SearchBooks</servlet-class>
 	</servlet>
 	<servlet-mapping>
-			<servlet-name>Large</servlet-name>
-			<url-pattern>/Large</url-pattern>
+			<servlet-name>SearchBooks</servlet-name>
+			<url-pattern>/SearchBooks</url-pattern>
 	</servlet-mapping>
 	<servlet>
 			<servlet-name>LargeClassification</servlet-name>

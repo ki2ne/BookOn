@@ -3,6 +3,6 @@
 	<Resource name="jdbc/bookon" auth="Container"
 		 type="javax.sql.DataSource" username="sa" password="P@ssw0rd"
 		 driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		 url="jdbc:sqlserver://localhost:1433;databaseName=Library_DB;" maxActive="4" maxWait="5000" maxIdle="2"
+		 url="jdbc:sqlserver://192.168.10.122:1433;databaseName=Library_DB;" maxActive="4" maxWait="5000" maxIdle="2"
 		 validationQuery="SELECT COUNT(*) FROM user_data" />
 </Context>

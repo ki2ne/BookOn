@@ -8,30 +8,23 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-public class LargeClassification implements Serializable {
 
-	private String id;
-	private String classification;
+public class Publisher implements Serializable {
+	
 
-	public String getId() {
-		return id;
+	private String name;
+	
+	public String getName() {
+		return name;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getClassification() {
-		return classification;
-	}
+	public static ArrayList<Publisher> getInfos() {
 
-	public void setClassification(String classification) {
-		this.classification = classification;
-	}
-
-	public static ArrayList<LargeClassification> getInfos() {
-
-		ArrayList<LargeClassification> list = new ArrayList<LargeClassification>();
+		ArrayList<Publisher> list = new ArrayList<Publisher>();
 		DataSource ds = null;
 		Connection db = null;
 		Statement stmt = null;
@@ -44,12 +37,11 @@ public class LargeClassification implements Serializable {
 			db.setReadOnly(true);
 			stmt = db.createStatement();
 			rs = stmt
-					.executeQuery("SELECT DISTINCT large_id, large FROM group_master ORDER BY large_id");
+					.executeQuery("SELECT DISTINCT pub_name FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id");
 			while (rs.next()) {
-				LargeClassification classification = new LargeClassification();
-				classification.setId(rs.getString("large_id"));
-				classification.setClassification(rs.getString("large"));
-				list.add(classification);
+				Publisher publisher = new Publisher();
+				publisher.setName(rs.getString("pub_name"));
+				list.add(publisher);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,4 +61,5 @@ public class LargeClassification implements Serializable {
 		}
 		return list;
 	}
+
 }

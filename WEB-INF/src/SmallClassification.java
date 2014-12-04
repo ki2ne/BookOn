@@ -9,7 +9,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 
-public class MiddleClassification implements Serializable {
+public class SmallClassification implements Serializable {
 
 	private String id;
 	private String classification;
@@ -30,9 +30,9 @@ public class MiddleClassification implements Serializable {
 		this.classification = classification;
 	}
 
-	public static ArrayList<MiddleClassification> getInfos(String large_id) {
+	public static ArrayList<SmallClassification> getInfos(String large_id, String middle_id) {
 
-		ArrayList<MiddleClassification> list = new ArrayList<MiddleClassification>();
+		ArrayList<SmallClassification> list = new ArrayList<SmallClassification>();
 		DataSource ds = null;
 		Connection db = null;
 		Statement stmt = null;
@@ -44,21 +44,29 @@ public class MiddleClassification implements Serializable {
 			db = ds.getConnection();
 			db.setReadOnly(true);
 			stmt = db.createStatement();
-			String middleQuery = "SELECT DISTINCT middle_id, middle FROM group_master WHERE large_id = ";
+			String smallQuery = "SELECT DISTINCT small_id, small FROM group_master WHERE large_id = ";
 			if(large_id != null)
             {
-              middleQuery += large_id;
+              smallQuery += large_id;
             }
             else
             {
-              middleQuery += "1";
+              smallQuery += "1";
+            }
+            if(middle_id != null)
+            {
+              smallQuery += (" AND middle_id = " + middle_id);
+            }
+            else
+            {
+              smallQuery += " AND middle_id = 1";
             }
 			rs = stmt
-					.executeQuery(middleQuery);
+					.executeQuery(smallQuery);
 			while (rs.next()) {
-				MiddleClassification classification = new MiddleClassification();
-				classification.setId(rs.getString("middle_id"));
-				classification.setClassification(rs.getString("middle"));
+				SmallClassification classification = new SmallClassification();
+				classification.setId(rs.getString("small_id"));
+				classification.setClassification(rs.getString("small"));
 				list.add(classification);
 			}
 		} catch (Exception e) {
