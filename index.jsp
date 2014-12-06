@@ -88,39 +88,46 @@
 		    		<li><a href="">contact</a></li>
             <li><a href=""><%= new Date() %></a></li>
 		      </ul>
-          <%if((session.getAttribute("login") == null) || !session.getAttribute("login").equals("true")){%>
-          <form class="navbar-form navbar-right" role="form" method="post" action="Authentication">
-          <div class="form-group <%if (session.getAttribute("login") != null &&
-      !session.getAttribute("login").equals("true")){%>has-error has-feedback<%}%>">
-          <input type="text" name='email' placeholder="Email" class="form-control">
-          <%if (session.getAttribute("login") != null &&
-              !session.getAttribute("login").equals("true")){%>
-              <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-              <%}%>
-          </div>
-          <div class="form-group <%if (session.getAttribute("login") != null &&
-      !session.getAttribute("login").equals("true")){%>has-error has-feedback<%}%>">
-            <input type="password" name='pass' placeholder="Password" class="form-control">
-            <%if (session.getAttribute("login") != null &&
-              !session.getAttribute("login").equals("true")){%>
-              <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-              <%}%>
-          </div>
-          <button type="submit" class="btn btn-success">ログイン</button>
-          <!-- Button trigger modal -->
-          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">登録
-          </button>
-          </form>
-          <%}else{%>
-          <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"><%=session.getAttribute("email")%></a></li>
-              <li>
-                  <form class="navbar-form navbar-right" role="form" method="post" action="SignOut">
-                  <button type="submit" class="btn btn-success">ログアウト</button>
-                  </form>
-              </li>
-          </ul>
-          <%}%>
+          <c:choose>
+			<c:when test="${sessionScope.login == null || sessionScope.login != 'true'}">
+				<form class="navbar-form navbar-right" role="form" method="post" action="Authentication">
+				<c:choose>
+					<c:when test="${sessionScope.login != null}">
+						<div class="form-group has-error has-feedback">
+							<input type="text" name='email' placeholder="Email" class="form-control">
+							<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+						</div>
+						<div class="form-group has-error has-feedback">
+							<input type="password" name='pass' placeholder="Password" class="form-control">
+							<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="form-group">
+							<input type="text" name='email' placeholder="Email" class="form-control">
+						</div>
+						<div class="form-group">
+							<input type="password" name='pass' placeholder="Password" class="form-control">
+						</div>
+					</c:otherwise>
+				</c:choose>
+							<button type="submit" class="btn btn-success">ログイン</button>
+          					<!-- Button trigger modal -->
+          					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">登録
+          					</button>
+          				</form>
+			</c:when>
+			<c:otherwise>
+				<ul class="nav navbar-nav navbar-right">
+        			<li><a href="#">${fn:escapeXml(sessionScope.email)}</a></li>
+            		<li>
+                		<form class="navbar-form navbar-right" role="form" method="post" action="SignOut">
+                		<button type="submit" class="btn btn-success">ログアウト</button>
+                		</form>
+            		</li>
+        		</ul>
+    		</c:otherwise>
+		</c:choose>
         </div><!--/.navbar-collapse -->
       </div>
     </div>
