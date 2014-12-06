@@ -42,6 +42,10 @@
       String small_id = request.getParameter("small_id");
       String email = request.getParameter("email");
       String login_pass = request.getParameter("password");
+      
+      session.setAttribute("large_id", large_id);
+      session.setAttribute("middle_id", middle_id);
+      session.setAttribute("small_id", small_id);
 
       if((email != null || email != "") && (login_pass != null || login_pass != "")){
         Context context = new InitialContext();
@@ -403,70 +407,39 @@
               <th>価格</th>
               <th>貸出状況</th>
             </tr>
-            <%
-            String query = "SELECT books_data.bk_id, bk_name, writer, pub_name, pub_date, isbn_no, price, state = CASE WHEN lend_date IS NOT NULL AND return_date IS NULL THEN 'false' ELSE 'true' END FROM books_data LEFT OUTER JOIN item_state ON books_data.bk_id = item_state.bk_id, pub_master WHERE pub_master.pub_id = books_data.pub_id";
-            if((pub_name != "") && (enable_pub_name != null))
-            {
-              query += (" AND pub_name = '" + pub_name + "'");
-            }
-            if(name != null && name !="")
-            {
-              query += (" AND bk_name LIKE '%" + name + "%'");
-            }
-            if(writer != null && writer !="")
-            {
-              query += (" AND writer LIKE '%" + writer + "%'");
-            }
-            if(isbn != null && isbn !="")
-            {
-              query += (" AND isbn_no = '" + isbn + "'");
-            }
-            if(below_price != null && below_price !="")
-            {
-              query += (" AND price <= " + below_price);
-            }
-            if(above_price != null && above_price !="")
-            {
-              query += (" AND price >= " + above_price);
-            }
-            if(large_id != null && large_id !="")
-            {
-              query += (" AND books_data.bk_id LIKE '" + large_id + "%'");
-            }
-            if(middle_id != null && middle_id !="")
-            {
-              query += (" AND books_data.bk_id LIKE '_" + middle_id + "%'");
-            }
-            if(small_id != null && small_id !="")
-            {
-              query += (" AND books_data.bk_id LIKE '__" + small_id + "%'");
-            }
-              session.setAttribute("large_id", large_id);
-              session.setAttribute("middle_id", middle_id);
-              session.setAttribute("small_id", small_id);
-              session.setAttribute("search_query", query);
-              Statement objSql5=db.createStatement();
-              ResultSet rs5=objSql5.executeQuery(query);
-              while(rs5.next()){
-            %>
+            <c:forEach var="item" items="${requestScope['list5']}">
               <tr>
-                <td><%=rs5.getString("bk_id")%></td>
-                <td><%=rs5.getString("bk_name")%></td>
-                <td><%=rs5.getString("writer")%></td>
-                <td><%=rs5.getString("pub_name")%></td>
-                <td><%=rs5.getDate("pub_date")%></td>
-                <td><%=rs5.getString("isbn_no")%></td>
-                <td><%=rs5.getInt("price")%></td>
-                <td><%if(rs5.getString("state").equals("true")){%><button type="submit" class="btn btn-primary btn-lg btn-block" <%if((session.getAttribute("login") == null) || !session.getAttribute("login").equals("true")){%>disabled=disabled<%}%> name="bk_id" value="<%=rs5.getString("bk_id")%>" onClick="return confirm('<%=rs5.getString("bk_name")%>を借りますか？')">貸出可</button><%}else{%><button type="button" class="btn btn-danger btn-lg btn-block">貸出中</button><%}%></td>
+                <td>${fn:escapeXml(item.id)}</td>
+                <td>${fn:escapeXml(item.name)}</td>
+                <td>${fn:escapeXml(item.author)}</td>
+                <td>${fn:escapeXml(item.publisher)}</td>
+                <td>${fn:escapeXml(item.publicationDate)}</td>
+                <td>${fn:escapeXml(item.isbn)}</td>
+                <td>${fn:escapeXml(item.price)}</td>
+                <td>
+                <c:choose>
+					<c:when test="${item.state == 'true'}">
+						<c:choose>
+							<c:when test="${sessionScope.login == null || sessionScope.login != 'true'}">
+								<button type="submit" class="btn btn-primary btn-lg btn-block" disabled=disabled>貸出可</button>
+							</c:when>
+							<c:otherwise>
+								<button type="submit" class="btn btn-primary btn-lg btn-block" name="bk_id" value="${item.id}" onClick="return confirm('${item.name}を借りますか？')">貸出可</button>
+							</c:otherwise>
+						</c:choose>
+					</c:when>
+					<c:otherwise>
+						<button type="button" class="btn btn-danger btn-lg btn-block">貸出中</button>
+					</c:otherwise>
+				</c:choose>
+                </td>
               </tr>
-            <%
-            }
-            rs5.close();
-            objSql5.close();
-            db.close();
-            %>
+            </c:forEach>
           </table>
         </form>
+        <%
+            db.close();
+        %>
       </div>
     </div>
 

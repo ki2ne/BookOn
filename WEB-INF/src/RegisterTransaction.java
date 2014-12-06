@@ -52,7 +52,7 @@ public class RegisterTransaction extends HttpServlet {
 				if (db != null) {
 					db.close();
 				}
-				response.sendRedirect("./index.jsp");
+				response.sendRedirect("SearchBooks");
 			} catch (Exception e) {
 			}
 		}
