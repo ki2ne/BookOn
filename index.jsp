@@ -3,6 +3,7 @@
 <%@ page import="java.util.Date,java.sql.*,java.text.*, javax.naming.*, javax.sql.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
   request.setCharacterEncoding("Windows-31J");
   response.setCharacterEncoding("Windows-31J");
@@ -42,6 +43,8 @@
       String small_id = request.getParameter("small_id");
       String email = request.getParameter("email");
       String login_pass = request.getParameter("password");
+      
+      pageContext.setAttribute("today", new Date());
       
       session.setAttribute("large_id", large_id);
       session.setAttribute("middle_id", middle_id);
@@ -86,7 +89,7 @@
           <ul class="nav navbar-nav">
 		    		<li><a href="">about</a></li>
 		    		<li><a href="">contact</a></li>
-            <li><a href=""><%= new Date() %></a></li>
+            <li><a href=""><fmt:formatDate value="${today}" type="DATE" dateStyle="FULL" /></a></li>
 		      </ul>
           <c:choose>
 			<c:when test="${sessionScope.login == null || sessionScope.login != 'true'}">
