@@ -201,19 +201,19 @@
 					<c:when test="${param.large_id != null}">
 						<c:choose>
 							<c:when test="${param.large_id == item.id}">
-								<label class="btn btn-default active">
+								<label class="btn btn-default ellipsis active">
 									<input type="radio" name="large_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)" checked>${fn:escapeXml(item.classification)}
 								</label>
 							</c:when>
 							<c:otherwise>
-								<label class="btn btn-default">
+								<label class="btn btn-default ellipsis">
 									<input type="radio" name="large_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
 								</label>
 							</c:otherwise>
 						</c:choose>
 					</c:when>
 					<c:otherwise>
-						<label class="btn btn-default">
+						<label class="btn btn-default ellipsis">
 							<input type="radio" name="large_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
 						</label>
 					</c:otherwise>
@@ -231,19 +231,19 @@
 					<c:when test="${param.middle_id != null}">
 						<c:choose>
 							<c:when test="${param.middle_id == item.id}">
-								<label class="btn btn-default active">
+								<label class="btn btn-default ellipsis active">
 									<input type="radio" name="middle_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)" checked>${fn:escapeXml(item.classification)}
 								</label>
 							</c:when>
 							<c:otherwise>
-								<label class="btn btn-default">
+								<label class="btn btn-default ellipsis">
 									<input type="radio" name="middle_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
 								</label>
 							</c:otherwise>
 						</c:choose>
 					</c:when>
 					<c:otherwise>
-						<label class="btn btn-default">
+						<label class="btn btn-default ellipsis">
 							<input type="radio" name="middle_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
 						</label>
 					</c:otherwise>
@@ -261,19 +261,19 @@
 					<c:when test="${param.small_id != null}">
 						<c:choose>
 							<c:when test="${param.small_id == item.id}">
-								<label class="btn btn-default active">
+								<label class="btn btn-default ellipsis active">
 									<input type="radio" name="small_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)" checked>${fn:escapeXml(item.classification)}
 								</label>
 							</c:when>
 							<c:otherwise>
-								<label class="btn btn-default">
+								<label class="btn btn-default ellipsis">
 									<input type="radio" name="small_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
 								</label>
 							</c:otherwise>
 						</c:choose>
 					</c:when>
 					<c:otherwise>
-						<label class="btn btn-default">
+						<label class="btn btn-default ellipsis">
 							<input type="radio" name="small_id" value ="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
 						</label>
 					</c:otherwise>
@@ -370,7 +370,7 @@
               ResultSet rs7=objSql7.executeQuery(countQuery);
               while(rs7.next()){
               %>
-                <button type="submit" class="btn btn-default btn-block">貸出中書籍 <span class="badge pull-right"><%=rs7.getInt("number")%></span></button>
+                <button type="submit" class="btn btn-default btn-block ellipsis">貸出中書籍 <span class="badge pull-right"><%=rs7.getInt("number")%></span></button>
               <%
               }
               rs7.close();
@@ -385,7 +385,7 @@
               ResultSet rs8=objSql8.executeQuery(overdueQuery);
               while(rs8.next()){
               %>
-              <button type="submit" class="btn btn-default btn-block">貸出期限超過 <span class="badge pull-right"><%=rs8.getInt("number")%></span></button>
+              <button type="submit" class="btn btn-default btn-block ellipsis">貸出期限超過 <span class="badge pull-right"><%=rs8.getInt("number")%></span></button>
               <%
               }
               %>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page import="java.util.Date,java.sql.*,java.text.*, javax.naming.*, javax.sql.*" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
   request.setCharacterEncoding("Windows-31J");
   response.setCharacterEncoding("Windows-31J");
@@ -36,6 +37,7 @@
     <%
       String email = request.getParameter("email");
       String login_pass = request.getParameter("password");
+      pageContext.setAttribute("today", new Date());
 
       if((email != null || email != "") && (login_pass != null || login_pass != "")){
         Context context = new InitialContext();
@@ -74,7 +76,7 @@
           <ul class="nav navbar-nav">
 		    		<li><a href="">about</a></li>
 		    		<li><a href="">contact</a></li>
-            <li><a href=""><%= new Date() %></a></li>
+            <li><a href=""><fmt:formatDate value="${today}" type="DATE" dateStyle="FULL" /></a></li>
 		      </ul>
         </div>
         <div id="navbar" class="navbar-collapse collapse">

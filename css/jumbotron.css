@@ -11,3 +11,9 @@ body {
 th {
 	white-space: nowrap;
 }
+
+.ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+ 	white-space: nowrap;
+}
