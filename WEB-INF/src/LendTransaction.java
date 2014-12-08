@@ -26,18 +26,23 @@ public class LendTransaction extends HttpServlet {
 		try {
 			String bk_id = request.getParameter("bk_id");
 			String id = (String) session.getAttribute("id");
-			String query = "INSERT INTO item_state (id, bk_id, lend_date, estimate_return_date) VALUES ('"
-					+ id
-					+ "', '"
-					+ bk_id
-					+ "', GETDATE(), DATEADD(day, 13, GETDATE()))";
+			String query = "IF"
+					+ " (SELECT COUNT(*) FROM item_state"
+					+ "	WHERE bk_id = '" + bk_id + "'"
+					+ "	AND estimate_return_date IS NOT NULL"
+					+ "	AND return_date IS NULL) = 0"
+					+ "		BEGIN"
+					+ "			INSERT INTO item_state (id, bk_id, lend_date, estimate_return_date)"
+					+ "			VALUES ('" + id + "', '" + bk_id + "', GETDATE(), DATEADD(day, 13, GETDATE()))"
+					+ "		END";
 			Context context = new InitialContext();
 			DataSource ds = (DataSource) context
 					.lookup("java:comp/env/jdbc/bookon");
 			db = ds.getConnection();
 			db.setReadOnly(true);
 			objSql = db.createStatement();
-			int num = objSql.executeUpdate(query);
+			int numberOfRows = objSql.executeUpdate(query);
+			session.setAttribute("resultOfLendTransaction", numberOfRows);
 		} catch (Exception e) {
 			throw new ServletException(e);
 		} finally {

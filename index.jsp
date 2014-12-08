@@ -90,6 +90,9 @@
 		    		<li><a href="">about</a></li>
 		    		<li><a href="">contact</a></li>
             <li><a href=""><fmt:formatDate value="${today}" type="DATE" dateStyle="FULL" /></a></li>
+            <c:if test="${sessionScope.resultOfLendTransaction != null && sessionScope.resultOfLendTransaction == -1}">
+            <li><a href="">ご指定の本は既に借りられています。</a></li>
+            </c:if>
 		      </ul>
           <c:choose>
 			<c:when test="${sessionScope.login == null || sessionScope.login != 'true'}">
@@ -447,11 +450,16 @@
             </c:forEach>
           </table>
         </form>
-        <%
-            db.close();
-        %>
+        <% db.close(); %>
       </div>
     </div>
+    
+    <c:if test="${sessionScope.resultOfLendTransaction != null && sessionScope.resultOfLendTransaction == -1}">
+    <script type="text/javascript">
+    alert("ご指定の本は既に借りられています。");
+    </script>
+    <% session.setAttribute("resultOfLendTransaction", 0); %>
+    </c:if>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
