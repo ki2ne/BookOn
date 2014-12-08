@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page import="java.util.Date,java.sql.*,java.text.*, javax.naming.*, javax.sql.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
   request.setCharacterEncoding("Windows-31J");
@@ -73,44 +75,57 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="SearchBooks">Book On</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 		    		<li><a href="">about</a></li>
 		    		<li><a href="">contact</a></li>
             <li><a href=""><fmt:formatDate value="${today}" type="DATE" dateStyle="FULL" /></a></li>
+            <c:if test="${sessionScope.resultOfLendTransaction != null && sessionScope.resultOfLendTransaction == -1}">
+            <li><a href="">ご指定の本は既に借りられています。</a></li>
+            </c:if>
 		      </ul>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-              <%if((session.getAttribute("login") == null) || !session.getAttribute("login").equals("true")){%>
-              <form class="navbar-form navbar-right" role="form" method="post" action="authentication.jsp">
-              <div class="form-group <%if (session.getAttribute("login") != null &&
-          !session.getAttribute("login").equals("true")){%>has-error has-feedback<%}%>">
-              <input type="text" name='email' placeholder="Email" class="form-control">
-              <%if (session.getAttribute("login") != null &&
-                  !session.getAttribute("login").equals("true")){%>
-                  <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-                  <%}%>
-              </div>
-              <div class="form-group <%if (session.getAttribute("login") != null &&
-          !session.getAttribute("login").equals("true")){%>has-error has-feedback<%}%>">
-                <input type="password" name='pass' placeholder="Password" class="form-control">
-                <%if (session.getAttribute("login") != null &&
-                  !session.getAttribute("login").equals("true")){%>
-                  <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-                  <%}%>
-              </div>
-              <button type="submit" class="btn btn-success">ログイン</button>
-              </form>
-              <%}else{%>
-              <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#"><%=session.getAttribute("email")%></a></li>
-                  <li>
-                      <form class="navbar-form navbar-right" role="form" method="post" action="SignOut">
-                      <button type="submit" class="btn btn-success">ログアウト</button>
-                      </form>
-                  </li>
-              </ul>
-              <%}%>
-          </div><!--/.navbar-collapse -->
+          <c:choose>
+			<c:when test="${sessionScope.login == null || sessionScope.login != 'true'}">
+				<form class="navbar-form navbar-right" role="form" method="post" action="Authentication">
+				<c:choose>
+					<c:when test="${sessionScope.login != null}">
+						<div class="form-group has-error has-feedback">
+							<input type="text" name='email' placeholder="Email" class="form-control">
+							<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+						</div>
+						<div class="form-group has-error has-feedback">
+							<input type="password" name='pass' placeholder="Password" class="form-control">
+							<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="form-group">
+							<input type="text" name='email' placeholder="Email" class="form-control">
+						</div>
+						<div class="form-group">
+							<input type="password" name='pass' placeholder="Password" class="form-control">
+						</div>
+					</c:otherwise>
+				</c:choose>
+							<button type="submit" class="btn btn-success">ログイン</button>
+          					<!-- Button trigger modal -->
+          					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">登録
+          					</button>
+          				</form>
+			</c:when>
+			<c:otherwise>
+				<ul class="nav navbar-nav navbar-right">
+        			<li><a href="#">${fn:escapeXml(sessionScope.email)}</a></li>
+            		<li>
+                		<form class="navbar-form navbar-right" role="form" method="post" action="SignOut">
+                		<button type="submit" class="btn btn-success">ログアウト</button>
+                		</form>
+            		</li>
+        		</ul>
+    		</c:otherwise>
+		</c:choose>
+        </div><!--/.navbar-collapse -->
       </div>
     </div>
 
