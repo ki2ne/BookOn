@@ -14,7 +14,14 @@ public class SearchBooks extends HttpServlet {
 
 		request.setCharacterEncoding("Windows-31J");
 		response.setCharacterEncoding("Windows-31J");
+		
+		System.out.println("Book On Start");
+		Runtime runtime = Runtime.getRuntime();
+		System.out.println("TotalMemory : " + (runtime.totalMemory() / 1024 / 1024) + "MB");
+		System.out.println("MemoryUsage : " + ((runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024) + "MB");
 
+		long startTime = System.currentTimeMillis();
+		
 		String large_id = request.getParameter("large_id");
 		String middle_id = request.getParameter("middle_id");
 		String small_id = request.getParameter("small_id");
@@ -44,6 +51,10 @@ public class SearchBooks extends HttpServlet {
 				small_id, enable_pub_name, pub_name, name, writer, isbn,
 				below_price, above_price);
 		request.setAttribute("list5", list5);
+		
+		long endTime = System.currentTimeMillis();
+		
+		System.out.println("RunTime : " + (endTime - startTime) + "ms");
 		
 		this.getServletContext().getRequestDispatcher("/index.jsp")
 				.forward(request, response);
