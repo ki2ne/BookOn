@@ -100,7 +100,35 @@ public class Result implements Serializable {
 			db = ds.getConnection();
 			db.setReadOnly(true);
 			stmt = db.createStatement();
-			String query = "SELECT DISTINCT books_data.bk_id, bk_name, writer, pub_name, CONVERT(NVARCHAR, pub_date, 111) AS pub_date, isbn_no, price, state = CASE WHEN lend_date IS NOT NULL AND return_date IS NULL THEN 'false' ELSE 'true' END FROM books_data LEFT OUTER JOIN (SELECT * FROM item_state  WHERE return_date IS NULL) AS item_state ON books_data.bk_id = item_state.bk_id, pub_master WHERE pub_master.pub_id = books_data.pub_id";
+			String query = "SELECT DISTINCT "
+			+ "  books_data.bk_id "
+			+ "  , bk_name "
+			+ "  , writer "
+			+ "  , pub_name "
+			+ "  , CONVERT(VARCHAR, pub_date, 111) AS pub_date "
+			+ "  , isbn_no "
+			+ "  , price "
+			+ "  , state = CASE "
+			+ "    WHEN lend_date IS NOT NULL "
+			+ "    AND return_date IS NULL "
+			+ "    THEN 'false' "
+			+ "    ELSE 'true' "
+			+ "    END "
+			+ "FROM "
+			+ "  books_data "
+			+ "  LEFT OUTER JOIN ( "
+			+ "    SELECT "
+			+ "      * "
+			+ "    FROM "
+			+ "      item_state "
+			+ "    WHERE "
+			+ "      return_date IS NULL "
+			+ "  ) AS item_state "
+			+ "    ON books_data.bk_id = item_state.bk_id "
+			+ "  , pub_master "
+			+ "WHERE "
+			+ "  pub_master.pub_id = books_data.pub_id ";
+			
 			if ((pub_name != "") && (enable_pub_name != null)) {
 				query += (" AND pub_name = '" + pub_name + "'");
 			}

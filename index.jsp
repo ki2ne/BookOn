@@ -50,29 +50,7 @@
       session.setAttribute("middle_id", middle_id);
       session.setAttribute("small_id", small_id);
 
-      if((email != null || email != "") && (login_pass != null || login_pass != "")){
-        Context context = new InitialContext();
-        DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/bookon");
-        Connection db6 = ds.getConnection();
-        db6.setReadOnly(true);
-        Statement objSql6=db6.createStatement();
-        String login_query = ("SELECT * FROM user_data WHERE email = '" + email + "' AND password = HASHBYTES('SHA2_256', '" + login_pass + "')");
-        ResultSet rs6=objSql6.executeQuery(login_query);
-
-        if(rs6.next()){
-                //セッションを一度破棄
-                session.invalidate();
-                //セッション再生成
-                session = request.getSession();
-                //セッションへ保存
-                session.setAttribute("email", email);
-                //画面遷移
-                response.sendRedirect("./index.jsp");
-            }
-        rs6.close();
-        objSql6.close();
-        db6.close();
-        }
+      System.out.println("Session ID : " + session.getId());
     %>
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
