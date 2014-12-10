@@ -61,8 +61,7 @@ public class SmallClassification implements Serializable {
             {
               smallQuery += " AND middle_id = 1";
             }
-			rs = stmt
-					.executeQuery(smallQuery);
+			rs = stmt.executeQuery(smallQuery);
 			while (rs.next()) {
 				SmallClassification classification = new SmallClassification();
 				classification.setId(rs.getString("small_id"));

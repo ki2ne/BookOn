@@ -359,39 +359,10 @@
           <form class="form" name="item_state_form" role="form" action="./return.jsp">
             <div class="btn-group-vertical btn-block">
               <button type="submit" class="btn btn-default btn-block"><%if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")){%><%=session.getAttribute("last_name")%> <%=session.getAttribute("first_name")%> さん<%}else{%>全体<%}%></button>
-              <%
-              Context context = new InitialContext();
-              DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/bookon");
-              Connection db = ds.getConnection();
-              db.setReadOnly(true);
-              Statement objSql7=db.createStatement();
-              String countQuery = "SELECT COUNT(*) AS number FROM item_state WHERE return_date IS NULL";
-              if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true"))
-                {
-                  countQuery += " AND id = '" + session.getAttribute("id") + "'";
-                }
-              ResultSet rs7=objSql7.executeQuery(countQuery);
-              while(rs7.next()){
-              %>
-                <button type="submit" class="btn btn-default btn-block ellipsis">貸出中書籍 <span class="badge pull-right"><%=rs7.getInt("number")%></span></button>
-              <%
-              }
-              rs7.close();
-              objSql7.close();
-
-              Statement objSql8=db.createStatement();
-              String overdueQuery = "SELECT COUNT(*) AS number FROM item_state WHERE return_date IS NULL AND estimate_return_date < DATEDIFF(day, 1, GETDATE())";
-              if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true"))
-                {
-                  overdueQuery += " AND id = '" + session.getAttribute("id") + "'";
-                }
-              ResultSet rs8=objSql8.executeQuery(overdueQuery);
-              while(rs8.next()){
-              %>
-              <button type="submit" class="btn btn-default btn-block ellipsis">貸出期限超過 <span class="badge pull-right"><%=rs8.getInt("number")%></span></button>
-              <%
-              }
-              %>
+              <c:forEach var="item" items="${requestScope['list6']}">
+                <button type="submit" class="btn btn-default btn-block ellipsis">貸出中書籍 <span class="badge pull-right">${fn:escapeXml(item.circulation)}</span></button>
+              	<button type="submit" class="btn btn-default btn-block ellipsis">貸出期限超過 <span class="badge pull-right">${fn:escapeXml(item.overdue)}</span></button>
+              </c:forEach>
             </div>
           </form>
         </div>
@@ -450,7 +421,6 @@
             </c:forEach>
           </table>
         </form>
-        <% db.close(); %>
       </div>
     </div>
     

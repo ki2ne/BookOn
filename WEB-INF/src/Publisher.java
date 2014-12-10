@@ -36,8 +36,7 @@ public class Publisher implements Serializable {
 			db = ds.getConnection();
 			db.setReadOnly(true);
 			stmt = db.createStatement();
-			rs = stmt
-					.executeQuery("SELECT DISTINCT pub_name FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id");
+			rs = stmt.executeQuery("SELECT DISTINCT pub_name FROM books_data, pub_master WHERE books_data.pub_id = pub_master.pub_id");
 			while (rs.next()) {
 				Publisher publisher = new Publisher();
 				publisher.setName(rs.getString("pub_name"));

@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class SearchBooks extends HttpServlet {
 
@@ -14,6 +15,8 @@ public class SearchBooks extends HttpServlet {
 
 		request.setCharacterEncoding("Windows-31J");
 		response.setCharacterEncoding("Windows-31J");
+		
+		HttpSession session = request.getSession(false);
 		
 		System.out.println("Book On Start");
 		Runtime runtime = Runtime.getRuntime();
@@ -51,6 +54,9 @@ public class SearchBooks extends HttpServlet {
 				small_id, enable_pub_name, pub_name, name, writer, isbn,
 				below_price, above_price);
 		request.setAttribute("list5", list5);
+		
+		ArrayList<Circulation> list6 = Circulation.getInfos(session);
+		request.setAttribute("list6", list6);
 		
 		long endTime = System.currentTimeMillis();
 		

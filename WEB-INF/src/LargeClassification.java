@@ -43,8 +43,7 @@ public class LargeClassification implements Serializable {
 			db = ds.getConnection();
 			db.setReadOnly(true);
 			stmt = db.createStatement();
-			rs = stmt
-					.executeQuery("SELECT DISTINCT large_id, large FROM group_master ORDER BY large_id");
+			rs = stmt.executeQuery("SELECT DISTINCT large_id, large FROM group_master ORDER BY large_id");
 			while (rs.next()) {
 				LargeClassification classification = new LargeClassification();
 				classification.setId(rs.getString("large_id"));

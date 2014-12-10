@@ -53,8 +53,7 @@ public class MiddleClassification implements Serializable {
             {
               middleQuery += "1";
             }
-			rs = stmt
-					.executeQuery(middleQuery);
+			rs = stmt.executeQuery(middleQuery);
 			while (rs.next()) {
 				MiddleClassification classification = new MiddleClassification();
 				classification.setId(rs.getString("middle_id"));
