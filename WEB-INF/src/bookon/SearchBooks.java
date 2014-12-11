@@ -1,3 +1,4 @@
+package bookon;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class SearchBooks extends HttpServlet {
 		request.setCharacterEncoding("Windows-31J");
 		response.setCharacterEncoding("Windows-31J");
 		
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(true);
 		
 		System.out.println("Book On Start");
 		Runtime runtime = Runtime.getRuntime();
@@ -24,6 +25,9 @@ public class SearchBooks extends HttpServlet {
 		System.out.println("MemoryUsage : " + ((runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024) + "MB");
 
 		long startTime = System.currentTimeMillis();
+		
+		Object login = session.getAttribute("login");
+		Object id = session.getAttribute("id");
 		
 		String large_id = request.getParameter("large_id");
 		String middle_id = request.getParameter("middle_id");
@@ -55,12 +59,17 @@ public class SearchBooks extends HttpServlet {
 				below_price, above_price);
 		request.setAttribute("list5", list5);
 		
-		ArrayList<Circulation> list6 = Circulation.getInfos(session);
+		ArrayList<Circulation> list6 = Circulation.getInfos(login, id);
 		request.setAttribute("list6", list6);
 		
 		long endTime = System.currentTimeMillis();
 		
 		System.out.println("RunTime : " + (endTime - startTime) + "ms");
+		
+		System.out.println("Session ID : " + session.getId());
+		if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")) {
+			System.out.println("UserName :" + session.getAttribute("last_name") + " " + session.getAttribute("first_name"));
+		}
 		
 		this.getServletContext().getRequestDispatcher("/index.jsp")
 				.forward(request, response);

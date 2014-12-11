@@ -1,3 +1,4 @@
+package bookon;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,8 +9,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-
-public class SmallClassification implements Serializable {
+public class LargeClassification implements Serializable {
 
 	private String id;
 	private String classification;
@@ -30,9 +30,9 @@ public class SmallClassification implements Serializable {
 		this.classification = classification;
 	}
 
-	public static ArrayList<SmallClassification> getInfos(String large_id, String middle_id) {
+	public static ArrayList<LargeClassification> getInfos() {
 
-		ArrayList<SmallClassification> list = new ArrayList<SmallClassification>();
+		ArrayList<LargeClassification> list = new ArrayList<LargeClassification>();
 		DataSource ds = null;
 		Connection db = null;
 		Statement stmt = null;
@@ -44,28 +44,11 @@ public class SmallClassification implements Serializable {
 			db = ds.getConnection();
 			db.setReadOnly(true);
 			stmt = db.createStatement();
-			String smallQuery = "SELECT DISTINCT small_id, small FROM group_master WHERE large_id = ";
-			if(large_id != null)
-            {
-              smallQuery += large_id;
-            }
-            else
-            {
-              smallQuery += "1";
-            }
-            if(middle_id != null)
-            {
-              smallQuery += (" AND middle_id = " + middle_id);
-            }
-            else
-            {
-              smallQuery += " AND middle_id = 1";
-            }
-			rs = stmt.executeQuery(smallQuery);
+			rs = stmt.executeQuery("SELECT DISTINCT large_id, large FROM group_master ORDER BY large_id");
 			while (rs.next()) {
-				SmallClassification classification = new SmallClassification();
-				classification.setId(rs.getString("small_id"));
-				classification.setClassification(rs.getString("small"));
+				LargeClassification classification = new LargeClassification();
+				classification.setId(rs.getString("large_id"));
+				classification.setClassification(rs.getString("large"));
 				list.add(classification);
 			}
 		} catch (Exception e) {

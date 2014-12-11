@@ -18,7 +18,7 @@
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="css/jumbotron.css" rel="stylesheet">
+    <link href="css/bookon.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,44 +26,12 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script type="text/javascript">
-    function toggleAll(source) {
-      checkboxes = document.getElementsByName('bk_id');
-      for(var i=0; i < checkboxes.length; i++) {
-        checkboxes[i].checked = source.checked;
-      }
-    }
-    </script>
   </head>
   <body>
     <%
       String email = request.getParameter("email");
       String login_pass = request.getParameter("password");
       pageContext.setAttribute("today", new Date());
-
-      if((email != null || email != "") && (login_pass != null || login_pass != "")){
-        Context context = new InitialContext();
-        DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/bookon");
-        Connection db = ds.getConnection();
-        db.setReadOnly(true);
-        Statement objSql=db.createStatement();
-        String login_query = ("SELECT * FROM user_data WHERE email = '" + email + "' AND password = HASHBYTES('SHA2_256', '" + login_pass + "')");
-        ResultSet rs=objSql.executeQuery(login_query);
-
-        if(rs.next()){
-                //セッションを一度破棄
-                session.invalidate();
-                //セッション再生成
-                session = request.getSession();
-                //セッションへ保存
-                session.setAttribute("email", email);
-                //画面遷移
-                response.sendRedirect("./index.jsp");
-            }
-        rs.close();
-        objSql.close();
-        db.close();
-        }
     %>
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
@@ -282,5 +250,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    function toggleAll(source) {
+      checkboxes = document.getElementsByName('bk_id');
+      for(var i=0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = source.checked;
+      }
+    }
+    </script>
   </body>
 </html>

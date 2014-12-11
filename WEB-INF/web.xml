@@ -5,7 +5,7 @@
 	version="2.5">
 	<servlet>
 			<servlet-name>CreatePDF</servlet-name>
-			<servlet-class>CreatePDF</servlet-class>
+			<servlet-class>bookon.CreatePDF</servlet-class>
 	</servlet>
 	<servlet-mapping>
 			<servlet-name>CreatePDF</servlet-name>
@@ -13,7 +13,7 @@
 	</servlet-mapping>
 	<servlet>
 			<servlet-name>Authentication</servlet-name>
-			<servlet-class>Authentication</servlet-class>
+			<servlet-class>bookon.Authentication</servlet-class>
 	</servlet>
 	<servlet-mapping>
 			<servlet-name>Authentication</servlet-name>
@@ -21,7 +21,7 @@
 	</servlet-mapping>
 	<servlet>
 			<servlet-name>LendTransaction</servlet-name>
-			<servlet-class>LendTransaction</servlet-class>
+			<servlet-class>bookon.LendTransaction</servlet-class>
 	</servlet>
 	<servlet-mapping>
 			<servlet-name>LendTransaction</servlet-name>
@@ -29,7 +29,7 @@
 	</servlet-mapping>
 	<servlet>
 			<servlet-name>RegisterTransaction</servlet-name>
-			<servlet-class>RegisterTransaction</servlet-class>
+			<servlet-class>bookon.RegisterTransaction</servlet-class>
 	</servlet>
 	<servlet-mapping>
 			<servlet-name>RegisterTransaction</servlet-name>
@@ -37,7 +37,7 @@
 	</servlet-mapping>
 	<servlet>
 			<servlet-name>ReturnTransaction</servlet-name>
-			<servlet-class>ReturnTransaction</servlet-class>
+			<servlet-class>bookon.ReturnTransaction</servlet-class>
 	</servlet>
 	<servlet-mapping>
 			<servlet-name>ReturnTransaction</servlet-name>
@@ -45,7 +45,7 @@
 	</servlet-mapping>
 	<servlet>
 			<servlet-name>SignOut</servlet-name>
-			<servlet-class>SignOut</servlet-class>
+			<servlet-class>bookon.SignOut</servlet-class>
 	</servlet>
 	<servlet-mapping>
 			<servlet-name>SignOut</servlet-name>
@@ -53,7 +53,7 @@
 	</servlet-mapping>
 	<servlet>
 			<servlet-name>SearchBooks</servlet-name>
-			<servlet-class>SearchBooks</servlet-class>
+			<servlet-class>bookon.SearchBooks</servlet-class>
 	</servlet>
 	<servlet-mapping>
 			<servlet-name>SearchBooks</servlet-name>
@@ -61,7 +61,7 @@
 	</servlet-mapping>
 	<servlet>
 			<servlet-name>LargeClassification</servlet-name>
-			<servlet-class>LargeClassification</servlet-class>
+			<servlet-class>bookon.LargeClassification</servlet-class>
 	</servlet>
 	<servlet-mapping>
 			<servlet-name>LargeClassification</servlet-name>

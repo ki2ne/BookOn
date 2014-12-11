@@ -1,3 +1,4 @@
+package bookon;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,7 +9,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-public class LargeClassification implements Serializable {
+
+public class MiddleClassification implements Serializable {
 
 	private String id;
 	private String classification;
@@ -29,9 +31,9 @@ public class LargeClassification implements Serializable {
 		this.classification = classification;
 	}
 
-	public static ArrayList<LargeClassification> getInfos() {
+	public static ArrayList<MiddleClassification> getInfos(String large_id) {
 
-		ArrayList<LargeClassification> list = new ArrayList<LargeClassification>();
+		ArrayList<MiddleClassification> list = new ArrayList<MiddleClassification>();
 		DataSource ds = null;
 		Connection db = null;
 		Statement stmt = null;
@@ -43,11 +45,20 @@ public class LargeClassification implements Serializable {
 			db = ds.getConnection();
 			db.setReadOnly(true);
 			stmt = db.createStatement();
-			rs = stmt.executeQuery("SELECT DISTINCT large_id, large FROM group_master ORDER BY large_id");
+			String middleQuery = "SELECT DISTINCT middle_id, middle FROM group_master WHERE large_id = ";
+			if(large_id != null)
+            {
+              middleQuery += large_id;
+            }
+            else
+            {
+              middleQuery += "1";
+            }
+			rs = stmt.executeQuery(middleQuery);
 			while (rs.next()) {
-				LargeClassification classification = new LargeClassification();
-				classification.setId(rs.getString("large_id"));
-				classification.setClassification(rs.getString("large"));
+				MiddleClassification classification = new MiddleClassification();
+				classification.setId(rs.getString("middle_id"));
+				classification.setClassification(rs.getString("middle"));
 				list.add(classification);
 			}
 		} catch (Exception e) {

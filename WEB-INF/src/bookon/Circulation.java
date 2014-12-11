@@ -1,3 +1,4 @@
+package bookon;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -31,7 +32,7 @@ public class Circulation implements Serializable {
 		this.overdue = overdue;
 	}
 
-	public static ArrayList<Circulation> getInfos(HttpSession session) {
+	public static ArrayList<Circulation> getInfos(Object login, Object id) {
 
 		ArrayList<Circulation> list = new ArrayList<Circulation>();
 		DataSource ds = null;
@@ -47,9 +48,9 @@ public class Circulation implements Serializable {
 			db.setReadOnly(true);
 			stmt = db.createStatement();
 			String query = "SELECT COUNT(*) AS number FROM item_state WHERE return_date IS NULL";
-			if(session != null && (session.getAttribute("login") != null) && session.getAttribute("login").equals("true"))
+			if((login != null) && login.equals("true"))
             {
-              query += " AND id = '" + session.getAttribute("id") + "'";
+              query += " AND id = '" + id + "'";
             }
 			rs = stmt.executeQuery(query);
 			Circulation circulation = new Circulation();
@@ -57,9 +58,9 @@ public class Circulation implements Serializable {
 				circulation.setCirculation(rs.getString("number"));
 			}
 			query = "SELECT COUNT(*) AS number FROM item_state WHERE return_date IS NULL AND estimate_return_date < DATEDIFF(day, 1, GETDATE())";
-			if(session != null &&(session.getAttribute("login") != null) && session.getAttribute("login").equals("true"))
+			if((login != null) && login.equals("true"))
             {
-              query += " AND id = '" + session.getAttribute("id") + "'";
+              query += " AND id = '" + id + "'";
             }
 			rs2 = stmt.executeQuery(query);
 			while(rs2.next()) {
