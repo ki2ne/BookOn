@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="WEB-INF/lib/javax.servlet.jsp.jstl-1.2.1.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/javax.servlet.jsp.jstl-api-1.2.1.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="var" path="TOMCAT_HOME/lib/tomcat-api.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>

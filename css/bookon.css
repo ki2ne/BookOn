@@ -17,3 +17,11 @@ th {
 	text-overflow: ellipsis;
  	white-space: nowrap;
 }
+
+.pagination {
+	margin: 0px;
+}
+
+.panel-heading {
+	background-color: #FFFFFF !important;
+}

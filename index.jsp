@@ -316,14 +316,14 @@
                 <div class="input-group">
                   <div class="input-group-addon"><span class="glyphicon glyphicon-usd"></span></div>
                     <input class="form-control" type="text" name="below_price" value='<%if (below_price != null){%><%=below_price%><%}%>' placeholder="価格">
-                  <div class="input-group-addon">以下</span></div>
+                  <span class="input-group-addon">以下</span>
                 </div>
               </div>
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-addon"><span class="glyphicon glyphicon-usd"></span></div>
                     <input class="form-control" type="text" name="above_price" value='<%if (above_price != null){%><%=above_price%><%}%>' placeholder="価格">
-                  <div class="input-group-addon">以上</span></div>
+                  <span class="input-group-addon">以上</span>
                 </div>
               </div>
               <button type="submit" class="btn btn-primary btn-lg btn-block">検索</button>
@@ -346,11 +346,30 @@
     <div class="container">
       <div class="panel panel-default">
         <!-- Default panel contents -->
-        <form class="form" name="book_table" role="form" action="LendTransaction">
-          <div class="panel-heading">検索結果
-            <div class="form-group pull-right">
-              <button type="button" name="pdf" class="btn btn-danger" onClick ="createPDF()">PDF</button>
-            </div>
+        <div class="panel-heading clearfix">
+            <div class="container">
+			  <nav>
+			    <div class="col-md-2"><h4 class="text-center">検索結果</h4></div>
+			    <div class="col-md-8">
+			    <div class="text-center">
+				  <ul class="pagination">
+				    <li><a href="#"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
+				    <li><a href="#">1</a></li>
+				    <li><a href="#">2</a></li>
+				    <li><a href="#">3</a></li>
+				    <li><a href="#">4</a></li>
+				    <li><a href="#">5</a></li>
+				    <li><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
+				  </ul>
+				  </div>
+				</div>
+				</nav>
+				<div class="col-md-2">
+				<div class="form-group text-center">
+			       <button type="button" name="pdf" class="btn btn-danger" onClick ="createPDF()">PDF</button>
+			   </div>
+			  </div>
+			</div>
           </div>
 
           <!-- Table -->
