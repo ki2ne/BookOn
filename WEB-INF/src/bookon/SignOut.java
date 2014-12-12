@@ -17,7 +17,7 @@ public class SignOut extends HttpServlet {
 		} catch (Exception e) {
 			throw new ServletException(e);
 		} finally {
-			response.sendRedirect("SearchBooks");
+			response.sendRedirect("Search");
 		}
 	}
 

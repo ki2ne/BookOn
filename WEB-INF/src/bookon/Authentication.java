@@ -75,7 +75,7 @@ public class Authentication extends HttpServlet {
 				if (db != null) {
 					db.close();
 				}
-				response.sendRedirect("SearchBooks");
+				response.sendRedirect("Search");
 			} catch (Exception e) {
 			}
 		}

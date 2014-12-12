@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class SearchBooks extends HttpServlet {
+public class Search extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request,

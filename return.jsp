@@ -42,7 +42,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="SearchBooks">Book On</a>
+          <a class="navbar-brand" href="Search">Book On</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -101,44 +101,30 @@
       <div class="col-sm-2" style="background:white;">
         <form class="form" name="item_state_form" role="form" action="./return.jsp">
           <div class="btn-group-vertical btn-block">
-            <button type="submit" class="btn btn-default btn-block"><%if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")){%><%=session.getAttribute("last_name")%> <%=session.getAttribute("first_name")%> さん<%}else{%>全体<%}%></button>
-            <%
-            Context context = new InitialContext();
-            DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/bookon");
-            Connection db = ds.getConnection();
-            db.setReadOnly(true);
-            Statement objSql7=db.createStatement();
-            String countQuery = "SELECT COUNT(*) AS number FROM item_state WHERE return_date IS NULL";
-            if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true"))
-              {
-                countQuery += " AND id = '" + session.getAttribute("id") + "'";
-              }
-            ResultSet rs7=objSql7.executeQuery(countQuery);
-            while(rs7.next()){
-            %>
-              <button type="submit" class="btn btn-default btn-block">貸出中書籍 <span class="badge pull-right"><%=rs7.getInt("number")%></span></button>
-            <%
-            }
-            rs7.close();
-            objSql7.close();
-
-            Statement objSql8=db.createStatement();
-            String overdueQuery = "SELECT COUNT(*) AS number FROM item_state WHERE return_date IS NULL AND estimate_return_date < DATEDIFF(day, 1, GETDATE())";
-            if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true"))
-              {
-                overdueQuery += " AND id = '" + session.getAttribute("id") + "'";
-              }
-            ResultSet rs8=objSql8.executeQuery(overdueQuery);
-            while(rs8.next()){
-            %>
-            <button type="submit" class="btn btn-default btn-block">貸出期限超過 <span class="badge pull-right"><%=rs8.getInt("number")%></span></button>
-            <%
-            }
-            %>
+            <button type="submit" class="btn btn-default btn-block">
+				<c:choose>
+					<c:when test="${sessionScope.login != null || sessionScope.login == 'true'}">
+						${fn:escapeXml(sessionScope.last_name)} 
+						${fn:escapeXml(sessionScope.first_name)}
+						さん
+					</c:when>
+					<c:otherwise>
+						全体
+					</c:otherwise>
+				</c:choose>
+			</button>
+			<c:forEach var="item" items="${requestScope['list']}">
+				<button type="submit" class="btn btn-default btn-block ellipsis">
+					貸出中書籍 <span class="badge pull-right">${fn:escapeXml(item.circulation)}</span>
+				</button>
+				<button type="submit" class="btn btn-default btn-block ellipsis">
+					貸出期限超過 <span class="badge pull-right">${fn:escapeXml(item.overdue)}</span>
+				</button>
+			</c:forEach>
           </div>
-          <%if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")){%>
+          <c:if test="${sessionScope.login != null || sessionScope.login == 'true'}">
           <button type="button" class="btn btn-danger btn-block" onClick="return document.forms['lend'].submit()">返却</button>
-          <%}%>
+          </c:if>
         </form>
       </div>
       <div class="col-sm-10" style="background:white;">
@@ -151,13 +137,13 @@
             <table class="table">
               <tr>
                 <th>#</th>
-                <%if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")){%>
+                <c:if test="${sessionScope.login != null || sessionScope.login == 'true'}">
                 <th>
                   <div class="checkbox">
                       <input type="checkbox" onClick="toggleAll(this)">
                   </div>
                 </th>
-                <%}%>
+                </c:if>
                 <th>書籍名</th>
                 <th>出版社</th>
                 <th>貸出日</th>
@@ -170,9 +156,13 @@
                   query += " AND id = '" + session.getAttribute("id") + "'";
                 }
 
-                Statement objSql2=db.createStatement();
-                ResultSet rs2=objSql2.executeQuery(query);
-                while(rs2.next()){
+              Context context = new InitialContext();
+              DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/bookon");
+              Connection db = ds.getConnection();
+              db.setReadOnly(true);
+              Statement objSql2=db.createStatement();
+              ResultSet rs2=objSql2.executeQuery(query);
+              while(rs2.next()){
               %>
                 <tr>
                   <td><%=rs2.getString("bk_id")%></td>

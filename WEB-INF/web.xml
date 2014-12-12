@@ -52,12 +52,12 @@
 			<url-pattern>/SignOut</url-pattern>
 	</servlet-mapping>
 	<servlet>
-			<servlet-name>SearchBooks</servlet-name>
-			<servlet-class>bookon.SearchBooks</servlet-class>
+			<servlet-name>Search</servlet-name>
+			<servlet-class>bookon.Search</servlet-class>
 	</servlet>
 	<servlet-mapping>
-			<servlet-name>SearchBooks</servlet-name>
-			<url-pattern>/SearchBooks</url-pattern>
+			<servlet-name>Search</servlet-name>
+			<url-pattern>/Search</url-pattern>
 	</servlet-mapping>
 	<servlet>
 			<servlet-name>LargeClassification</servlet-name>
@@ -66,6 +66,14 @@
 	<servlet-mapping>
 			<servlet-name>LargeClassification</servlet-name>
 			<url-pattern>/LargeClassification</url-pattern>
+	</servlet-mapping>
+	<servlet>
+			<servlet-name>Return</servlet-name>
+			<servlet-class>bookon.Return</servlet-class>
+	</servlet>
+	<servlet-mapping>
+			<servlet-name>Return</servlet-name>
+			<url-pattern>/Return</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>

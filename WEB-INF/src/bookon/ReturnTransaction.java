@@ -50,7 +50,7 @@ public class ReturnTransaction extends HttpServlet {
 				if (db != null) {
 					db.close();
 				}
-				response.sendRedirect("./return.jsp");
+				response.sendRedirect("Return");
 			} catch (Exception e) {
 			}
 		}

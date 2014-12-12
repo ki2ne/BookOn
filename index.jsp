@@ -70,8 +70,7 @@
 					</c:if>
 				</ul>
 				<c:choose>
-					<c:when
-						test="${sessionScope.login == null || sessionScope.login != 'true'}">
+					<c:when test="${sessionScope.login == null || sessionScope.login != 'true'}">
 						<form class="navbar-form navbar-right" role="form" method="post" action="Authentication">
 							<c:choose>
 								<c:when test="${sessionScope.login != null}">
@@ -172,7 +171,7 @@
 
     <div class="container">
 		<div class="row">
-			<form class="form search_form" name="search_form" role="form" action="SearchBooks">
+			<form class="form search_form" name="search_form" role="form" action="Search">
 				<div class="col-sm-2" style="background: white;">
 					<div class="btn-group-vertical btn-block" data-toggle="buttons">
 						<label class="btn btn-primary"> <input type="radio" autocomplete="off">大分類</label>
@@ -336,17 +335,19 @@
 				</div>
 			</form>
 			<div class="col-sm-2" style="background: white;">
-				<form class="form" name="item_state_form" role="form" action="./return.jsp">
+				<form class="form" name="item_state_form" role="form" action="Return">
 					<div class="btn-group-vertical btn-block">
 						<button type="submit" class="btn btn-default btn-block">
-							<%if ((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")) {%>
-							<%=session.getAttribute("last_name")%>
-							<%=session.getAttribute("first_name")%>
-							さん<%
-								} else {
-							%>全体<%
-								}
-							%>
+							<c:choose>
+								<c:when test="${sessionScope.login != null || sessionScope.login == 'true'}">
+									${fn:escapeXml(sessionScope.last_name)} 
+									${fn:escapeXml(sessionScope.first_name)}
+									さん
+								</c:when>
+								<c:otherwise>
+									全体
+								</c:otherwise>
+							</c:choose>
 						</button>
 						<c:forEach var="item" items="${requestScope['list6']}">
 							<button type="submit" class="btn btn-default btn-block ellipsis">
