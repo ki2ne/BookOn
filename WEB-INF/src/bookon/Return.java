@@ -33,6 +33,12 @@ public class Return extends HttpServlet {
 		ArrayList<Circulation> list = Circulation.getInfos(login, id);
 		request.setAttribute("list", list);
 		
+		ArrayList<OnLoan> list2 = OnLoan.getInfos(id);
+		request.setAttribute("list2", list2);
+		
+		ArrayList<OverDue> list3 = OverDue.getInfos(id);
+		request.setAttribute("list3", list3);
+		
 		long endTime = System.currentTimeMillis();
 		
 		System.out.println("RunTime : " + (endTime - startTime) + "ms");

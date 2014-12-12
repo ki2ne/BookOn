@@ -34,207 +34,176 @@
       pageContext.setAttribute("today", new Date());
     %>
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="Search">Book On</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-		    		<li><a href="">about</a></li>
-		    		<li><a href="">contact</a></li>
-            <li><a href=""><fmt:formatDate value="${today}" type="DATE" dateStyle="FULL" /></a></li>
-            <c:if test="${sessionScope.resultOfLendTransaction != null && sessionScope.resultOfLendTransaction == -1}">
-            <li><a href="">ご指定の本は既に借りられています。</a></li>
-            </c:if>
-		      </ul>
-          <c:choose>
-			<c:when test="${sessionScope.login == null || sessionScope.login != 'true'}">
-				<form class="navbar-form navbar-right" role="form" method="post" action="Authentication">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="Search">Book On</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="">about</a></li>
+					<li><a href="">contact</a></li>
+					<li><a href=""><fmt:formatDate value="${today}" type="DATE" dateStyle="FULL" /></a></li>
+					<c:if test="${sessionScope.resultOfLendTransaction != null && sessionScope.resultOfLendTransaction == -1}">
+						<li><a href="">ご指定の本は既に借りられています。</a></li>
+					</c:if>
+				</ul>
 				<c:choose>
-					<c:when test="${sessionScope.login != null}">
-						<div class="form-group has-error has-feedback">
-							<input type="text" name='email' placeholder="Email" class="form-control">
-							<span class="glyphicon glyphicon-remove form-control-feedback"></span>
-						</div>
-						<div class="form-group has-error has-feedback">
-							<input type="password" name='pass' placeholder="Password" class="form-control">
-							<span class="glyphicon glyphicon-remove form-control-feedback"></span>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="form-group">
-							<input type="text" name='email' placeholder="Email" class="form-control">
-						</div>
-						<div class="form-group">
-							<input type="password" name='pass' placeholder="Password" class="form-control">
-						</div>
-					</c:otherwise>
-				</c:choose>
+					<c:when test="${sessionScope.login == null || sessionScope.login != 'true'}">
+						<form class="navbar-form navbar-right" role="form" method="post" action="Authentication">
+							<c:choose>
+								<c:when test="${sessionScope.login != null}">
+									<div class="form-group has-error has-feedback">
+										<input type="text" name='email' placeholder="Email" class="form-control">
+										<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+									</div>
+									<div class="form-group has-error has-feedback">
+										<input type="password" name='pass' placeholder="Password" class="form-control">
+										<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="form-group">
+										<input type="text" name='email' placeholder="Email" class="form-control">
+									</div>
+									<div class="form-group">
+										<input type="password" name='pass' placeholder="Password" class="form-control">
+									</div>
+								</c:otherwise>
+							</c:choose>
 							<button type="submit" class="btn btn-success">ログイン</button>
-          					<!-- Button trigger modal -->
-          					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">登録
-          					</button>
-          				</form>
-			</c:when>
-			<c:otherwise>
-				<ul class="nav navbar-nav navbar-right">
-        			<li><a href="#">${fn:escapeXml(sessionScope.email)}</a></li>
-            		<li>
-                		<form class="navbar-form navbar-right" role="form" method="post" action="SignOut">
-                		<button type="submit" class="btn btn-success">ログアウト</button>
-                		</form>
-            		</li>
-        		</ul>
-    		</c:otherwise>
-		</c:choose>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="col-sm-2" style="background:white;">
-        <form class="form" name="item_state_form" role="form" action="./return.jsp">
-          <div class="btn-group-vertical btn-block">
-            <button type="submit" class="btn btn-default btn-block">
-				<c:choose>
-					<c:when test="${sessionScope.login != null || sessionScope.login == 'true'}">
-						${fn:escapeXml(sessionScope.last_name)} 
-						${fn:escapeXml(sessionScope.first_name)}
-						さん
+							<!-- Button trigger modal -->
+							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">登録</button>
+						</form>
 					</c:when>
 					<c:otherwise>
-						全体
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="#">${fn:escapeXml(sessionScope.email)}</a></li>
+							<li>
+								<form class="navbar-form navbar-right" role="form" method="post" action="SignOut">
+									<button type="submit" class="btn btn-success">ログアウト</button>
+								</form>
+							</li>
+						</ul>
 					</c:otherwise>
 				</c:choose>
-			</button>
-			<c:forEach var="item" items="${requestScope['list']}">
-				<button type="submit" class="btn btn-default btn-block ellipsis">
-					貸出中書籍 <span class="badge pull-right">${fn:escapeXml(item.circulation)}</span>
-				</button>
-				<button type="submit" class="btn btn-default btn-block ellipsis">
-					貸出期限超過 <span class="badge pull-right">${fn:escapeXml(item.overdue)}</span>
-				</button>
-			</c:forEach>
-          </div>
-          <c:if test="${sessionScope.login != null || sessionScope.login == 'true'}">
-          <button type="button" class="btn btn-danger btn-block" onClick="return document.forms['lend'].submit()">返却</button>
-          </c:if>
-        </form>
-      </div>
-      <div class="col-sm-10" style="background:white;">
-        <div class="panel panel-default">
-          <!-- Default panel contents -->
-          <form class="form" name="lend" role="form" action="ReturnTransaction">
-            <div class="panel-heading">貸出中書籍</div>
-
-            <!-- Table -->
-            <table class="table">
-              <tr>
-                <th>#</th>
-                <c:if test="${sessionScope.login != null || sessionScope.login == 'true'}">
-                <th>
-                  <div class="checkbox">
-                      <input type="checkbox" onClick="toggleAll(this)">
-                  </div>
-                </th>
-                </c:if>
-                <th>書籍名</th>
-                <th>出版社</th>
-                <th>貸出日</th>
-                <th>返却予定日</th>
-              </tr>
-              <%
-              String query = "SELECT item_state.bk_id, bk_name, pub_name, lend_date, estimate_return_date FROM item_state INNER JOIN (SELECT bk_id, bk_name, pub_name FROM books_data bd INNER JOIN pub_master pm ON bd.pub_id = pm.pub_id) AS books_and_pub_data ON item_state.bk_id = books_and_pub_data.bk_id WHERE return_date IS NULL";
-              if(session.getAttribute("id") != null)
-                {
-                  query += " AND id = '" + session.getAttribute("id") + "'";
-                }
-
-              Context context = new InitialContext();
-              DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/bookon");
-              Connection db = ds.getConnection();
-              db.setReadOnly(true);
-              Statement objSql2=db.createStatement();
-              ResultSet rs2=objSql2.executeQuery(query);
-              while(rs2.next()){
-              %>
-                <tr>
-                  <td><%=rs2.getString("bk_id")%></td>
-                  <%if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")){%>
-                  <td>
-                    <div class="checkbox">
-                        <input type="checkbox" name="bk_id" value='<%=rs2.getString("bk_id")%>'>
-                    </div>
-                  </td>
-                  <%}%>
-                  <td><%=rs2.getString("bk_name")%></td>
-                  <td><%=rs2.getString("pub_name")%></td>
-                  <td><%=rs2.getDate("lend_date")%></td>
-                  <td><%=rs2.getDate("estimate_return_date")%></td>
-                </tr>
-              <%
-              }
-              rs2.close();
-              objSql2.close();
-              %>
-            </table>
-          </form>
-        </div>
-      </div>
-    </div>
+			</div>
+			<!--/.navbar-collapse -->
+		</div>
+	</div>
 
     <div class="container">
-      <div class="col-sm-2" style="background:white;"></div>
-      <div class="col-sm-10" style="background:white;">
-        <div class="panel panel-default">
-          <!-- Default panel contents -->
-          <form class="form" name="overdue" role="form" action="./lend.jsp">
-            <div class="panel-heading">貸出期限超過書籍</div>
+		<div class="col-sm-2" style="background: white;">
+			<form class="form" name="item_state_form" role="form" action="Return">
+				<div class="btn-group-vertical btn-block">
+					<button type="submit" class="btn btn-default btn-block">
+						<c:choose>
+							<c:when test="${sessionScope.login != null || sessionScope.login == 'true'}">
+								${fn:escapeXml(sessionScope.last_name)} 
+								${fn:escapeXml(sessionScope.first_name)}
+								さん
+							</c:when>
+							<c:otherwise>
+								全体
+							</c:otherwise>
+						</c:choose>
+					</button>
+					<c:forEach var="item" items="${requestScope['list']}">
+						<button type="submit" class="btn btn-default btn-block ellipsis">
+							貸出中書籍 <span class="badge pull-right">${fn:escapeXml(item.circulation)}</span>
+						</button>
+						<button type="submit" class="btn btn-default btn-block ellipsis">
+							貸出期限超過 <span class="badge pull-right">${fn:escapeXml(item.overdue)}</span>
+						</button>
+					</c:forEach>
+				</div>
+				<c:if test="${sessionScope.login != null || sessionScope.login == 'true'}">
+					<button type="button" class="btn btn-danger btn-block" onClick="return document.forms['lend'].submit()">返却</button>
+				</c:if>
+			</form>
+		</div>
+		<div class="col-sm-10" style="background: white;">
+			<form class="form" name="lend" role="form" action="ReturnTransaction">
+				<div class="panel panel-default">
+					<!-- Default panel contents -->
+					<div class="panel-heading">貸出中書籍</div>
 
-            <!-- Table -->
-            <table class="table">
-              <tr>
-                <th>#</th>
-                <th>書籍名</th>
-                <th>出版社</th>
-                <th>貸出日</th>
-                <th>返却予定日</th>
-              </tr>
-              <%
-              String overdue_query = "SELECT item_state.bk_id, bk_name, pub_name, lend_date, estimate_return_date FROM item_state INNER JOIN (SELECT bk_id, bk_name, pub_name FROM books_data bd INNER JOIN pub_master pm ON bd.pub_id = pm.pub_id) AS books_and_pub_data ON item_state.bk_id = books_and_pub_data.bk_id WHERE return_date IS NULL　AND estimate_return_date < DATEDIFF(day, 1, GETDATE())";
-              if(session.getAttribute("id") != null)
-                {
-                  overdue_query += " AND id = '" + session.getAttribute("id") + "'";
-                }
+					<!-- Table -->
+					<table class="table">
+						<tr>
+							<th>#</th>
+							<c:if test="${sessionScope.login != null || sessionScope.login == 'true'}">
+								<th>
+									<div class="checkbox">
+										<input type="checkbox" onClick="toggleAll(this)">
+									</div>
+								</th>
+							</c:if>
+							<th>書籍名</th>
+							<th>出版社</th>
+							<th>貸出日</th>
+							<th>返却予定日</th>
+						</tr>
+						<c:forEach var="item" items="${requestScope['list2']}">
+							<tr>
+								<td>${fn:escapeXml(item.id)}</td>
+								<c:if test="${sessionScope.login != null || sessionScope.login == 'true'}">
+									<td>
+										<div class="checkbox">
+											<input type="checkbox" name="bk_id" value='${item.id}'>
+										</div>
+									</td>
+								</c:if>
+								<td>${fn:escapeXml(item.name)}</td>
+								<td>${fn:escapeXml(item.publisher)}</td>
+								<td>${fn:escapeXml(item.lendingDate)}</td>
+								<td>${fn:escapeXml(item.dueDate)}</td>
+							</tr>
+						</c:forEach>
+					</table>
 
-                Statement objSql3=db.createStatement();
-                ResultSet rs3=objSql3.executeQuery(overdue_query);
-                while(rs3.next()){
-              %>
-                <tr>
-                  <td><%=rs3.getString("bk_id")%></td>
-                  <td><%=rs3.getString("bk_name")%></td>
-                  <td><%=rs3.getString("pub_name")%></td>
-                  <td><%=rs3.getDate("lend_date")%></td>
-                  <td><%=rs3.getDate("estimate_return_date")%></td>
-                </tr>
-              <%
-              }
-              rs3.close();
-              objSql3.close();
-              db.close();
-              %>
-            </table>
-          </form>
-        </div>
-      </div>
-    </div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+    <div class="container">
+		<div class="col-sm-2" style="background: white;"></div>
+		<div class="col-sm-10" style="background: white;">
+			<div class="panel panel-default">
+				<!-- Default panel contents -->
+				<form class="form" name="overdue" role="form">
+					<div class="panel-heading">貸出期限超過書籍</div>
+
+					<!-- Table -->
+					<table class="table">
+						<tr>
+							<th>#</th>
+							<th>書籍名</th>
+							<th>出版社</th>
+							<th>貸出日</th>
+							<th>返却予定日</th>
+						</tr>
+						<c:forEach var="item" items="${requestScope['list3']}">
+							<tr>
+								<td>${fn:escapeXml(item.id)}</td>
+								<td>${fn:escapeXml(item.name)}</td>
+								<td>${fn:escapeXml(item.publisher)}</td>
+								<td>${fn:escapeXml(item.lendingDate)}</td>
+								<td>${fn:escapeXml(item.dueDate)}</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

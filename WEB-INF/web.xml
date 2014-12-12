@@ -75,6 +75,22 @@
 			<servlet-name>Return</servlet-name>
 			<url-pattern>/Return</url-pattern>
 	</servlet-mapping>
+	<servlet>
+			<servlet-name>OnLoan</servlet-name>
+			<servlet-class>bookon.OnLoan</servlet-class>
+	</servlet>
+	<servlet-mapping>
+			<servlet-name>OnLoan</servlet-name>
+			<url-pattern>/OnLoan</url-pattern>
+	</servlet-mapping>
+	<servlet>
+			<servlet-name>OverDue</servlet-name>
+			<servlet-class>bookon.OverDue</servlet-class>
+	</servlet>
+	<servlet-mapping>
+			<servlet-name>OverDue</servlet-name>
+			<url-pattern>/OverDue</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
