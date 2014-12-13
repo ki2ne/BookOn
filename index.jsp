@@ -110,7 +110,7 @@
 				</c:choose>
 			</div>
 			<!--/.navbar-collapse -->
-		</div>
+		</div><!-- /.container -->
 	</div>
 
     <!-- Modal -->
@@ -361,7 +361,7 @@
 				</form>
 			</div>
 		</div>
-	</div>
+	</div><!-- /.container -->
 
     <div class="container">
 		<div class="panel panel-default">
@@ -376,15 +376,15 @@
 							</div>
 							<div class="col-md-8 col-sm-8">
 								<div class="text-center">
-									<ul class="pagination">
-										<li><a href="#"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
-										<li><a href="#">1</a></li>
-										<li><a href="#">2</a></li>
-										<li><a href="#">3</a></li>
-										<li><a href="#">4</a></li>
-										<li><a href="#">5</a></li>
-										<li><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
-									</ul>
+								    <div class="btn-group">
+								        <button type="button" class="btn btn-default"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></button>
+								        <button type="button" class="btn btn-default">1</button>
+								        <button type="button" class="btn btn-default">2</button>
+								        <button type="button" class="btn btn-default">3</button>
+								        <button type="button" class="btn btn-default">4</button>
+								        <button type="button" class="btn btn-default">5</button>
+								        <button type="button" class="btn btn-default"><span aria-hidden="true">&raquo;</span><span class="sr-only">Previous</span></button>
+								    </div>
 								</div>
 							</div>
 							</nav>
@@ -440,7 +440,7 @@
 				</table>
 			</form>
 		</div>
-	</div>
+	</div><!-- /.container -->
     
     <c:if test="${sessionScope.resultOfLendTransaction != null && sessionScope.resultOfLendTransaction == -1}">
     <script type="text/javascript">
