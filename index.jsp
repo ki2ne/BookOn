@@ -643,7 +643,11 @@
     });
 
     function createPDF() {
-      window.open("./CreatePDF");
+    	document.search_form.action = "CreatePDF";
+    	document.search_form.target = "_blank";
+    	document.search_form.submit();
+    	document.search_form.action = "Search";
+    	document.search_form.removeAttribute('target');
     }
     </script>
   </body>

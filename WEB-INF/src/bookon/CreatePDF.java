@@ -1,41 +1,45 @@
 package bookon;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
+import java.util.Iterator;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.sql.DataSource;
 
-import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 public class CreatePDF extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		Connection db = null;
-		PreparedStatement ps =null;
-		ResultSet rs = null;
-		String query = (String)session.getAttribute("search_query");
+		
+		String large_id = request.getParameter("large_id");
+		String middle_id = request.getParameter("middle_id");
+		String small_id = request.getParameter("small_id");
+		String enable_pub_name = request.getParameter("enable_pub_name");
+		String pub_name = request.getParameter("pub_name");
+		String name = request.getParameter("name");
+		String writer = request.getParameter("writer");
+		String isbn = request.getParameter("isbn");
+		String below_price = request.getParameter("below_price");
+		String above_price = request.getParameter("above_price");
+		
+		ArrayList<Result> list = Result.getInfos(large_id, middle_id,
+				small_id, enable_pub_name, pub_name, name, writer, isbn,
+				below_price, above_price);
+		
 		try {
 			Document doc = new Document(PageSize.A4.rotate(), 50,20,50,20);
-			PdfWriter writer = PdfWriter.getInstance(doc, response.getOutputStream());
+			PdfWriter pdfWriter = PdfWriter.getInstance(doc, response.getOutputStream());
 			doc.open();
 			Font fTitle = new Font(BaseFont.createFont("HeiseiKakuGo-W5","UniJIS-UCS2-H",
 				BaseFont.NOT_EMBEDDED),11,Font.BOLD);
@@ -51,28 +55,29 @@ public class CreatePDF extends HttpServlet {
 				tbl.addCell(c);
 			}
 			tbl.setHeaderRows(1);
-			Context context = new InitialContext();
-			DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/bookon");
-			db = ds.getConnection();
-			ps = db.prepareStatement(query);
-			rs = ps.executeQuery();
-			ResultSetMetaData meta = rs.getMetaData();
-			while(rs.next()){
-				for(int i = 1; i <= meta.getColumnCount() - 1; i++) {
-					PdfPCell c = new PdfPCell(new Phrase(rs.getString(i),fData));
-					tbl.addCell(c);
-				}
+			for(Result result : list)
+			{
+				PdfPCell c = new PdfPCell(new Phrase(result.getId(), fData));
+				tbl.addCell(c);
+				c = new PdfPCell(new Phrase(result.getName(), fData));
+				tbl.addCell(c);
+				c = new PdfPCell(new Phrase(result.getAuthor(), fData));
+				tbl.addCell(c);
+				c = new PdfPCell(new Phrase(result.getPublisher(), fData));
+				tbl.addCell(c);
+				c = new PdfPCell(new Phrase(result.getPublicationDate(), fData));
+				tbl.addCell(c);
+				c = new PdfPCell(new Phrase(result.getIsbn(), fData));
+				tbl.addCell(c);
+				c = new PdfPCell(new Phrase(result.getPrice(), fData));
+				tbl.addCell(c);
+				System.out.println(result.getId());
 			}
 			doc.add(tbl);
 			doc.close();
 		} catch (Exception e) {
 			throw new ServletException(e);
 		} finally {
-			try {
-				if(rs != null) {rs.close();}
-				if(ps != null) {ps.close();}
-				if(db != null) {db.close();}
-			} catch(Exception e) {}
 		}
 	}
 }
