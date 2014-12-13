@@ -1,7 +1,6 @@
 package bookon;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,8 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -32,6 +33,8 @@ public class CreatePDF extends HttpServlet {
 		String isbn = request.getParameter("isbn");
 		String below_price = request.getParameter("below_price");
 		String above_price = request.getParameter("above_price");
+		int totalAmount = 0;
+		int count = 0;
 		
 		ArrayList<Result> list = Result.getInfos(large_id, middle_id,
 				small_id, enable_pub_name, pub_name, name, writer, isbn,
@@ -71,9 +74,17 @@ public class CreatePDF extends HttpServlet {
 				tbl.addCell(c);
 				c = new PdfPCell(new Phrase(result.getPrice(), fData));
 				tbl.addCell(c);
-				System.out.println(result.getId());
+				if(result.getPrice() != null) {
+					totalAmount += Integer.parseInt(result.getPrice());
+				}
+				count++;
 			}
+			
+			System.out.println(totalAmount);
 			doc.add(tbl);
+			Paragraph p = new Paragraph("冊数 : " + count + "冊   合計 : \u00A5 " + Integer.toString(totalAmount), fData);
+			p.setAlignment(Element.ALIGN_RIGHT);
+			doc.add(p);
 			doc.close();
 		} catch (Exception e) {
 			throw new ServletException(e);
