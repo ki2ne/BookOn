@@ -380,11 +380,18 @@
 								<div class="text-center">
 								    <div class="btn-group">
 								        <button type="button" class="btn btn-default"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></button>
-								        <button type="button" class="btn btn-default" OnClick="submitPage(1)">1</button>
-								        <button type="button" class="btn btn-default" OnClick="submitPage(2)">2</button>
-								        <button type="button" class="btn btn-default" OnClick="submitPage(3)">3</button>
-								        <button type="button" class="btn btn-default" OnClick="submitPage(4)">4</button>
-								        <button type="button" class="btn btn-default" OnClick="submitPage(5)">5</button>
+								        <c:choose>
+											<c:when test="${requestScope['list5'][0].numberOfRows / 10 <= 10}">
+												<c:forEach var="i" begin="1" end="${requestScope['list5'][0].numberOfRows / 10}" step="1">
+													<button type="button" class="btn btn-default" OnClick="submitPage(${i})">${i}</button>
+												</c:forEach>
+											</c:when>
+											<c:otherwise>
+												<c:forEach var="i" begin="1" end="10" step="1">
+													<button type="button" class="btn btn-default" OnClick="submitPage(${i})">${i}</button>
+												</c:forEach>
+											</c:otherwise>
+										</c:choose>
 								        <button type="button" class="btn btn-default"><span aria-hidden="true">&raquo;</span><span class="sr-only">Previous</span></button>
 								    </div>
 								</div>
