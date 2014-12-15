@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 public class Result implements Serializable {
 
+	private String numberOfRows;
 	private String id;
 	private String name;
 	private String author;
@@ -19,6 +20,14 @@ public class Result implements Serializable {
 	private String isbn;
 	private String price;
 	private String state;
+
+	public String getNumberOfRows() {
+		return numberOfRows;
+	}
+
+	public void setNumberOfRows(String numberOfRows) {
+		this.numberOfRows = numberOfRows;
+	}
 
 	public String getId() {
 		return id;
@@ -102,7 +111,8 @@ public class Result implements Serializable {
 			db.setReadOnly(true);
 			stmt = db.createStatement();
 			String query = "SELECT DISTINCT "
-			+ "  books_data.bk_id "
+			+ "  COUNT(*) OVER() AS number_of_rows "
+			+ "  , books_data.bk_id "
 			+ "  , bk_name "
 			+ "  , writer "
 			+ "  , pub_name "
@@ -158,7 +168,6 @@ public class Result implements Serializable {
 				query += (" AND books_data.bk_id LIKE '__" + small_id + "%'");
 			}
 			query += " ORDER BY books_data.bk_id";
-			System.out.println(page);
 			if(page != null && page.equals("1")) {
 				query += " OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY";
 			}
@@ -169,6 +178,7 @@ public class Result implements Serializable {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				Result result = new Result();
+				result.setNumberOfRows(rs.getString("number_of_rows"));
 				result.setId(rs.getString("bk_id"));
 				result.setName(rs.getString("bk_name"));
 				result.setAuthor(rs.getString("writer"));
