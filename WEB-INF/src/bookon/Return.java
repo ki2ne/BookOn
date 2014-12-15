@@ -23,7 +23,7 @@ public class Return extends HttpServlet {
 		Object login = session.getAttribute("login");
 		Object id = session.getAttribute("id");
 		
-		System.out.println("Book On Start");
+		System.out.println("Book On -> Return page -> Start");
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("TotalMemory : " + (runtime.totalMemory() / 1024 / 1024) + "MB");
 		System.out.println("MemoryUsage : " + ((runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024) + "MB");

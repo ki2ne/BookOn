@@ -332,8 +332,9 @@
 						</div>
 					</div>
 					<button type="submit" class="btn btn-primary btn-lg btn-block">検索</button>
+					<input type="hidden" id="page" name="page" value="1">
 				</div>
-			</form>
+			</form><!-- /.form -->
 			<div class="col-sm-2" style="background: white;">
 				<form class="form" name="item_state_form" role="form" action="Return">
 					<div class="btn-group-vertical btn-block">
@@ -358,7 +359,7 @@
 							</button>
 						</c:forEach>
 					</div>
-				</form>
+				</form><!-- /.form -->
 			</div>
 		</div>
 	</div><!-- /.container -->
@@ -378,11 +379,11 @@
 								<div class="text-center">
 								    <div class="btn-group">
 								        <button type="button" class="btn btn-default"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></button>
-								        <button type="button" class="btn btn-default">1</button>
-								        <button type="button" class="btn btn-default">2</button>
-								        <button type="button" class="btn btn-default">3</button>
-								        <button type="button" class="btn btn-default">4</button>
-								        <button type="button" class="btn btn-default">5</button>
+								        <button type="button" class="btn btn-default" OnClick="submitPage(1)">1</button>
+								        <button type="button" class="btn btn-default" OnClick="submitPage(2)">2</button>
+								        <button type="button" class="btn btn-default" OnClick="submitPage(3)">3</button>
+								        <button type="button" class="btn btn-default" OnClick="submitPage(4)">4</button>
+								        <button type="button" class="btn btn-default" OnClick="submitPage(5)">5</button>
 								        <button type="button" class="btn btn-default"><span aria-hidden="true">&raquo;</span><span class="sr-only">Previous</span></button>
 								    </div>
 								</div>
@@ -438,7 +439,7 @@
 						</tr>
 					</c:forEach>
 				</table>
-			</form>
+			</form><!-- /.form -->
 		</div>
 	</div><!-- /.container -->
     
@@ -648,6 +649,12 @@
     	document.search_form.submit();
     	document.search_form.action = "Search";
     	document.search_form.removeAttribute('target');
+    }
+    
+    function submitPage(page) {
+    	document.getElementById("page").value = page;
+    	console.log(document.getElementById("page").value);
+    	document.search_form.submit();
     }
     </script>
   </body>

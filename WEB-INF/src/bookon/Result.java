@@ -87,7 +87,7 @@ public class Result implements Serializable {
 	public static ArrayList<Result> getInfos(String large_id, String middle_id,
 			String small_id, String enable_pub_name, String pub_name,
 			String name, String writer, String isbn, String below_price,
-			String above_price) {
+			String above_price, String page) {
 
 		ArrayList<Result> list = new ArrayList<Result>();
 		DataSource ds = null;
@@ -158,6 +158,13 @@ public class Result implements Serializable {
 				query += (" AND books_data.bk_id LIKE '__" + small_id + "%'");
 			}
 			query += " ORDER BY books_data.bk_id";
+			System.out.println(page);
+			if(page != null && page.equals("1")) {
+				query += " OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY";
+			}
+			else if(page != null && Integer.parseInt(page) > 1){
+				query += " OFFSET " + ((Integer.parseInt(page) - 1) * 10 - 1) +  " ROWS FETCH NEXT 10 ROWS ONLY";
+			}
 			
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {

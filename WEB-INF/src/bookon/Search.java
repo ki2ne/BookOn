@@ -19,7 +19,7 @@ public class Search extends HttpServlet {
 		
 		HttpSession session = request.getSession(true);
 		
-		System.out.println("Book On Start");
+		System.out.println("Book On -> Search page -> Start");
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("TotalMemory : " + (runtime.totalMemory() / 1024 / 1024) + "MB");
 		System.out.println("MemoryUsage : " + ((runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024) + "MB");
@@ -39,6 +39,7 @@ public class Search extends HttpServlet {
 		String isbn = request.getParameter("isbn");
 		String below_price = request.getParameter("below_price");
 		String above_price = request.getParameter("above_price");
+		String page = request.getParameter("page");
 
 		ArrayList<LargeClassification> list = LargeClassification.getInfos();
 		request.setAttribute("list", list);
@@ -56,7 +57,7 @@ public class Search extends HttpServlet {
 
 		ArrayList<Result> list5 = Result.getInfos(large_id, middle_id,
 				small_id, enable_pub_name, pub_name, name, writer, isbn,
-				below_price, above_price);
+				below_price, above_price, page);
 		request.setAttribute("list5", list5);
 		
 		ArrayList<Circulation> list6 = Circulation.getInfos(login, id);
