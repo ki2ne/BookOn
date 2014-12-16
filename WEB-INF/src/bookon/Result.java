@@ -168,7 +168,7 @@ public class Result implements Serializable {
 				query += (" AND books_data.bk_id LIKE '__" + small_id + "%'");
 			}
 			query += " ORDER BY books_data.bk_id";
-			if(page != null && page.equals("1")) {
+			if(page == null || page.equals("1")) {
 				query += " OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY";
 			}
 			else if(page != null && Integer.parseInt(page) > 1){
