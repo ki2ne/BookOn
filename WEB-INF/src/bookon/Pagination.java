@@ -53,7 +53,7 @@ public class Pagination {
 			
 			if(pagination.getPage() > middle) {
 				if(pagination.getPage() - middle + 10 > pagination.getTotalPage()) {
-					pagination.setBegin(pagination.getTotalPage() - 10);
+					pagination.setBegin(pagination.getTotalPage() - 9);
 				} else {
 					pagination.setBegin(pagination.getPage() - middle);
 				}

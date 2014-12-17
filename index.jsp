@@ -387,7 +387,7 @@
 													</c:forEach>
 												</c:when>
 												<c:otherwise>
-													<c:forEach var="i" begin="${requestScope.pagination.begin}" end="${requestScope.pagination.begin + 10}" step="1">
+													<c:forEach var="i" begin="${requestScope.pagination.begin}" end="${requestScope.pagination.begin + 9}" step="1">
 														<button type="button" class="btn btn-default" OnClick="submitPage(${i})">${i}</button>
 													</c:forEach>
 												</c:otherwise>
@@ -449,6 +449,28 @@
 					</c:forEach>
 				</table>
 			</form><!-- /.form -->
+			<div class="panel-footer">
+				<c:if test="${requestScope.pagination.totalPage > 1}">
+					<div class="text-center">
+					    <div class="btn-group">
+					        <button type="button" class="btn btn-default"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></button>
+						        <c:choose>
+									<c:when test="${requestScope.pagination.totalPage < 10}">
+										<c:forEach var="i" begin="1" end="${requestScope.pagination.totalPage}" step="1">
+											<button type="button" class="btn btn-default" OnClick="submitPage(${i})">${i}</button>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="i" begin="${requestScope.pagination.begin}" end="${requestScope.pagination.begin + 9}" step="1">
+											<button type="button" class="btn btn-default" OnClick="submitPage(${i})">${i}</button>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+					        <button type="button" class="btn btn-default"><span aria-hidden="true">&raquo;</span><span class="sr-only">Previous</span></button>
+					    </div>
+					</div>
+				</c:if>
+			</div>
 		</div>
 	</div><!-- /.container -->
     
