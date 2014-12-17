@@ -60,6 +60,9 @@ public class Search extends HttpServlet {
 				below_price, above_price, page);
 		request.setAttribute("list5", list5);
 		
+		Pagination pagination = Pagination.getInfos(list5.get(0).getNumberOfRows(), page);
+		request.setAttribute("pagination", pagination);
+		
 		ArrayList<Circulation> list6 = Circulation.getInfos(login, id);
 		request.setAttribute("list6", list6);
 		
