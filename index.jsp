@@ -376,7 +376,7 @@
 								<h4 class="text-center">検索結果</h4>
 							</div>
 							<div class="col-md-8 col-sm-8">
-								<c:if test="${requestScope['list5'][0].numberOfRows / 10 > 1}">
+								<c:if test="${requestScope.pagination.totalPage > 1}">
 								<div class="text-center">
 								    <div class="btn-group">
 								        <button type="button" class="btn btn-default"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></button>
