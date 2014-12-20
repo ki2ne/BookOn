@@ -410,14 +410,14 @@
 				<!-- Table -->
 				<table class="table">
 					<tr>
-						<th>#</th>
-						<th>書籍名</th>
-						<th>著者</th>
-						<th>出版社</th>
-						<th>発行年</th>
-						<th>ISBN</th>
-						<th>価格</th>
-						<th>貸出状況</th>
+						<th width="6%">#</th>
+						<th width="40%">書籍名</th>
+						<th width="17%">著者</th>
+						<th width="10%">出版社</th>
+						<th width="6%">発行年</th>
+						<th width="10%">ISBN</th>
+						<th width="5%">価格</th>
+						<th width="6%">貸出状況</th>
 					</tr>
 					<c:forEach var="item" items="${requestScope['list5']}">
 						<tr>

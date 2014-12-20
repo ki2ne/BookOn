@@ -137,14 +137,12 @@
 					<!-- Table -->
 					<table class="table">
 						<tr>
-							<th>#</th>
 							<c:if test="${sessionScope.login != null || sessionScope.login == 'true'}">
 								<th>
-									<div class="checkbox">
 										<input type="checkbox" onClick="toggleAll(this)">
-									</div>
 								</th>
 							</c:if>
+							<th>#</th>
 							<th>書籍名</th>
 							<th>出版社</th>
 							<th>貸出日</th>
@@ -152,14 +150,12 @@
 						</tr>
 						<c:forEach var="item" items="${requestScope['list2']}">
 							<tr>
-								<td>${fn:escapeXml(item.id)}</td>
 								<c:if test="${sessionScope.login != null || sessionScope.login == 'true'}">
 									<td>
-										<div class="checkbox">
 											<input type="checkbox" name="bk_id" value='${item.id}'>
-										</div>
 									</td>
 								</c:if>
+								<td>${fn:escapeXml(item.id)}</td>
 								<td>${fn:escapeXml(item.name)}</td>
 								<td>${fn:escapeXml(item.publisher)}</td>
 								<td>${fn:escapeXml(item.lendingDate)}</td>
