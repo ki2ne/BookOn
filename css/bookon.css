@@ -24,3 +24,7 @@ th {
 .panel-footer {
 	background-color: #FFFFFF !important;
 }
+
+.navbar {
+	margin-bottom: 0px;
+}

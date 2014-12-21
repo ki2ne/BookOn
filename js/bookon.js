@@ -93,7 +93,7 @@ $(document).ready(function() {
                 message: 'ID is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'IDを入力してください'
+                        message: 'IDを入力してください   (例: 1012)'
                     },
                     stringLength: {
                         min: 4,

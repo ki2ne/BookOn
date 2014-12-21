@@ -170,8 +170,8 @@
 	</div>
 
     <div class="container">
-		<div class="row">
-			<form class="form search_form" name="search_form" role="form" action="Search">
+	    <form class="form search_form" name="search_form" role="form" action="Search">
+			<div class="row">
 				<div class="col-sm-2" style="background: white;">
 					<div class="btn-group-vertical btn-block" data-toggle="buttons">
 						<label class="btn btn-primary"> <input type="radio" autocomplete="off">大分類</label>
@@ -334,11 +334,9 @@
 					<button type="submit" class="btn btn-primary btn-lg btn-block">検索</button>
 					<input type="hidden" id="page" name="page" value="1">
 				</div>
-			</form><!-- /.form -->
-			<div class="col-sm-2" style="background: white;">
-				<form class="form" name="item_state_form" role="form" action="Return">
+				<div class="col-sm-2" style="background: white;">
 					<div class="btn-group-vertical btn-block">
-						<button type="submit" class="btn btn-default btn-block">
+						<a href="Return" class="btn btn-default btn-block">
 							<c:choose>
 								<c:when test="${sessionScope.login != null || sessionScope.login == 'true'}">
 									${fn:escapeXml(sessionScope.last_name)} 
@@ -349,19 +347,19 @@
 									全体
 								</c:otherwise>
 							</c:choose>
-						</button>
+						</a>
 						<c:forEach var="item" items="${requestScope['list6']}">
-							<button type="submit" class="btn btn-default btn-block ellipsis">
+							<a href="Return" class="btn btn-default btn-block ellipsis">
 								貸出中書籍 <span class="badge pull-right">${fn:escapeXml(item.circulation)}</span>
-							</button>
-							<button type="submit" class="btn btn-default btn-block ellipsis">
+							</a>
+							<a href="Return" class="btn btn-default btn-block ellipsis">
 								貸出期限超過 <span class="badge pull-right">${fn:escapeXml(item.overdue)}</span>
-							</button>
+							</a>
 						</c:forEach>
 					</div>
-				</form><!-- /.form -->
+				</div>
 			</div>
-		</div>
+		</form><!-- /.form -->
 	</div><!-- /.container -->
 
     <div class="container">
