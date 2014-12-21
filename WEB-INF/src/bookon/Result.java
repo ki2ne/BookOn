@@ -172,7 +172,7 @@ public class Result implements Serializable {
 				query += " OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY";
 			}
 			else if(page != null && Integer.parseInt(page) > 1){
-				query += " OFFSET " + ((Integer.parseInt(page) - 1) * 10 - 1) +  " ROWS FETCH NEXT 10 ROWS ONLY";
+				query += " OFFSET " + ((Integer.parseInt(page) - 1) * 10) +  " ROWS FETCH NEXT 10 ROWS ONLY";
 			}
 			
 			rs = stmt.executeQuery(query);
