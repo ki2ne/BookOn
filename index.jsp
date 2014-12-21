@@ -48,7 +48,7 @@
       session.setAttribute("middle_id", middle_id);
       session.setAttribute("small_id", small_id);
     %>
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-default" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
@@ -383,12 +383,26 @@
 									        <c:choose>
 												<c:when test="${requestScope.pagination.totalPage < 10}">
 													<c:forEach var="i" begin="1" end="${requestScope.pagination.totalPage}" step="1">
-														<button type="button" class="btn btn-default" OnClick="submitPage(${i})">${i}</button>
+														<c:choose>
+															<c:when test="${i == requestScope.pagination.page}">
+																<button type="button" class="btn btn-default active" OnClick="submitPage(${i})">${i}</button>
+															</c:when>
+															<c:otherwise>
+																<button type="button" class="btn btn-default" OnClick="submitPage(${i})">${i}</button>
+															</c:otherwise>
+														</c:choose>
 													</c:forEach>
 												</c:when>
 												<c:otherwise>
 													<c:forEach var="i" begin="${requestScope.pagination.begin}" end="${requestScope.pagination.begin + 9}" step="1">
-														<button type="button" class="btn btn-default" OnClick="submitPage(${i})">${i}</button>
+														<c:choose>
+															<c:when test="${i == requestScope.pagination.page}">
+																<button type="button" class="btn btn-default active" OnClick="submitPage(${i})">${i}</button>
+															</c:when>
+															<c:otherwise>
+																<button type="button" class="btn btn-default" OnClick="submitPage(${i})">${i}</button>
+															</c:otherwise>
+														</c:choose>
 													</c:forEach>
 												</c:otherwise>
 											</c:choose>
