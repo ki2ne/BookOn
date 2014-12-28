@@ -1,84 +1,3 @@
-function wrapperSubmit(callObj) {
-
-      var large_id = document.getElementsByName('large_id');
-      var middle_id = document.getElementsByName('middle_id');
-      var small_id = document.getElementsByName('small_id');
-      var large_id_is_not_checked = true;
-      var middle_id_is_not_checked = true;
-
-      if (callObj.name == 'large_id') {
-        for(var i=0; i < middle_id.length; i++)
-        {
-        middle_id[i].checked = false;
-        }
-        for(var i=0; i < small_id.length; i++)
-        {
-        small_id[i].checked = false;
-        }
-      }
-      if (callObj.name == 'middle_id') {
-        for(var i=0; i < small_id.length; i++)
-        {
-        small_id[i].checked = false;
-        }
-        for(var i=0; i < large_id.length; i++)
-        {
-          if(large_id[i].checked == true)
-          {
-            large_id_is_not_checked = false;
-          }
-        }
-        if(large_id_is_not_checked == true) {
-          large_id[0].checked = true;
-        }
-      }
-
-      if (callObj.name == 'small_id') {
-        for(var i=0; i < large_id.length; i++)
-        {
-          if(large_id[i].checked == true)
-          {
-            large_id_is_not_checked = false;
-          }
-        }
-        if(large_id_is_not_checked == true) {
-          large_id[0].checked = true;
-        }
-        for(var i=0; i < middle_id.length; i++)
-        {
-          if(middle_id[i].checked == true)
-          {
-            middle_id_is_not_checked = false;
-          }
-        }
-        if(middle_id_is_not_checked == true) {
-          middle_id[0].checked = true;
-        }
-      }
-
-    document.forms['search_form'].submit();
-}
-
-function clearAll() {
-  var large_id = document.getElementsByName('large_id');
-  var middle_id = document.getElementsByName('middle_id');
-  var small_id = document.getElementsByName('small_id');
-
-  for(var i=0; i < large_id.length; i++)
-    {
-      large_id[i].checked = false;
-    }
-    for(var i=0; i < middle_id.length; i++)
-    {
-      middle_id[i].checked = false;
-    }
-    for(var i=0; i < small_id.length; i++)
-    {
-      small_id[i].checked = false;
-    }
-    document.forms['search_form'].submit();
-}
-
 $(document).ready(function() {
     $('.register_form').bootstrapValidator({
         live: 'disabled',
@@ -183,7 +102,92 @@ $(document).ready(function() {
     $('#registerModal').on('shown.bs.modal', function() {
         $('.register_form').bootstrapValidator('resetForm', true);
     });
+
+    window.scroll($.cookie("x"), $.cookie("y"));
 });
+
+function wrapperSubmit(callObj) {
+
+      var large_id = document.getElementsByName('large_id');
+      var middle_id = document.getElementsByName('middle_id');
+      var small_id = document.getElementsByName('small_id');
+      var large_id_is_not_checked = true;
+      var middle_id_is_not_checked = true;
+
+      if (callObj.name == 'large_id') {
+        for(var i=0; i < middle_id.length; i++)
+        {
+        middle_id[i].checked = false;
+        }
+        for(var i=0; i < small_id.length; i++)
+        {
+        small_id[i].checked = false;
+        }
+      }
+      if (callObj.name == 'middle_id') {
+        for(var i=0; i < small_id.length; i++)
+        {
+        small_id[i].checked = false;
+        }
+        for(var i=0; i < large_id.length; i++)
+        {
+          if(large_id[i].checked == true)
+          {
+            large_id_is_not_checked = false;
+          }
+        }
+        if(large_id_is_not_checked == true) {
+          large_id[0].checked = true;
+        }
+      }
+
+      if (callObj.name == 'small_id') {
+        for(var i=0; i < large_id.length; i++)
+        {
+          if(large_id[i].checked == true)
+          {
+            large_id_is_not_checked = false;
+          }
+        }
+        if(large_id_is_not_checked == true) {
+          large_id[0].checked = true;
+        }
+        for(var i=0; i < middle_id.length; i++)
+        {
+          if(middle_id[i].checked == true)
+          {
+            middle_id_is_not_checked = false;
+          }
+        }
+        if(middle_id_is_not_checked == true) {
+          middle_id[0].checked = true;
+        }
+      }
+
+    document.cookie = 'x = ' + document.body.scrollLeft;
+    document.cookie = 'y = ' + document.body.scrollTop;
+    document.forms['search_form'].submit();
+}
+
+function clearAll() {
+  var large_id = document.getElementsByName('large_id');
+  var middle_id = document.getElementsByName('middle_id');
+  var small_id = document.getElementsByName('small_id');
+
+  for(var i=0; i < large_id.length; i++)
+    {
+      large_id[i].checked = false;
+    }
+    for(var i=0; i < middle_id.length; i++)
+    {
+      middle_id[i].checked = false;
+    }
+    for(var i=0; i < small_id.length; i++)
+    {
+      small_id[i].checked = false;
+    }
+    document.forms['search_form'].submit();
+}
 
 function createPDF() {
 	document.search_form.action = "CreatePDF";
@@ -194,6 +198,8 @@ function createPDF() {
 }
 
 function submitPage(page) {
+	document.cookie = 'x = ' + document.body.scrollLeft;
+	document.cookie = 'y = ' + document.body.scrollTop;
 	document.getElementById("page").value = page;
 	console.log(document.getElementById("page").value);
 	document.search_form.submit();
