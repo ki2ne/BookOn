@@ -3,7 +3,7 @@ body {
   padding-bottom: 20px;
 }
 
-.container {
+.section {
 	margin-top: 10px;
 }
 
@@ -27,4 +27,8 @@ th {
 
 .navbar {
 	margin-bottom: 0px;
+}
+
+.menu {
+	padding-bottom: 10px;
 }

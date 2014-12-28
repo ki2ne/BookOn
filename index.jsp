@@ -207,190 +207,194 @@
     <div class="container">
 	    <form class="form search_form" name="search_form" role="form" action="Search">
 			<div class="row">
-				<div class="col-sm-2" style="background: white;">
-					<div class="btn-group-vertical btn-block" data-toggle="buttons">
-						<label class="btn btn-primary"> <input type="radio" autocomplete="off">大分類</label>
-						<c:forEach var="item" items="${requestScope['list']}">
-							<c:choose>
-								<c:when test="${param.large_id != null}">
-									<c:choose>
-										<c:when test="${param.large_id == item.id}">
-											<label class="btn btn-default ellipsis active">
-											<input type="radio" name="large_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)" checked>${fn:escapeXml(item.classification)}
-											</label>
-										</c:when>
-										<c:otherwise>
-											<label class="btn btn-default ellipsis">
-											<input type="radio" name="large_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
-											</label>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								<c:otherwise>
-									<label class="btn btn-default ellipsis">
-									<input type="radio" name="large_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
-									</label>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</div>
-				</div>
-				<div class="col-sm-2" style="background: white;">
-					<div class="btn-group-vertical btn-block" data-toggle="buttons">
-						<label class="btn btn-success"> <input type="radio" autocomplete="off">中分類</label>
-						<c:forEach var="item" items="${requestScope['list2']}">
-							<c:choose>
-								<c:when test="${param.middle_id != null}">
-									<c:choose>
-										<c:when test="${param.middle_id == item.id}">
-											<label class="btn btn-default ellipsis active">
-											<input type="radio" name="middle_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)" checked>${fn:escapeXml(item.classification)}
-											</label>
-										</c:when>
-										<c:otherwise>
-											<label class="btn btn-default ellipsis">
-											<input type="radio" name="middle_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
-											</label>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								<c:otherwise>
-									<label class="btn btn-default ellipsis">
-									<input type="radio" name="middle_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
-									</label>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</div>
-				</div>
-				<div class="col-sm-2" style="background: white;">
-					<div class="btn-group-vertical btn-block" data-toggle="buttons">
-						<label class="btn btn-danger"> <input type="radio" autocomplete="off">小分類</label>
-						<c:forEach var="item" items="${requestScope['list3']}">
-							<c:choose>
-								<c:when test="${param.small_id != null}">
-									<c:choose>
-										<c:when test="${param.small_id == item.id}">
-											<label class="btn btn-default ellipsis active"> <input type="radio" name="small_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)" checked>${fn:escapeXml(item.classification)}
-											</label>
-										</c:when>
-										<c:otherwise>
-											<label class="btn btn-default ellipsis"> <input type="radio" name="small_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
-											</label>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								<c:otherwise>
-									<label class="btn btn-default ellipsis"> <input type="radio" name="small_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
-									</label>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</div>
-				</div>
-				<div class="col-sm-2" style="background: white;">
-					<div class="form-group">
-						<div class="checkbox">
-							<label>
+				<div class="col-sm-12 col-md-12 col-lg-6">
+					<div class="col-sm-4 section" style="background: white;">
+						<div class="btn-group-vertical btn-block" data-toggle="buttons">
+							<label class="btn btn-primary"> <input type="radio" autocomplete="off">大分類</label>
+							<c:forEach var="item" items="${requestScope['list']}">
 								<c:choose>
-									<c:when test="${param.enable_pub_name != null}">
-										<input type="checkbox" name="enable_pub_name" value="enable" checked>出版社
+									<c:when test="${param.large_id != null}">
+										<c:choose>
+											<c:when test="${param.large_id == item.id}">
+												<label class="btn btn-default ellipsis active">
+												<input type="radio" name="large_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)" checked>${fn:escapeXml(item.classification)}
+												</label>
+											</c:when>
+											<c:otherwise>
+												<label class="btn btn-default ellipsis">
+												<input type="radio" name="large_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
+												</label>
+											</c:otherwise>
+										</c:choose>
 									</c:when>
 									<c:otherwise>
-										<input type="checkbox" name="enable_pub_name" value="enable">出版社
+										<label class="btn btn-default ellipsis">
+										<input type="radio" name="large_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
+										</label>
 									</c:otherwise>
 								</c:choose>
-							</label>
+							</c:forEach>
 						</div>
 					</div>
-					<select id="pub_name" name="pub_name" size="14" class="form-control">
-						<c:forEach var="item" items="${requestScope['list4']}">
-							<c:choose>
-								<c:when test="${param.pub_name != null}">
+					<div class="col-sm-4 section" style="background: white;">
+						<div class="btn-group-vertical btn-block" data-toggle="buttons">
+							<label class="btn btn-success"> <input type="radio" autocomplete="off">中分類</label>
+							<c:forEach var="item" items="${requestScope['list2']}">
+								<c:choose>
+									<c:when test="${param.middle_id != null}">
+										<c:choose>
+											<c:when test="${param.middle_id == item.id}">
+												<label class="btn btn-default ellipsis active">
+												<input type="radio" name="middle_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)" checked>${fn:escapeXml(item.classification)}
+												</label>
+											</c:when>
+											<c:otherwise>
+												<label class="btn btn-default ellipsis">
+												<input type="radio" name="middle_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
+												</label>
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:otherwise>
+										<label class="btn btn-default ellipsis">
+										<input type="radio" name="middle_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
+										</label>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</div>
+					</div>
+					<div class="col-sm-4 section" style="background: white;">
+						<div class="btn-group-vertical btn-block" data-toggle="buttons">
+							<label class="btn btn-danger"> <input type="radio" autocomplete="off">小分類</label>
+							<c:forEach var="item" items="${requestScope['list3']}">
+								<c:choose>
+									<c:when test="${param.small_id != null}">
+										<c:choose>
+											<c:when test="${param.small_id == item.id}">
+												<label class="btn btn-default ellipsis active"> <input type="radio" name="small_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)" checked>${fn:escapeXml(item.classification)}
+												</label>
+											</c:when>
+											<c:otherwise>
+												<label class="btn btn-default ellipsis"> <input type="radio" name="small_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
+												</label>
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:otherwise>
+										<label class="btn btn-default ellipsis"> <input type="radio" name="small_id" value="${item.id}" autocomplete="off" onChange="wrapperSubmit(this)">${fn:escapeXml(item.classification)}
+										</label>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-12 col-lg-6">
+					<div class="col-sm-4 section" style="background: white;">
+						<div class="form-group">
+							<div class="checkbox">
+								<label>
 									<c:choose>
-										<c:when test="${param.pub_name == item.name}">
-											<option selected>${fn:escapeXml(item.name)}</option>
+										<c:when test="${param.enable_pub_name != null}">
+											<input type="checkbox" name="enable_pub_name" value="enable" checked>出版社
 										</c:when>
 										<c:otherwise>
-											<option>${fn:escapeXml(item.name)}</option>
+											<input type="checkbox" name="enable_pub_name" value="enable">出版社
 										</c:otherwise>
 									</c:choose>
-								</c:when>
-								<c:otherwise>
-									<option>${fn:escapeXml(item.name)}</option>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</select>
-				</div>
-				<div class="col-sm-2" style="background: white;">
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-addon">
-								<span class="glyphicon glyphicon-book"></span>
+								</label>
 							</div>
-							<input class="form-control" type="text" name="name" value='<%if (name != null) {%><%=name%><%}%>' placeholder="書籍名">
 						</div>
+						<select id="pub_name" name="pub_name" size="14" class="form-control">
+							<c:forEach var="item" items="${requestScope['list4']}">
+								<c:choose>
+									<c:when test="${param.pub_name != null}">
+										<c:choose>
+											<c:when test="${param.pub_name == item.name}">
+												<option selected>${fn:escapeXml(item.name)}</option>
+											</c:when>
+											<c:otherwise>
+												<option>${fn:escapeXml(item.name)}</option>
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:otherwise>
+										<option>${fn:escapeXml(item.name)}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
 					</div>
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-addon">
-								<span class="glyphicon glyphicon-user"></span>
+					<div class="col-sm-4 section" style="background: white;">
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-book"></span>
+								</div>
+								<input class="form-control" type="text" name="name" value='<%if (name != null) {%><%=name%><%}%>' placeholder="書籍名">
 							</div>
-							<input class="form-control" type="text" name="writer" value='<%if (writer != null) {%><%=writer%><%}%>' placeholder="著者">
 						</div>
-					</div>
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-addon">
-								<span class="glyphicon glyphicon-barcode"></span>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-user"></span>
+								</div>
+								<input class="form-control" type="text" name="writer" value='<%if (writer != null) {%><%=writer%><%}%>' placeholder="著者">
 							</div>
-							<input class="form-control" type="text" name="isbn" value='<%if (isbn != null) {%><%=isbn%><%}%>' placeholder="ISBN">
 						</div>
-					</div>
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-addon">
-								<span class="glyphicon glyphicon-usd"></span>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-barcode"></span>
+								</div>
+								<input class="form-control" type="text" name="isbn" value='<%if (isbn != null) {%><%=isbn%><%}%>' placeholder="ISBN">
 							</div>
-							<input class="form-control" type="text" name="below_price" value='<%if (below_price != null) {%><%=below_price%><%}%>' placeholder="価格">
-							<span class="input-group-addon">以下</span>
 						</div>
-					</div>
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-addon">
-								<span class="glyphicon glyphicon-usd"></span>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-usd"></span>
+								</div>
+								<input class="form-control" type="text" name="below_price" value='<%if (below_price != null) {%><%=below_price%><%}%>' placeholder="価格">
+								<span class="input-group-addon">以下</span>
 							</div>
-							<input class="form-control" type="text" name="above_price" value='<%if (above_price != null) {%><%=above_price%><%}%>' placeholder="価格">
-							<span class="input-group-addon">以上</span>
 						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-usd"></span>
+								</div>
+								<input class="form-control" type="text" name="above_price" value='<%if (above_price != null) {%><%=above_price%><%}%>' placeholder="価格">
+								<span class="input-group-addon">以上</span>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary btn-lg btn-block">検索</button>
+						<input type="hidden" id="page" name="page" value="1">
 					</div>
-					<button type="submit" class="btn btn-primary btn-lg btn-block">検索</button>
-					<input type="hidden" id="page" name="page" value="1">
-				</div>
-				<div class="col-sm-2" style="background: white;">
-					<div class="btn-group-vertical btn-block">
-						<a href="Return" class="btn btn-default btn-block">
-							<c:choose>
-								<c:when test="${sessionScope.login != null && sessionScope.login == 'true'}">
-									${fn:escapeXml(sessionScope.last_name)} 
-									${fn:escapeXml(sessionScope.first_name)}
-									さん
-								</c:when>
-								<c:otherwise>
-									全体
-								</c:otherwise>
-							</c:choose>
-						</a>
-						<c:forEach var="item" items="${requestScope['list6']}">
-							<a href="Return" class="btn btn-default btn-block ellipsis">
-								貸出中書籍 <span class="badge pull-right">${fn:escapeXml(item.circulation)}</span>
+					<div class="col-sm-4 section" style="background: white;">
+						<div class="btn-group-vertical btn-block">
+							<a href="Return" class="btn btn-default btn-block">
+								<c:choose>
+									<c:when test="${sessionScope.login != null && sessionScope.login == 'true'}">
+										${fn:escapeXml(sessionScope.last_name)} 
+										${fn:escapeXml(sessionScope.first_name)}
+										さん
+									</c:when>
+									<c:otherwise>
+										全体
+									</c:otherwise>
+								</c:choose>
 							</a>
-							<a href="Return" class="btn btn-default btn-block ellipsis">
-								貸出期限超過 <span class="badge pull-right">${fn:escapeXml(item.overdue)}</span>
-							</a>
-						</c:forEach>
+							<c:forEach var="item" items="${requestScope['list6']}">
+								<a href="Return" class="btn btn-default btn-block ellipsis">
+									貸出中書籍 <span class="badge pull-right">${fn:escapeXml(item.circulation)}</span>
+								</a>
+								<a href="Return" class="btn btn-default btn-block ellipsis">
+									貸出期限超過 <span class="badge pull-right">${fn:escapeXml(item.overdue)}</span>
+								</a>
+							</c:forEach>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -398,7 +402,7 @@
 	</div><!-- /.container -->
 
     <div class="container">
-		<div class="panel panel-default">
+		<div class="panel panel-default  section">
 			<!-- Default panel contents -->
 			<form class="form" name="book_table" role="form" action="LendTransaction">
 				<div class="panel-heading clearfix">

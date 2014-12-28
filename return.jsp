@@ -190,7 +190,7 @@
 	</div>
 
     <div class="container">
-		<div class="col-sm-2" style="background: white;">
+		<div class="col-sm-12 col-md-3 col-lg-2 section menu" style="background: white;">
 			<form class="form" name="item_state_form" role="form" action="Return">
 				<div class="btn-group-vertical btn-block">
 					<button type="submit" class="btn btn-default btn-block">
@@ -219,7 +219,7 @@
 				</c:if>
 			</form>
 		</div>
-		<div class="col-sm-10" style="background: white;">
+		<div class="col-sm-12 col-md-9 col-lg-10 section" style="background: white;">
 			<form class="form" name="lend" role="form" action="ReturnTransaction">
 				<div class="panel panel-default">
 					<!-- Default panel contents -->
@@ -261,8 +261,8 @@
 	</div>
 
     <div class="container">
-		<div class="col-sm-2" style="background: white;"></div>
-		<div class="col-sm-10" style="background: white;">
+		<div class="col-sm-12 col-md-3 col-lg-2" style="background: white;"></div>
+		<div class="col-sm-12 col-md-9 col-lg-10" style="background: white;">
 			<div class="panel panel-default">
 				<!-- Default panel contents -->
 				<form class="form" name="overdue" role="form">
