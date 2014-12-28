@@ -60,14 +60,6 @@
 			<url-pattern>/Search</url-pattern>
 	</servlet-mapping>
 	<servlet>
-			<servlet-name>LargeClassification</servlet-name>
-			<servlet-class>bookon.LargeClassification</servlet-class>
-	</servlet>
-	<servlet-mapping>
-			<servlet-name>LargeClassification</servlet-name>
-			<url-pattern>/LargeClassification</url-pattern>
-	</servlet-mapping>
-	<servlet>
 			<servlet-name>Return</servlet-name>
 			<servlet-class>bookon.Return</servlet-class>
 	</servlet>

@@ -71,30 +71,10 @@
 				</ul>
 				<c:choose>
 					<c:when test="${sessionScope.login == null || sessionScope.login != 'true'}">
-						<form class="navbar-form navbar-right" role="form" method="post" action="Authentication">
-							<c:choose>
-								<c:when test="${sessionScope.login != null}">
-									<div class="form-group has-error has-feedback">
-										<input type="text" name='email' placeholder="Email" class="form-control">
-										<span class="glyphicon glyphicon-remove form-control-feedback"></span>
-									</div>
-									<div class="form-group has-error has-feedback">
-										<input type="password" name='pass' placeholder="Password" class="form-control">
-											<span class="glyphicon glyphicon-remove form-control-feedback"></span>
-									</div>
-								</c:when>
-								<c:otherwise>
-									<div class="form-group">
-										<input type="text" name='email' placeholder="Email" class="form-control">
-									</div>
-									<div class="form-group">
-										<input type="password" name='pass' placeholder="Password" class="form-control">
-									</div>
-								</c:otherwise>
-							</c:choose>
-							<button type="submit" class="btn btn-success">ログイン</button>
+						<form class="navbar-form navbar-right">
+							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#loginModal">ログイン</button>
 							<!-- Button trigger modal -->
-							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">登録</button>
+							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#registerModal">登録</button>
 						</form>
 					</c:when>
 					<c:otherwise>
@@ -112,9 +92,64 @@
 			<!--/.navbar-collapse -->
 		</div><!-- /.container -->
 	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<form class="form-horizontal" method="POST" role="form" action="Authentication">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span>
+							<span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">ログイン</h4>
+					</div>
+					<div class="modal-body">
+							<c:choose>
+								<c:when test="${sessionScope.login != null}">
+									<div class="form-group has-error has-feedback">
+										<label for="email" class="col-md-4 control-label">Email</label>
+										<div class="col-md-6">
+										<input type="text" name='email' placeholder="Email" class="form-control">
+										<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+										</div>
+									</div>
+									<div class="form-group has-error has-feedback">
+										<label for="pass" class="col-md-4 control-label">Password</label>
+										<div class="col-md-6">
+										<input type="password" name='pass' placeholder="Password" class="form-control">
+											<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+										</div>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="form-group">
+										<label for="email" class="col-md-4 control-label">Email</label>
+										<div class="col-md-6">
+										<input type="text" name='email' placeholder="Email" class="form-control">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="pass" class="col-md-4 control-label">Password</label>
+										<div class="col-md-6">
+										<input type="password" name='pass' placeholder="Password" class="form-control">
+										</div>
+									</div>
+								</c:otherwise>
+							</c:choose>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success" name="register">ログイン</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 
     <!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<form class="form-horizontal register_form" method="POST" name="register_form" role="form" action="RegisterTransaction">
 				<div class="modal-content">
@@ -338,7 +373,7 @@
 					<div class="btn-group-vertical btn-block">
 						<a href="Return" class="btn btn-default btn-block">
 							<c:choose>
-								<c:when test="${sessionScope.login != null || sessionScope.login == 'true'}">
+								<c:when test="${sessionScope.login != null && sessionScope.login == 'true'}">
 									${fn:escapeXml(sessionScope.last_name)} 
 									${fn:escapeXml(sessionScope.first_name)}
 									さん
@@ -485,13 +520,6 @@
 			</div>
 		</div>
 	</div><!-- /.container -->
-    
-    <c:if test="${sessionScope.resultOfLendTransaction != null && sessionScope.resultOfLendTransaction == -1}">
-    <script type="text/javascript">
-    alert("ご指定の本は既に借りられています。");
-    </script>
-    <% session.setAttribute("resultOfLendTransaction", 0); %>
-    </c:if>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -499,5 +527,16 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrapValidator.min.js"></script>
     <script src="js/bookon.js" charset="UTF-8"></script>
+    <c:if test="${sessionScope.resultOfLendTransaction != null && sessionScope.resultOfLendTransaction == -1}">
+    <script type="text/javascript">
+    alert("ご指定の本は既に借りられています。");
+    </script>
+    <% session.setAttribute("resultOfLendTransaction", 0); %>
+    </c:if>
+    <%--<c:if test="${sessionScope.login != null && sessionScope.login != 'true'}">
+    <script type="text/javascript">
+    $('#loginModal').modal({ show: true });
+    </script>
+    </c:if>--%>
   </body>
 </html>

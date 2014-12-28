@@ -180,7 +180,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#myModal').on('shown.bs.modal', function() {
+    $('#registerModal').on('shown.bs.modal', function() {
         $('.register_form').bootstrapValidator('resetForm', true);
     });
 });
@@ -198,3 +198,10 @@ function submitPage(page) {
 	console.log(document.getElementById("page").value);
 	document.search_form.submit();
 }
+
+function toggleAll(source) {
+    checkboxes = document.getElementsByName('bk_id');
+    for(var i=0; i < checkboxes.length; i++) {
+      checkboxes[i].checked = source.checked;
+    }
+  }
