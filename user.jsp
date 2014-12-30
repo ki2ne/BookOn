@@ -198,7 +198,7 @@
 		<div class="col-sm-12 col-md-9 col-lg-10 section" style="background: white;">
 			<div class="panel panel-default">
 				<!-- Default panel contents -->
-				<form class="form" name="user" role="form" action="DeleteUser">
+				<form class="form" name="user" role="form" action="UserTransaction">
 					<div class="panel-heading">ユーザー情報</div>
 
 					<!-- Table -->

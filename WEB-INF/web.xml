@@ -99,6 +99,14 @@
 			<servlet-name>User</servlet-name>
 			<url-pattern>/User</url-pattern>
 	</servlet-mapping>
+	<servlet>
+			<servlet-name>UserTransaction</servlet-name>
+			<servlet-class>bookon.UserTransaction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+			<servlet-name>UserTransaction</servlet-name>
+			<url-pattern>/UserTransaction</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
