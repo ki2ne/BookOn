@@ -83,6 +83,22 @@
 			<servlet-name>OverDue</servlet-name>
 			<url-pattern>/OverDue</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>Overview</servlet-name>
+		<servlet-class>bookon.Overview</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Overview</servlet-name>
+		<url-pattern>/chart/piechart.png</url-pattern>
+	</servlet-mapping>
+	<servlet>
+			<servlet-name>User</servlet-name>
+			<servlet-class>bookon.User</servlet-class>
+	</servlet>
+	<servlet-mapping>
+			<servlet-name>User</servlet-name>
+			<url-pattern>/User</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

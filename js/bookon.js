@@ -205,8 +205,8 @@ function submitPage(page) {
 	document.search_form.submit();
 }
 
-function toggleAll(source) {
-    checkboxes = document.getElementsByName('bk_id');
+function toggleAll(source, name) {
+    checkboxes = document.getElementsByName(name);
     for(var i=0; i < checkboxes.length; i++) {
       checkboxes[i].checked = source.checked;
     }

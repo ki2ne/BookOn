@@ -15,5 +15,7 @@
 	<classpathentry kind="lib" path="WEB-INF/lib/javax.servlet.jsp.jstl-api-1.2.1.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/commons-logging-1.2.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/lib/tomcat-api.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/jfreechart-1.0.19.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>

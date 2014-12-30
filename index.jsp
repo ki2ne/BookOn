@@ -394,6 +394,7 @@
 									貸出期限超過 <span class="badge pull-right">${fn:escapeXml(item.overdue)}</span>
 								</a>
 							</c:forEach>
+							<a href="overview.jsp" class="btn btn-default btn-block ellipsis">管理画面</a>
 						</div>
 					</div>
 				</div>

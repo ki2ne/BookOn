@@ -50,9 +50,6 @@
 					<li><a href="">about</a></li>
 					<li><a href="">contact</a></li>
 					<li><a href=""><fmt:formatDate value="${today}" type="DATE" dateStyle="FULL" /></a></li>
-					<c:if test="${sessionScope.resultOfLendTransaction != null && sessionScope.resultOfLendTransaction == -1}">
-						<li><a href="">ご指定の本は既に借りられています。</a></li>
-					</c:if>
 				</ul>
 				<c:choose>
 					<c:when test="${sessionScope.login == null || sessionScope.login != 'true'}">
@@ -188,110 +185,22 @@
 			</form>
 		</div>
 	</div>
-
-    <div class="container">
+	
+	<div class="container">
 		<div class="col-sm-12 col-md-3 col-lg-2 section menu" style="background: white;">
-			<form class="form" name="item_state_form" role="form" action="Return">
 				<div class="btn-group-vertical btn-block">
-					<button type="submit" class="btn btn-default btn-block">
-						<c:choose>
-							<c:when test="${sessionScope.login != null || sessionScope.login == 'true'}">
-								${fn:escapeXml(sessionScope.last_name)} 
-								${fn:escapeXml(sessionScope.first_name)}
-								さん
-							</c:when>
-							<c:otherwise>
-								全体
-							</c:otherwise>
-						</c:choose>
-					</button>
-					<c:forEach var="item" items="${requestScope['list']}">
-						<button type="submit" class="btn btn-default btn-block ellipsis">
-							貸出中書籍 <span class="badge pull-right">${fn:escapeXml(item.circulation)}</span>
-						</button>
-						<button type="submit" class="btn btn-default btn-block ellipsis">
-							貸出期限超過 <span class="badge pull-right">${fn:escapeXml(item.overdue)}</span>
-						</button>
-					</c:forEach>
+					<a href="overview.jsp" class="btn btn-default btn-block ellipsis">概要</a>
+					<a href="User" class="btn btn-default btn-block ellipsis">ユーザー管理</a>
+					<a href="overview.jsp" class="btn btn-default btn-block ellipsis">ログ</a>
 				</div>
-				<c:if test="${sessionScope.login != null || sessionScope.login == 'true'}">
-					<button type="button" class="btn btn-danger btn-block" onClick="return document.forms['lend'].submit()">返却</button>
-				</c:if>
-			</form>
 		</div>
 		<div class="col-sm-12 col-md-9 col-lg-10 section" style="background: white;">
-			<form class="form" name="lend" role="form" action="ReturnTransaction">
-				<div class="panel panel-default">
-					<!-- Default panel contents -->
-					<div class="panel-heading">貸出中書籍</div>
-
-					<!-- Table -->
-					<table class="table">
-						<tr>
-							<c:if test="${sessionScope.login != null || sessionScope.login == 'true'}">
-								<th>
-										<input type="checkbox" onClick="toggleAll(this, 'bk_id')">
-								</th>
-							</c:if>
-							<th>#</th>
-							<th>書籍名</th>
-							<th>出版社</th>
-							<th>貸出日</th>
-							<th>返却予定日</th>
-						</tr>
-						<c:forEach var="item" items="${requestScope['list2']}">
-							<tr>
-								<c:if test="${sessionScope.login != null || sessionScope.login == 'true'}">
-									<td>
-											<input type="checkbox" name="bk_id" value='${item.id}'>
-									</td>
-								</c:if>
-								<td>${fn:escapeXml(item.id)}</td>
-								<td>${fn:escapeXml(item.name)}</td>
-								<td>${fn:escapeXml(item.publisher)}</td>
-								<td>${fn:escapeXml(item.lendingDate)}</td>
-								<td>${fn:escapeXml(item.dueDate)}</td>
-							</tr>
-						</c:forEach>
-					</table>
-
-				</div>
-			</form>
+			<img src='<%=request.getContextPath()%>/chart/piechart.png'>
+			<img src='<%=request.getContextPath()%>/chart/piechart.png'>
 		</div>
 	</div>
-
-    <div class="container">
-		<div class="col-sm-12 col-md-9 col-lg-10 col-sm-offset-0 col-md-offset-3 col-lg-offset-2" style="background: white;">
-			<div class="panel panel-default">
-				<!-- Default panel contents -->
-				<form class="form" name="overdue" role="form">
-					<div class="panel-heading">貸出期限超過書籍</div>
-
-					<!-- Table -->
-					<table class="table">
-						<tr>
-							<th>#</th>
-							<th>書籍名</th>
-							<th>出版社</th>
-							<th>貸出日</th>
-							<th>返却予定日</th>
-						</tr>
-						<c:forEach var="item" items="${requestScope['list3']}">
-							<tr>
-								<td>${fn:escapeXml(item.id)}</td>
-								<td>${fn:escapeXml(item.name)}</td>
-								<td>${fn:escapeXml(item.publisher)}</td>
-								<td>${fn:escapeXml(item.lendingDate)}</td>
-								<td>${fn:escapeXml(item.dueDate)}</td>
-							</tr>
-						</c:forEach>
-					</table>
-				</form>
-			</div>
-		</div>
-	</div>
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
