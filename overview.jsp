@@ -195,8 +195,16 @@
 				</div>
 		</div>
 		<div class="col-sm-12 col-md-9 col-lg-10 section" style="background: white;">
-			<img src='<%=request.getContextPath()%>/chart/piechart.png'>
-			<img src='<%=request.getContextPath()%>/chart/piechart.png'>
+			<table class="table">
+				<tr>
+					<td width="50%">分類別書籍数</td>
+					<td width="50%">今月の分類別貸出数</td>
+				</tr>
+				<tr>
+					<td><img src='<%=request.getContextPath()%>/chart/piechart.png'></td>
+					<td><img src='<%=request.getContextPath()%>/chart/piechart.png'></td>
+				</tr>
+			</table>
 		</div>
 	</div>
 	
