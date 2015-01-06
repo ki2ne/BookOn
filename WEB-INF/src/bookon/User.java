@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 public class User extends HttpServlet {
@@ -91,11 +92,29 @@ public class User extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
+		HttpSession session = request.getSession(true);
+		
+		System.out.println("Book On -> User page -> Start");
+		Runtime runtime = Runtime.getRuntime();
+		System.out.println("TotalMemory : " + (runtime.totalMemory() / 1024 / 1024) + "MB");
+		System.out.println("MemoryUsage : " + ((runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024) + "MB");
+
+		long startTime = System.currentTimeMillis();
+		
 		request.setCharacterEncoding("Windows-31J");
 		response.setCharacterEncoding("Windows-31J");
 		
 		ArrayList<User> list = this.getInfos();
 		request.setAttribute("list", list);
+		
+		long endTime = System.currentTimeMillis();
+		
+		System.out.println("RunTime : " + (endTime - startTime) + "ms");
+		
+		System.out.println("Session ID : " + session.getId());
+		if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")) {
+			System.out.println("UserName :" + session.getAttribute("last_name") + " " + session.getAttribute("first_name"));
+		}
 		
 		this.getServletContext().getRequestDispatcher("/user.jsp")
 		.forward(request, response);

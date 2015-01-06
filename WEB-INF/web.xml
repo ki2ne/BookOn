@@ -89,7 +89,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Overview</servlet-name>
-		<url-pattern>/chart/piechart.png</url-pattern>
+		<url-pattern>/Overview</url-pattern>
 	</servlet-mapping>
 	<servlet>
 			<servlet-name>User</servlet-name>

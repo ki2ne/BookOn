@@ -10,7 +10,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-public class ChartData implements Serializable {
+public class CirculationByClassificationOfThisYear implements Serializable {
 
 	private String classification;
 	private int number;
@@ -28,7 +28,7 @@ public class ChartData implements Serializable {
 		this.number = number;
 	}
 	
-	public static ArrayList<ChartData> getInfos() {
+	public static ArrayList<CirculationByClassificationOfThisYear> getInfos() {
 		
 		final class Group {
 			String id;
@@ -48,7 +48,7 @@ public class ChartData implements Serializable {
 			}
 		}
 		
-		ArrayList<ChartData> list = new ArrayList<ChartData>();
+		ArrayList<CirculationByClassificationOfThisYear> list = new ArrayList<CirculationByClassificationOfThisYear>();
 		ArrayList<Group> groupList = new ArrayList<Group>();
 		String query;
 		DataSource ds = null;
@@ -83,10 +83,15 @@ public class ChartData implements Serializable {
 			}
 		}
 		
-		query  = "SELECT COUNT(*) AS count FROM books_data INNER JOIN "
-				+ "(SELECT DISTINCT large_id FROM group_master) AS a "
-				+ "ON SUBSTRING(books_data.bk_id, 1, 1) = a.large_id "
-				+ "GROUP BY a.large_id ";
+		query  = "SELECT "
+				+ "  COUNT(*) AS count "
+				+ "FROM "
+				+ "  item_state "
+				+ "  INNER JOIN (SELECT DISTINCT large_id FROM group_master) AS a "
+				+ "    ON SUBSTRING(item_state.bk_id, 1, 1) = a.large_id "
+				+ "GROUP BY "
+				+ "  a.large_id ";
+
 		
 		try {
 			stmt = db.createStatement();
@@ -94,7 +99,7 @@ public class ChartData implements Serializable {
 			int i = 0;
 
 			while (rs.next()) {
-				ChartData chartData = new ChartData();
+				CirculationByClassificationOfThisYear chartData = new CirculationByClassificationOfThisYear();
 				chartData.setClassification(groupList.get(i).classification);
 				chartData.setNumber(Integer.parseInt(rs.getString("count")));
 				list.add(chartData);

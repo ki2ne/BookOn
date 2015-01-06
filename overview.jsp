@@ -198,11 +198,11 @@
 			<table class="table">
 				<tr>
 					<td width="50%">分類別書籍数</td>
-					<td width="50%">今月の分類別貸出数</td>
+					<td width="50%">今年の分類別貸出数</td>
 				</tr>
 				<tr>
-					<td><img src='<%=request.getContextPath()%>/chart/piechart.png'></td>
-					<td><img src='<%=request.getContextPath()%>/chart/piechart.png'></td>
+					<td><img src='./temp/NumberOfBooksByClassificationChart.png'></td>
+					<td><img src='./temp/CirculationByClassificationOfThisYear.png'></td>
 				</tr>
 			</table>
 		</div>

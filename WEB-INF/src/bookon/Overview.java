@@ -2,13 +2,16 @@ package bookon;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
@@ -25,15 +28,23 @@ public class Overview extends HttpServlet {
 	  protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	      throws ServletException, IOException {
 		
-		ArrayList<ChartData> list = ChartData.getInfos();
-	 
-	    // コンテンツタイプ設定
-	    response.setContentType("image/png");
+		HttpSession session = request.getSession(true);
+		
+		System.out.println("Book On -> Overview page -> Start");
+		Runtime runtime = Runtime.getRuntime();
+		System.out.println("TotalMemory : " + (runtime.totalMemory() / 1024 / 1024) + "MB");
+		System.out.println("MemoryUsage : " + ((runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024) + "MB");
+
+		long startTime = System.currentTimeMillis();
+		
+		ServletContext context = this.getServletContext();
+		
+		ArrayList<NumberOfBooksByClassification> list = NumberOfBooksByClassification.getInfos();
 	 
 	    // 円グラフのデータ作成
 	    DefaultPieDataset data = new DefaultPieDataset();
 	    
-	    for(ChartData item : list) {
+	    for(NumberOfBooksByClassification item : list) {
 	    	data.setValue(item.getClassification(), item.getNumber());
 	    }
 	 
@@ -52,15 +63,6 @@ public class Overview extends HttpServlet {
 	    
 	    RingPlot plot = (RingPlot) chart.getPlot();
 	    
-	    /*plot.setSectionPaint("OS", new Color(0, 136, 204));
-	    plot.setSectionPaint("ﾌﾟﾛｸﾞﾗﾐﾝｸﾞ", new Color(248, 148, 6));
-	    plot.setSectionPaint("ﾈｯﾄ", new Color(81, 163, 81));
-	    plot.setSectionPaint("アプリ", new Color(162, 0, 255));
-	    plot.setSectionPaint("経理", new Color(242, 48, 84));
-	    plot.setSectionPaint("資格", new Color(216, 0, 155));
-	    plot.setSectionPaint("電気", new Color(255, 88, 13));
-	    plot.setSectionPaint("その他", new Color(189, 54, 47));*/
-	    
 	    // セクション間の境界線の削除(リングチャート)
 	    plot.setSeparatorsVisible(false);
 	    // リングチャートの太さを設定
@@ -76,11 +78,71 @@ public class Overview extends HttpServlet {
 	    plot.setBaseSectionOutlineStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 	    // 影の削除
 	    plot.setShadowPaint(null);
+
+	    File file = new File(context.getRealPath("temp") + "/NumberOfBooksByClassificationChart.png");
+	    try {
+	      ChartUtilities.saveChartAsPNG(file, chart, 300, 300);
+	    } catch (IOException e) {
+	      e.printStackTrace();
+	    }
+	    
+	    ArrayList<CirculationByClassificationOfThisYear> list2 = CirculationByClassificationOfThisYear.getInfos();
 	 
-	    // 円グラフ出力
-	    ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart, 400, 400);
+	    // 円グラフのデータ作成
+	    DefaultPieDataset data2 = new DefaultPieDataset();
+
+	    for(CirculationByClassificationOfThisYear item : list2) {
+	    	data2.setValue(item.getClassification(), item.getNumber());
+	    }
 	 
-	    // アウトプットストリームをフラッシュ
-	    response.getOutputStream().flush();
+	    // 日本語の文字化けを抑制
+	    ChartFactory.setChartTheme(StandardChartTheme.createLegacyTheme());
+	    
+		// JFreeChartオブジェクト作成
+	    JFreeChart chart2 = ChartFactory.createRingChart("", data2, true, true, false);
+	    
+	    // 背景色を削除
+	    chart2.setBackgroundPaint(Color.WHITE);
+	    // 凡例のアウトラインを削除
+	    chart2.getLegend().setFrame(BlockBorder.NONE);
+	    // 凡例の位置を右に固定
+	    chart2.getLegend().setPosition(RectangleEdge.RIGHT);
+	    
+	    RingPlot plot2 = (RingPlot) chart2.getPlot();
+	    
+	    // セクション間の境界線の削除(リングチャート)
+	    plot2.setSeparatorsVisible(false);
+	    // リングチャートの太さを設定
+	    plot2.setSectionDepth(0.5);
+	    // アウトラインを削除
+	    plot2.setOutlineVisible(false);
+	    // ラベルを削除
+	    plot2.setLabelGenerator(null);
+	    // セクション間の境界線の削除
+	    //plot.setBaseSectionOutlinePaint(new Color(0, 0, 0, 0));
+	    // セクション間の境界線を設定
+	    plot2.setBaseSectionOutlinePaint(Color.WHITE);
+	    plot2.setBaseSectionOutlineStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+	    // 影の削除
+	    plot2.setShadowPaint(null);
+
+	    File file2 = new File(context.getRealPath("temp") + "/CirculationByClassificationOfThisYear.png");
+	    try {
+	      ChartUtilities.saveChartAsPNG(file2, chart2, 300, 300);
+	    } catch (IOException e) {
+	      e.printStackTrace();
+	    }
+	    
+		long endTime = System.currentTimeMillis();
+		
+		System.out.println("RunTime : " + (endTime - startTime) + "ms");
+		
+		System.out.println("Session ID : " + session.getId());
+		if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")) {
+			System.out.println("UserName :" + session.getAttribute("last_name") + " " + session.getAttribute("first_name"));
+		}
+	    
+	    this.getServletContext().getRequestDispatcher("/overview.jsp")
+		.forward(request, response);
 	  }
 }
