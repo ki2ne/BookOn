@@ -87,34 +87,32 @@ public class CirculationByClassificationOfThisYear implements Serializable {
 			}
 		}
 
-		query  = "SELECT "
-				+ "  COUNT(*) AS count "
-				+ "FROM "
-				+ "  item_state "
-				+ "  INNER JOIN (SELECT DISTINCT large_id FROM group_master) AS a "
-				+ "    ON SUBSTRING(item_state.bk_id, 1, 1) = a.large_id ";
-
-		if(month > 3) {
-			query += "WHERE lend_date >= '" + year + "-04-01' ";
-			query += "AND lend_date < '" + (year + 1) + "-04-01' ";
-		} else {
-			query += "WHERE lend_date >= '" + (year - 1) + "-04-01' ";
-			query += "AND lend_date < '" + year + "-04-01' ";
+		query  = "select * from ";
+		for(Group item : groupList) {
+			query += "(SELECT COUNT(*) AS " + item.classification + " FROM item_state WHERE bk_id LIKE '" + item.id + "%' ";
+			if(month > 3) {
+				query += "AND lend_date >= '" + year + "-04-01' ";
+				query += "AND lend_date < '" + (year + 1) + "-04-01' ";
+			} else {
+				query += "AND lend_date >= '" + (year - 1) + "-04-01' ";
+				query += "AND lend_date < '" + year + "-04-01' ";
+			}
+			query += ") AS " + item.classification + ", ";
 		}
 		
-		query += "GROUP BY a.large_id";
+		query = query.substring(0, query.length() - 2);
 		
 		try {
 			stmt = db.createStatement();
 			rs = stmt.executeQuery(query);
-			int i = 0;
 
-			while (rs.next()) {
-				CirculationByClassificationOfThisYear chartData = new CirculationByClassificationOfThisYear();
-				chartData.setClassification(groupList.get(i).classification);
-				chartData.setNumber(Integer.parseInt(rs.getString("count")));
-				list.add(chartData);
-				i++;
+			if (rs.next()) {
+				for(Group item : groupList) {
+					CirculationByClassificationOfThisYear chartData = new CirculationByClassificationOfThisYear();
+					chartData.setClassification(item.classification);
+					chartData.setNumber(Integer.parseInt(rs.getString(item.classification)));
+					list.add(chartData);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

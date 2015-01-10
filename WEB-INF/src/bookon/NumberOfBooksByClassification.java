@@ -83,22 +83,24 @@ public class NumberOfBooksByClassification implements Serializable {
 			}
 		}
 		
-		query  = "SELECT COUNT(*) AS count FROM books_data INNER JOIN "
-				+ "(SELECT DISTINCT large_id FROM group_master) AS a "
-				+ "ON SUBSTRING(books_data.bk_id, 1, 1) = a.large_id "
-				+ "GROUP BY a.large_id ";
+		query  = "select * from ";
+		for(Group item : groupList) {
+			query += "(select count(*) as " + item.classification + " from books_data where bk_id LIKE '" + item.id + "%') as " + item.classification + ", ";
+		}
+		
+		query = query.substring(0, query.length() - 2);
 		
 		try {
 			stmt = db.createStatement();
 			rs = stmt.executeQuery(query);
-			int i = 0;
 
-			while (rs.next()) {
-				NumberOfBooksByClassification chartData = new NumberOfBooksByClassification();
-				chartData.setClassification(groupList.get(i).classification);
-				chartData.setNumber(Integer.parseInt(rs.getString("count")));
-				list.add(chartData);
-				i++;
+			if (rs.next()) {
+				for(Group item : groupList) {
+					NumberOfBooksByClassification chartData = new NumberOfBooksByClassification();
+					chartData.setClassification(item.classification);
+					chartData.setNumber(Integer.parseInt(rs.getString(item.classification)));
+					list.add(chartData);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
