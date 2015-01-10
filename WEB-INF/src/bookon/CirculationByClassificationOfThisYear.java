@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -55,6 +56,9 @@ public class CirculationByClassificationOfThisYear implements Serializable {
 		Connection db = null;
 		Statement stmt = null;
 		ResultSet rs = null;
+		Calendar calendar = Calendar.getInstance();
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH) + 1;
 		
 		try {
 			Context context = new InitialContext();
@@ -82,16 +86,23 @@ public class CirculationByClassificationOfThisYear implements Serializable {
 			} catch (Exception e) {
 			}
 		}
-		
+
 		query  = "SELECT "
 				+ "  COUNT(*) AS count "
 				+ "FROM "
 				+ "  item_state "
 				+ "  INNER JOIN (SELECT DISTINCT large_id FROM group_master) AS a "
-				+ "    ON SUBSTRING(item_state.bk_id, 1, 1) = a.large_id "
-				+ "GROUP BY "
-				+ "  a.large_id ";
+				+ "    ON SUBSTRING(item_state.bk_id, 1, 1) = a.large_id ";
 
+		if(month > 3) {
+			query += "WHERE lend_date >= '" + year + "-04-01' ";
+			query += "AND lend_date < '" + (year + 1) + "-04-01' ";
+		} else {
+			query += "WHERE lend_date >= '" + (year - 1) + "-04-01' ";
+			query += "AND lend_date < '" + year + "-04-01' ";
+		}
+		
+		query += "GROUP BY a.large_id";
 		
 		try {
 			stmt = db.createStatement();

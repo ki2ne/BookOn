@@ -189,9 +189,9 @@
 	<div class="container">
 		<div class="col-sm-12 col-md-3 col-lg-2 section menu" style="background: white;">
 				<div class="btn-group-vertical btn-block">
-					<a href="overview.jsp" class="btn btn-default btn-block ellipsis">概要</a>
+					<a href="Overview" class="btn btn-default btn-block ellipsis">概要</a>
 					<a href="User" class="btn btn-default btn-block ellipsis">ユーザー管理</a>
-					<a href="overview.jsp" class="btn btn-default btn-block ellipsis">ログ</a>
+					<a href="Overview" class="btn btn-default btn-block ellipsis">ログ</a>
 				</div>
 		</div>
 		<div class="col-sm-12 col-md-9 col-lg-10 section" style="background: white;">
