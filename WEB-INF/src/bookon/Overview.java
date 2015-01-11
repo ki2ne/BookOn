@@ -18,7 +18,9 @@ import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.RingPlot;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.ui.RectangleEdge;
 
@@ -126,7 +128,7 @@ public class Overview extends HttpServlet {
 	    // 影の削除
 	    plot2.setShadowPaint(null);
 
-	    File file2 = new File(context.getRealPath("temp") + "/CirculationByClassificationOfThisYear.png");
+	    File file2 = new File(context.getRealPath("temp") + "/CirculationByClassificationOfThisYearChart.png");
 	    try {
 	      ChartUtilities.saveChartAsPNG(file2, chart2, 300, 300);
 	    } catch (IOException e) {
@@ -141,6 +143,36 @@ public class Overview extends HttpServlet {
 		if((session.getAttribute("login") != null) && session.getAttribute("login").equals("true")) {
 			System.out.println("UserName :" + session.getAttribute("last_name") + " " + session.getAttribute("first_name"));
 		}
+		
+		
+		ArrayList<CirculationByMonths> list3 = CirculationByMonths.getInfos();
+		
+		// 円グラフのデータ作成
+	    DefaultCategoryDataset data3 = new DefaultCategoryDataset();
+	    
+	    for(CirculationByMonths item : list3) {
+	    	data3.addValue(item.getNumber(), item.getClassification(), item.getMonth() + "月");
+	    }
+	 
+	    // 日本語の文字化けを抑制
+	    ChartFactory.setChartTheme(StandardChartTheme.createLegacyTheme());
+	    
+		// JFreeChartオブジェクト作成
+	    JFreeChart chart3 = ChartFactory.createStackedBarChart("", "", "貸出冊数", data3, PlotOrientation.VERTICAL, true, true, false);
+	    
+	    // 背景色を削除
+	    chart3.setBackgroundPaint(Color.WHITE);
+	    // 凡例のアウトラインを削除
+	    chart3.getLegend().setFrame(BlockBorder.NONE);
+	    // 凡例の位置を右に固定
+	    chart3.getLegend().setPosition(RectangleEdge.RIGHT);
+
+	    File file3 = new File(context.getRealPath("temp") + "/CirculationByMonthsChart.png");
+	    try {
+	      ChartUtilities.saveChartAsPNG(file3, chart3, 600, 300);
+	    } catch (IOException e) {
+	      e.printStackTrace();
+	    }
 	    
 	    this.getServletContext().getRequestDispatcher("/overview.jsp")
 		.forward(request, response);

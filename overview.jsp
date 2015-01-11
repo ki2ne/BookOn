@@ -197,12 +197,18 @@
 		<div class="col-sm-12 col-md-9 col-lg-10 section" style="background: white;">
 			<table class="table">
 				<tr>
-					<td width="50%">分類別書籍数</td>
-					<td width="50%">今年の分類別貸出数</td>
+					<th width="50%">分類別書籍数</th>
+					<th width="50%">今年の分類別貸出数</th>
 				</tr>
 				<tr>
 					<td><img src='./temp/NumberOfBooksByClassificationChart.png'></td>
-					<td><img src='./temp/CirculationByClassificationOfThisYear.png'></td>
+					<td><img src='./temp/CirculationByClassificationOfThisYearChart.png'></td>
+				</tr>
+				<tr>
+					<th colspan="2">月別貸出冊数</th>
+				</tr>
+				<tr>
+					<td colspan="2"><img src='./temp/CirculationByMonthsChart.png'></td>
 				</tr>
 			</table>
 		</div>
