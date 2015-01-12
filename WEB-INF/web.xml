@@ -107,6 +107,14 @@
 			<servlet-name>UserTransaction</servlet-name>
 			<url-pattern>/UserTransaction</url-pattern>
 	</servlet-mapping>
+	<servlet>
+			<servlet-name>Record</servlet-name>
+			<servlet-class>bookon.Record</servlet-class>
+	</servlet>
+	<servlet-mapping>
+			<servlet-name>Record</servlet-name>
+			<url-pattern>/Record</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

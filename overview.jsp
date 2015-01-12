@@ -191,7 +191,7 @@
 				<div class="btn-group-vertical btn-block">
 					<a href="Overview" class="btn btn-default btn-block ellipsis">概要</a>
 					<a href="User" class="btn btn-default btn-block ellipsis">ユーザー管理</a>
-					<a href="Overview" class="btn btn-default btn-block ellipsis">ログ</a>
+					<a href="Record" class="btn btn-default btn-block ellipsis">貸出履歴</a>
 				</div>
 		</div>
 		<div class="col-sm-12 col-md-9 col-lg-10 section" style="background: white;">

@@ -193,30 +193,33 @@
 					<a href="User" class="btn btn-default btn-block ellipsis">ユーザー管理</a>
 					<a href="Record" class="btn btn-default btn-block ellipsis">貸出履歴</a>
 				</div>
-				<button type="button" class="btn btn-danger btn-block" onClick="return document.forms['user'].submit()">削除</button>
 		</div>
 		<div class="col-sm-12 col-md-9 col-lg-10 section" style="background: white;">
 			<div class="panel panel-default">
 				<!-- Default panel contents -->
 				<form class="form" name="user" role="form" action="UserTransaction">
-					<div class="panel-heading">ユーザー情報</div>
+					<div class="panel-heading">貸出履歴</div>
 
 					<!-- Table -->
 					<table class="table">
 						<tr>
-							<th><input type="checkbox" onClick="toggleAll(this, 'user_id')"></th>
-							<th>ID</th>
-							<th>姓</th>
-							<th>名</th>
-							<th>Email</th>
+							<th width="5%">ID</th>
+							<th width="8%">姓</th>
+							<th width="8%">名</th>
+							<th width="49%">書籍名</th>
+							<th width="10%">貸出日</th>
+							<th width="10%">貸出期限</th>
+							<th width="10%">返却日</th>
 						</tr>
 						<c:forEach var="item" items="${requestScope['list']}">
 							<tr>
-								<td><input type="checkbox" name="user_id" value='${item.id}'></td>
 								<td>${fn:escapeXml(item.id)}</td>
 								<td>${fn:escapeXml(item.lastName)}</td>
 								<td>${fn:escapeXml(item.firstName)}</td>
-								<td>${fn:escapeXml(item.email)}</td>
+								<td>${fn:escapeXml(item.bookName)}</td>
+								<td>${fn:escapeXml(item.lendDate)}</td>
+								<td>${fn:escapeXml(item.dueDate)}</td>
+								<td>${fn:escapeXml(item.returnDate)}</td>
 							</tr>
 						</c:forEach>
 					</table>

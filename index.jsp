@@ -208,7 +208,7 @@
 	    <form class="form search_form" name="search_form" role="form" action="Search">
 			<div class="row">
 				<div class="col-sm-12 col-md-12 col-lg-6">
-					<div class="col-sm-4 section" style="background: white;">
+					<div class="col-sm-4 section">
 						<div class="btn-group-vertical btn-block" data-toggle="buttons">
 							<label class="btn btn-primary"> <input type="radio" autocomplete="off">大分類</label>
 							<c:forEach var="item" items="${requestScope['list']}">
@@ -236,7 +236,7 @@
 							</c:forEach>
 						</div>
 					</div>
-					<div class="col-sm-4 section" style="background: white;">
+					<div class="col-sm-4 section">
 						<div class="btn-group-vertical btn-block" data-toggle="buttons">
 							<label class="btn btn-success"> <input type="radio" autocomplete="off">中分類</label>
 							<c:forEach var="item" items="${requestScope['list2']}">
@@ -264,7 +264,7 @@
 							</c:forEach>
 						</div>
 					</div>
-					<div class="col-sm-4 section" style="background: white;">
+					<div class="col-sm-4 section">
 						<div class="btn-group-vertical btn-block" data-toggle="buttons">
 							<label class="btn btn-danger"> <input type="radio" autocomplete="off">小分類</label>
 							<c:forEach var="item" items="${requestScope['list3']}">
@@ -291,7 +291,7 @@
 					</div>
 				</div>
 				<div class="col-sm-12 col-md-12 col-lg-6">
-					<div class="col-sm-4 section" style="background: white;">
+					<div class="col-sm-4 section">
 						<div class="form-group">
 							<div class="checkbox">
 								<label>
@@ -326,7 +326,7 @@
 							</c:forEach>
 						</select>
 					</div>
-					<div class="col-sm-4 section" style="background: white;">
+					<div class="col-sm-4 section">
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-addon">
@@ -372,7 +372,7 @@
 						<button type="submit" class="btn btn-primary btn-lg btn-block">検索</button>
 						<input type="hidden" id="page" name="page" value="1">
 					</div>
-					<div class="col-sm-4 section" style="background: white;">
+					<div class="col-sm-4 section">
 						<div class="btn-group-vertical btn-block">
 							<a href="Return" class="btn btn-default btn-block">
 								<c:choose>
