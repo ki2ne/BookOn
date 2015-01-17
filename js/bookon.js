@@ -102,17 +102,6 @@ $(document).ready(function() {
     $('#registerModal').on('shown.bs.modal', function() {
         $('.register_form').bootstrapValidator('resetForm', true);
     });
-    
-    if($.cookie("theme") != null && $.cookie("theme") != '') {
-	    document.getElementById('theme').href = $.cookie("theme");
-    }else
-    {
-    	document.getElementById('theme').href = 'css/bootstrap.min.css';
-    }
-    
-    if($.cookie("index") != null && $.cookie("index") != ''){
-	    document.getElementById('theme_select')[$.cookie("index")].selected = true;
-    }
 
     window.scroll($.cookie("x"), $.cookie("y"));
 });
@@ -222,10 +211,3 @@ function toggleAll(source, name) {
       checkboxes[i].checked = source.checked;
     }
   }
-
-function changesytle(cssfile) {
-	document.getElementById('theme').href = cssfile;
-	document.cookie = 'theme = ' + cssfile;
-	var index = document.getElementById('theme_select').selectedIndex;
-	document.cookie = 'index = ' + index;
-}

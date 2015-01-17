@@ -16,7 +16,7 @@
     <title>Book On</title>
 
     <!-- Bootstrap -->
-    <link href="#" rel="stylesheet" id="theme">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="css/bookon.css" rel="stylesheet">
 
@@ -396,16 +396,8 @@
 							</c:forEach>
 							<a href="Overview" class="btn btn-default btn-block ellipsis">管理画面</a>
 						</div>
-						<select id="theme_select" class="form-control" onchange="changesytle(value);">
-						  <option value="css/bootstrap.min.css">Default</option>
-						  <option value="css/bootstrap.darkly.min.css">Darkly</option>
-						  <option value="css/bootstrap.slate.min.css">Slate</option>
-						  <option value="css/bootstrap.superhero.min.css">SuperHero</option>
-						  <option value="css/bootstrap.united.min.css">United</option>
-						  <option value="css/bootstrap.yeti.min.css">Yeti</option>
-						</select>
 						<div class="form-group">
-							<button type="button" name="pdf" class="btn btn-danger btn-block" onClick="createPDF()">PDF</button>
+							<button type="button" name="pdf" class="btn btn-danger btn-block btn-lg pdf" onClick="createPDF()">PDF</button>
 						</div>
 					</div>
 				</div>
