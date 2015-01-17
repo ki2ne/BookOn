@@ -32,3 +32,12 @@ th {
 .menu {
 	padding-bottom: 10px;
 }
+
+.pagination {
+	margin: 15px;
+}
+
+#theme_select {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}

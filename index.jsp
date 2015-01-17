@@ -16,7 +16,7 @@
     <title>Book On</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="#" rel="stylesheet" id="theme">
     <!-- Custom styles for this template -->
     <link href="css/bookon.css" rel="stylesheet">
 
@@ -396,117 +396,125 @@
 							</c:forEach>
 							<a href="Overview" class="btn btn-default btn-block ellipsis">管理画面</a>
 						</div>
+						<select id="theme_select" class="form-control" onchange="changesytle(value);">
+						  <option value="css/bootstrap.min.css">Default</option>
+						  <option value="css/bootstrap.darkly.min.css">Darkly</option>
+						  <option value="css/bootstrap.slate.min.css">Slate</option>
+						  <option value="css/bootstrap.superhero.min.css">SuperHero</option>
+						  <option value="css/bootstrap.united.min.css">United</option>
+						  <option value="css/bootstrap.yeti.min.css">Yeti</option>
+						</select>
+						<div class="form-group">
+							<button type="button" name="pdf" class="btn btn-danger btn-block" onClick="createPDF()">PDF</button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</form><!-- /.form -->
 	</div><!-- /.container -->
 
-    <div class="container">
-		<div class="panel panel-default  section">
-			<!-- Default panel contents -->
-			<form class="form" name="book_table" role="form" action="LendTransaction">
-				<div class="panel-heading clearfix">
-					<div class="container">
-						<div class="row">
-							<nav>
-							<div class="col-md-2 col-sm-2">
-								<h4 class="text-center">検索結果</h4>
-							</div>
-							<div class="col-md-8 col-sm-8">
-								<c:if test="${requestScope.pagination.totalPage > 1}">
-								<div class="text-center">
-								    <div class="btn-group">
-								        <button type="button" class="btn btn-default"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></button>
-									        <c:choose>
-												<c:when test="${requestScope.pagination.totalPage < 10}">
-													<c:forEach var="i" begin="1" end="${requestScope.pagination.totalPage}" step="1">
-														<c:choose>
-															<c:when test="${i == requestScope.pagination.page}">
-																<button type="button" class="btn btn-default active" OnClick="submitPage(${i})">${i}</button>
-															</c:when>
-															<c:otherwise>
-																<button type="button" class="btn btn-default" OnClick="submitPage(${i})">${i}</button>
-															</c:otherwise>
-														</c:choose>
-													</c:forEach>
-												</c:when>
-												<c:otherwise>
-													<c:forEach var="i" begin="${requestScope.pagination.begin}" end="${requestScope.pagination.begin + 9}" step="1">
-														<c:choose>
-															<c:when test="${i == requestScope.pagination.page}">
-																<button type="button" class="btn btn-default active" OnClick="submitPage(${i})">${i}</button>
-															</c:when>
-															<c:otherwise>
-																<button type="button" class="btn btn-default" OnClick="submitPage(${i})">${i}</button>
-															</c:otherwise>
-														</c:choose>
-													</c:forEach>
-												</c:otherwise>
-											</c:choose>
-								        <button type="button" class="btn btn-default"><span aria-hidden="true">&raquo;</span><span class="sr-only">Previous</span></button>
-								    </div>
-								</div>
-								</c:if>
-							</div>
-							</nav>
-							<div class="col-md-2 col-sm-2">
-								<div class="form-group">
-									<button type="button" name="pdf" class="btn btn-danger" onClick="createPDF()">PDF</button>
+    <div class="container result">
+		<form class="form" name="book_table" role="form" action="LendTransaction">
+			<div class="container">
+				<div class="row">
+					<nav>
+					<div class="col-md-12 col-sm-12">
+						<c:if test="${requestScope.pagination.totalPage > 1}">
+							<div class="text-center">
+								<div class="btn-group pagination">
+									<button type="button" class="btn btn-default">
+										<span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
+									</button>
+									<c:choose>
+										<c:when test="${requestScope.pagination.totalPage < 10}">
+											<c:forEach var="i" begin="1" end="${requestScope.pagination.totalPage}" step="1">
+												<c:choose>
+													<c:when test="${i == requestScope.pagination.page}">
+														<button type="button" class="btn btn-default active" OnClick="submitPage(${i})">${i}</button>
+													</c:when>
+													<c:otherwise>
+														<button type="button" class="btn btn-default" OnClick="submitPage(${i})">${i}</button>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<c:forEach var="i" begin="${requestScope.pagination.begin}" end="${requestScope.pagination.begin + 9}" step="1">
+												<c:choose>
+													<c:when test="${i == requestScope.pagination.page}">
+														<button type="button" class="btn btn-default active" OnClick="submitPage(${i})">${i}</button>
+													</c:when>
+													<c:otherwise>
+														<button type="button" class="btn btn-default" OnClick="submitPage(${i})">${i}</button>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
+									<button type="button" class="btn btn-default">
+										<span aria-hidden="true">&raquo;</span><span class="sr-only">Previous</span>
+									</button>
 								</div>
 							</div>
-						</div>
+						</c:if>
 					</div>
+					</nav>
 				</div>
+			</div>
 
-				<!-- Table -->
-				<table class="table">
+			<!-- Table -->
+			<table class="table">
+				<tr>
+					<th width="6%">#</th>
+					<th width="40%">書籍名</th>
+					<th width="17%">著者</th>
+					<th width="10%">出版社</th>
+					<th width="6%">発行年</th>
+					<th width="10%">ISBN</th>
+					<th width="5%">価格</th>
+					<th width="6%">貸出状況</th>
+				</tr>
+				<c:forEach var="item" items="${requestScope['list5']}">
 					<tr>
-						<th width="6%">#</th>
-						<th width="40%">書籍名</th>
-						<th width="17%">著者</th>
-						<th width="10%">出版社</th>
-						<th width="6%">発行年</th>
-						<th width="10%">ISBN</th>
-						<th width="5%">価格</th>
-						<th width="6%">貸出状況</th>
+						<td>${fn:escapeXml(item.id)}</td>
+						<td>${fn:escapeXml(item.name)}</td>
+						<td>${fn:escapeXml(item.author)}</td>
+						<td>${fn:escapeXml(item.publisher)}</td>
+						<td>${fn:escapeXml(item.publicationDate)}</td>
+						<td>${fn:escapeXml(item.isbn)}</td>
+						<td>${fn:escapeXml(item.price)}</td>
+						<td>
+							<c:choose>
+								<c:when test="${item.state == 'true'}">
+									<c:choose>
+										<c:when test="${sessionScope.login == null || sessionScope.login != 'true'}">
+											<button type="submit" class="btn btn-primary btn-lg btn-block" disabled=disabled>貸出可</button>
+										</c:when>
+										<c:otherwise>
+											<button type="submit" class="btn btn-primary btn-lg btn-block" name="bk_id" value="${item.id}" onClick="return confirm('${item.name}を借りますか？')">貸出可</button>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:otherwise>
+									<button type="button" class="btn btn-danger btn-lg btn-block">貸出中</button>
+								</c:otherwise>
+							</c:choose>
+						</td>
 					</tr>
-					<c:forEach var="item" items="${requestScope['list5']}">
-						<tr>
-							<td>${fn:escapeXml(item.id)}</td>
-							<td>${fn:escapeXml(item.name)}</td>
-							<td>${fn:escapeXml(item.author)}</td>
-							<td>${fn:escapeXml(item.publisher)}</td>
-							<td>${fn:escapeXml(item.publicationDate)}</td>
-							<td>${fn:escapeXml(item.isbn)}</td>
-							<td>${fn:escapeXml(item.price)}</td>
-							<td>
+				</c:forEach>
+			</table>
+		</form><!-- /.form -->
+		<div class="container">
+			<div class="row">
+				<nav>
+				<div class="col-md-12 col-sm-12">
+					<c:if test="${requestScope.pagination.totalPage > 1}">
+						<div class="text-center">
+							<div class="btn-group">
+								<button type="button" class="btn btn-default">
+									<span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
+								</button>
 								<c:choose>
-									<c:when test="${item.state == 'true'}">
-										<c:choose>
-											<c:when test="${sessionScope.login == null || sessionScope.login != 'true'}">
-												<button type="submit" class="btn btn-primary btn-lg btn-block" disabled=disabled>貸出可</button>
-											</c:when>
-											<c:otherwise>
-												<button type="submit" class="btn btn-primary btn-lg btn-block" name="bk_id" value="${item.id}" onClick="return confirm('${item.name}を借りますか？')">貸出可</button>
-											</c:otherwise>
-										</c:choose>
-									</c:when>
-									<c:otherwise>
-										<button type="button" class="btn btn-danger btn-lg btn-block">貸出中</button>
-									</c:otherwise>
-								</c:choose>
-							</td>
-						</tr>
-					</c:forEach>
-				</table>
-			</form><!-- /.form -->
-			<div class="panel-footer">
-				<c:if test="${requestScope.pagination.totalPage > 1}">
-					<div class="text-center">
-					    <div class="btn-group">
-					        <button type="button" class="btn btn-default"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></button>
-						        <c:choose>
 									<c:when test="${requestScope.pagination.totalPage < 10}">
 										<c:forEach var="i" begin="1" end="${requestScope.pagination.totalPage}" step="1">
 											<button type="button" class="btn btn-default" OnClick="submitPage(${i})">${i}</button>
@@ -518,10 +526,14 @@
 										</c:forEach>
 									</c:otherwise>
 								</c:choose>
-					        <button type="button" class="btn btn-default"><span aria-hidden="true">&raquo;</span><span class="sr-only">Previous</span></button>
-					    </div>
-					</div>
-				</c:if>
+								<button type="button" class="btn btn-default">
+									<span aria-hidden="true">&raquo;</span><span class="sr-only">Previous</span>
+								</button>
+							</div>
+						</div>
+					</c:if>
+				</div>
+				</nav>
 			</div>
 		</div>
 	</div><!-- /.container -->
